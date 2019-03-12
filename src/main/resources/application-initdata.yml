@@ -1,0 +1,32 @@
+initdata:
+  spieler:
+    - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
+      vorname: SpielerVorname1
+      nachname: SpielerVorname1
+    - id: 7007b773-2f95-42a4-a3df-b6892551c362
+      vorname: SpielerVorname2
+      nachname: SpielerNachname2
+    - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
+      vorname: SpielerVorname3
+      nachname: SpielerNachname3
+    - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
+      vorname: SpielerVorname4
+      nachname: SpielerNachname4
+    - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
+      vorname: SpielerVorname5
+      nachname: SpielerNachname5
+    - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
+      vorname: SpielerVorname6
+      nachname: SpielerNachname6
+
+  teams:
+    - name: Team1
+      spielerIdList:
+        - a2a7c774-0c88-4baf-8845-b6222ebe1b71
+        - 7007b773-2f95-42a4-a3df-b6892551c362
+        - f971dd81-7590-4a89-9e55-c64a15cdcbd5
+    - name: Team2
+      spielerIdList:
+        - 47a56f72-8491-4548-be7a-e8b29a8863fe
+        - fc4cf4f3-1458-44f8-94fd-b6f1829ada91
+    - name: Team3
