@@ -10,7 +10,13 @@ package de.phip1611.hockeyligamanager.repository;
 import de.phip1611.hockeyligamanager.domain.Spielbericht;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface SpielberichtRepo extends JpaRepository<Spielbericht, UUID> {
+
+    List<Spielbericht> findAllByTeamHeimId(UUID id);
+
+    List<Spielbericht> findAllByTeamGastId(UUID id);
+
 }

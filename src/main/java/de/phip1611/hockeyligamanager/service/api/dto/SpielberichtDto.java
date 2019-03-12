@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
-public class SpielberichtDto {
+public class SpielberichtDto implements Comparable<SpielberichtDto> {
 
     private UUID id;
 
@@ -116,5 +116,10 @@ public class SpielberichtDto {
 
     public List<SpielerStrafEreignisDto> getHeimSpielerStrafEreignisList() {
         return heimSpielerStrafEreignisList;
+    }
+
+    @Override
+    public int compareTo(SpielberichtDto o) {
+        return begin.compareTo(o.begin);
     }
 }

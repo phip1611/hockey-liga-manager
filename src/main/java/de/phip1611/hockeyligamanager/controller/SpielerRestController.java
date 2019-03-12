@@ -7,8 +7,8 @@
  */
 package de.phip1611.hockeyligamanager.controller;
 
-import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
-import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
+import de.phip1611.hockeyligamanager.service.api.SpielerService;
+import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("spielbericht")
-public class SpielberichtController {
+@RequestMapping("spieler")
+public class SpielerRestController {
 
-    private SpielberichtService service;
+    private SpielerService spielerService;
 
-    public SpielberichtController(SpielberichtService service) {
-        this.service = service;
+    public SpielerRestController(SpielerService spielerService) {
+        this.spielerService = spielerService;
     }
 
     @GetMapping("all")
-    public List<SpielberichtDto> getAllSpielberichte() {
-        return this.service.findAll();
+    public List<SpielerDto> getAllSpieler() {
+        return this.spielerService.findAll();
     }
 }

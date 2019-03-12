@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Sarahs Hockey Liga Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="res/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="res/css/style.css"/>
+    <script defer src="res/js/jquery-3.3.1.min.js"></script>
+    <script defer src="res/js/bootstrap.bundle.min.js"></script>
+    <script defer src="res/js/main.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <span class="navbar-brand">Sarahs Hockey Liga Manager</span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:classappend="${page == 'ligatabelle'} ? 'active'" href="/ligatabelle">Ligatabelle</a>
+                <a class="nav-item nav-link" th:classappend="${page == 'spielberichte-overview'} ? 'active'" href="/spielberichte">Spielberichte</a>
+                <a class="nav-item nav-link" th:classappend="${page == 'spieler-overview'} ? 'active'" href="/spieler">Spieler</a>
+                <a class="nav-item nav-link" th:classappend="${page == 'teams-overview'} ? 'active'" href="/teams">Teams</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section container col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2" th:include="inc/__${page}__"></section>
+
+    <footer class="footer">&copy; Philipp Schuster - <a href="https://phip1611.de">https://phip1611.de</a></footer>
+</body>
+</html>

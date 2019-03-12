@@ -17,11 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("team")
-public class TeamController {
+public class TeamRestController {
 
     private TeamService service;
 
-    public TeamController(TeamService service) {
+    public TeamRestController(TeamService service) {
         this.service = service;
     }
 

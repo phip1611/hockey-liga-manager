@@ -1,0 +1,9 @@
+.section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    min-height: 600px;
+}
+
+.footer {
+    text-align: center;
+}

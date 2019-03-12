@@ -9,7 +9,13 @@ package de.phip1611.hockeyligamanager.service.api;
 
 import de.phip1611.hockeyligamanager.domain.Spielbericht;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
+import de.phip1611.hockeyligamanager.service.api.dto.LigatabellenEintragDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
+import java.util.List;
+
 public interface SpielberichtService extends EntityService<Spielbericht, SpielberichtForm, SpielberichtDto> {
+
+    List<LigatabellenEintragDto> erstelleLigatabelle();
+
 }

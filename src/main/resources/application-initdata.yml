@@ -1,23 +1,27 @@
 initdata:
   spieler:
     - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
-      vorname: SpielerVorname1
-      nachname: SpielerVorname1
+      vorname: Spieler 1
+      nachname: In Team 1
     - id: 7007b773-2f95-42a4-a3df-b6892551c362
-      vorname: SpielerVorname2
-      nachname: SpielerNachname2
+      vorname: Spieler 2
+      nachname: In Team 1
     - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
-      vorname: SpielerVorname3
-      nachname: SpielerNachname3
+      vorname: Spieler 3
+      nachname: In Team 1
+
     - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
-      vorname: SpielerVorname4
-      nachname: SpielerNachname4
+      vorname: Spieler 4
+      nachname: In Team 2
     - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
-      vorname: SpielerVorname5
-      nachname: SpielerNachname5
+      vorname: Spieler 5
+      nachname: In Team 2
     - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
-      vorname: SpielerVorname6
-      nachname: SpielerNachname6
+      vorname: Spieler 6
+      nachname: In Team 3
+    - id: c1204af8-848d-4118-a737-103f1bebcc68
+      vorname: Spieler 7
+      nachname: In keinem Team
 
   teams:
     - name: Team1
@@ -32,9 +36,15 @@ initdata:
         - 47a56f72-8491-4548-be7a-e8b29a8863fe
         - fc4cf4f3-1458-44f8-94fd-b6f1829ada91
     - name: Team3
+      id: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
+      spielerIdList:
+        - b6ef7515-2dcc-425b-a3d9-ce931743f444
+    - name: Team4
 
   spielberichte:
-    - teamHeimId: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
+    - # 3 Punkte Sieg
+      id: 431a9dde-f007-488b-a5d5-9ef9dae39803
+      teamHeimId: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
       teamGastId: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
       schiedsrichter1: Herr Blümel
       schiedsrichter2: Herr Mustermann
@@ -57,6 +67,24 @@ initdata:
         - time: 16
           schuetzeId: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
           firstAssistId: 47a56f72-8491-4548-be7a-e8b29a8863fe
-
+    - # 2 Punkte Sieg für Team 2, 1 Punkt Niederlage für Team 3
+      teamHeimId: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
+      teamGastId: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
+      heimSpielerTorEreignisList:
+        - time: 1
+          schuetzeId: 47a56f72-8491-4548-be7a-e8b29a8863fe
+          firstAssistId: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
+        - time: 60 # ab 60 ist Overtime, 59,999 noch regulär
+          schuetzeId: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
+          firstAssistId: 47a56f72-8491-4548-be7a-e8b29a8863fe
+      gastSpielerTorEreignisList:
+        - time: 16
+          schuetzeId: b6ef7515-2dcc-425b-a3d9-ce931743f444
+    - # 3 Punkt Sieg für Team 3
+      teamHeimId: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
+      teamGastId: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
+      heimSpielerTorEreignisList:
+      - time: 59
+        schuetzeId: b6ef7515-2dcc-425b-a3d9-ce931743f444
 
 
