@@ -66,6 +66,10 @@ public class Spieler {
         return team;
     }
 
+    public String getFullName() {
+        return vorname + " " + nachname;
+    };
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

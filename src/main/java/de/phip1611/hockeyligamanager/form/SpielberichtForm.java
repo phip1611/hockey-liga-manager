@@ -8,8 +8,11 @@
 package de.phip1611.hockeyligamanager.form;
 
 import de.phip1611.hockeyligamanager.domain.Spielbericht;
+import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -18,13 +21,29 @@ public class SpielberichtForm {
 
     private UUID id;
 
-    private UUID team1Id;
+    private UUID teamHeimId;
 
-    private UUID team2Id;
+    private UUID teamGastId;
 
-    private int goalsTeam1;
+    private String Schiedsrichter1;
 
-    private int goalsTeam2;
+    private String Schiedsrichter2;
+
+    private String zeitnehmer;
+
+    private int zuschauer;
+
+    private String ort;
+
+    private String beginTimeString;
+
+    private List<SpielerTorEreignisForm> heimSpielerTorEreignisList = new ArrayList<>();
+
+    private List<SpielerStrafEreignisForm> heimSpielerStrafEreignisList = new ArrayList<>();
+
+    private List<SpielerTorEreignisForm> gastSpielerTorEreignisList = new ArrayList<>();
+
+    private List<SpielerStrafEreignisForm> gastSpielerStrafEreignisList = new ArrayList<>();
 
     public UUID getId() {
         return id;
@@ -35,43 +54,106 @@ public class SpielberichtForm {
         return this;
     }
 
-    public UUID getTeam1Id() {
-        return team1Id;
+    public UUID getTeamHeimId() {
+        return teamHeimId;
     }
 
-    public SpielberichtForm setTeam1Id(UUID team1Id) {
-        this.team1Id = team1Id;
+    public SpielberichtForm setTeamHeimId(UUID teamHeimId) {
+        this.teamHeimId = teamHeimId;
         return this;
     }
 
-    public UUID getTeam2Id() {
-        return team2Id;
+    public UUID getTeamGastId() {
+        return teamGastId;
     }
 
-    public SpielberichtForm setTeam2Id(UUID team2Id) {
-        this.team2Id = team2Id;
+    public SpielberichtForm setTeamGastId(UUID teamGastId) {
+        this.teamGastId = teamGastId;
         return this;
     }
 
-    public int getGoalsTeam1() {
-        return goalsTeam1;
+    public String getSchiedsrichter1() {
+        return Schiedsrichter1;
     }
 
-    public SpielberichtForm setGoalsTeam1(int goalsTeam1) {
-        this.goalsTeam1 = goalsTeam1;
-        return this;
+    public void setSchiedsrichter1(String schiedsrichter1) {
+        Schiedsrichter1 = schiedsrichter1;
     }
 
-    public int getGoalsTeam2() {
-        return goalsTeam2;
+    public String getSchiedsrichter2() {
+        return Schiedsrichter2;
     }
 
-    public SpielberichtForm setGoalsTeam2(int goalsTeam2) {
-        this.goalsTeam2 = goalsTeam2;
-        return this;
+    public void setSchiedsrichter2(String schiedsrichter2) {
+        Schiedsrichter2 = schiedsrichter2;
     }
 
-    public Spielbericht build(Function<UUID, Optional<Team>> teamFinder) {
-        return new Spielbericht(this, teamFinder);
+    public String getZeitnehmer() {
+        return zeitnehmer;
     }
+
+    public void setZeitnehmer(String zeitnehmer) {
+        this.zeitnehmer = zeitnehmer;
+    }
+
+    public int getZuschauer() {
+        return zuschauer;
+    }
+
+    public void setZuschauer(int zuschauer) {
+        this.zuschauer = zuschauer;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public String getBeginTimeString() {
+        return beginTimeString;
+    }
+
+    public void setBeginTimeString(String beginTimeString) {
+        this.beginTimeString = beginTimeString;
+    }
+
+    public List<SpielerTorEreignisForm> getHeimSpielerTorEreignisList() {
+        return heimSpielerTorEreignisList;
+    }
+
+    public void setHeimSpielerTorEreignisList(List<SpielerTorEreignisForm> heimSpielerTorEreignisList) {
+        this.heimSpielerTorEreignisList = heimSpielerTorEreignisList;
+    }
+
+    public List<SpielerStrafEreignisForm> getHeimSpielerStrafEreignisList() {
+        return heimSpielerStrafEreignisList;
+    }
+
+    public void setHeimSpielerStrafEreignisList(List<SpielerStrafEreignisForm> heimSpielerStrafEreignisList) {
+        this.heimSpielerStrafEreignisList = heimSpielerStrafEreignisList;
+    }
+
+    public List<SpielerTorEreignisForm> getGastSpielerTorEreignisList() {
+        return gastSpielerTorEreignisList;
+    }
+
+    public void setGastSpielerTorEreignisList(List<SpielerTorEreignisForm> gastSpielerTorEreignisList) {
+        this.gastSpielerTorEreignisList = gastSpielerTorEreignisList;
+    }
+
+    public List<SpielerStrafEreignisForm> getGastSpielerStrafEreignisList() {
+        return gastSpielerStrafEreignisList;
+    }
+
+    public void setGastSpielerStrafEreignisList(List<SpielerStrafEreignisForm> gastSpielerStrafEreignisList) {
+        this.gastSpielerStrafEreignisList = gastSpielerStrafEreignisList;
+    }
+
+    public Spielbericht build(Function<UUID, Optional<Team>> teamFinder, Function<UUID, Optional<Spieler>> spielerFinder) {
+        return new Spielbericht(this, teamFinder, spielerFinder);
+    }
+
 }

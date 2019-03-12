@@ -10,13 +10,15 @@ package de.phip1611.hockeyligamanager.domain;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Spielbericht {
@@ -26,32 +28,73 @@ public class Spielbericht {
 
     @JoinColumn
     @ManyToOne
-    private Team team1;
+    private Team teamHeim;
 
     @JoinColumn
     @ManyToOne
-    private Team team2;
+    private Team teamGast;
 
-    private int goalsTeam1;
+    private String schiedsrichter1;
 
-    private int goalsTeam2;
+    private String schiedsrichter2;
+
+    private String zeitnehmer;
+
+    private int zuschauer;
+
+    private String ort;
+
+    private LocalDateTime begin;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SpielerTorEreignis> heimSpielerTorEreignisList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SpielerStrafEreignis> heimSpielerStrafEreignisList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SpielerTorEreignis> gastSpielerTorEreignisList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SpielerStrafEreignis> gastSpielerStrafEreignisList = new ArrayList<>();
 
     private Spielbericht() {
         /* hibernate default constructor */
     }
 
     public Spielbericht(SpielberichtForm form,
-                        Function<UUID, Optional<Team>> teamFinder) {
+                        Function<UUID, Optional<Team>> teamFinder,
+                        Function<UUID, Optional<Spieler>> spielerFinder) {
         this.id = form.getId() == null ? UUID.randomUUID() : form.getId();
-        this.update(form, teamFinder);
+        this.update(form, teamFinder, spielerFinder);
     }
 
     public Spielbericht update(SpielberichtForm form,
-                               Function<UUID, Optional<Team>> teamFinder) {
-        this.goalsTeam1 = form.getGoalsTeam1();
-        this.goalsTeam2 = form.getGoalsTeam2();
-        this.team1 = teamFinder.apply(form.getTeam1Id()).get();
-        this.team2 = teamFinder.apply(form.getTeam2Id()).get();
+                               Function<UUID, Optional<Team>> teamFinder,
+                               Function<UUID, Optional<Spieler>> spielerFinder) {
+        this.teamHeim = teamFinder.apply(form.getTeamHeimId()).get();
+        this.teamGast = teamFinder.apply(form.getTeamGastId()).get();
+        this.schiedsrichter1 = form.getSchiedsrichter1();
+        this.schiedsrichter2 = form.getSchiedsrichter2();
+        this.zeitnehmer = form.getZeitnehmer();
+        this.zuschauer = form.getZuschauer();
+        this.ort = form.getOrt();
+        this.begin = LocalDateTime.parse(form.getBeginTimeString());
+
+        this.heimSpielerStrafEreignisList = form.getHeimSpielerStrafEreignisList().stream()
+                .map(x -> x.build(spielerFinder))
+                .collect(toList());
+        this.heimSpielerTorEreignisList = form.getHeimSpielerTorEreignisList().stream()
+                .map(x -> x.build(spielerFinder))
+                .collect(toList());
+
+        this.gastSpielerStrafEreignisList = form.getGastSpielerStrafEreignisList().stream()
+                .map(x -> x.build(spielerFinder))
+                .collect(toList());
+        this.gastSpielerTorEreignisList = form.getGastSpielerTorEreignisList().stream()
+                .map(x -> x.build(spielerFinder))
+                .collect(toList());
+
         return this;
     }
 
@@ -59,20 +102,52 @@ public class Spielbericht {
         return id;
     }
 
-    public Team getTeam1() {
-        return team1;
+    public Team getTeamHeim() {
+        return teamHeim;
     }
 
-    public Team getTeam2() {
-        return team2;
+    public Team getTeamGast() {
+        return teamGast;
     }
 
-    public int getGoalsTeam1() {
-        return goalsTeam1;
+    public String getSchiedsrichter1() {
+        return schiedsrichter1;
     }
 
-    public int getGoalsTeam2() {
-        return goalsTeam2;
+    public String getSchiedsrichter2() {
+        return schiedsrichter2;
+    }
+
+    public String getZeitnehmer() {
+        return zeitnehmer;
+    }
+
+    public int getZuschauer() {
+        return zuschauer;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public LocalDateTime getBegin() {
+        return begin;
+    }
+
+    public List<SpielerTorEreignis> getHeimSpielerTorEreignisList() {
+        return heimSpielerTorEreignisList;
+    }
+
+    public List<SpielerStrafEreignis> getHeimSpielerStrafEreignisList() {
+        return heimSpielerStrafEreignisList;
+    }
+
+    public List<SpielerTorEreignis> getGastSpielerTorEreignisList() {
+        return gastSpielerTorEreignisList;
+    }
+
+    public List<SpielerStrafEreignis> getGastSpielerStrafEreignisList() {
+        return gastSpielerStrafEreignisList;
     }
 
     public SpielberichtDto toDto() {

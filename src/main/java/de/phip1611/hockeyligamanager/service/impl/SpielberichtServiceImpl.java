@@ -10,6 +10,7 @@ package de.phip1611.hockeyligamanager.service.impl;
 import de.phip1611.hockeyligamanager.domain.Spielbericht;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.repository.SpielberichtRepo;
+import de.phip1611.hockeyligamanager.repository.SpielerRepo;
 import de.phip1611.hockeyligamanager.repository.TeamRepo;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
@@ -28,10 +29,14 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     private TeamRepo teamRepo;
 
+    private SpielerRepo spielerRepo;
+
     public SpielberichtServiceImpl(SpielberichtRepo repo,
-                                   TeamRepo teamRepo) {
+                                   TeamRepo teamRepo,
+                                   SpielerRepo spielerRepo) {
         this.repo = repo;
         this.teamRepo = teamRepo;
+        this.spielerRepo = spielerRepo;
     }
 
     @Override
@@ -39,16 +44,16 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     public SpielberichtDto createOrUpdate(SpielberichtForm spielberichtForm) {
         if (spielberichtForm.getId() == null) {
             // neue Entität speichern
-            return this.repo.save(spielberichtForm.build(teamRepo::findById)).toDto();
+            return this.repo.save(spielberichtForm.build(teamRepo::findById, spielerRepo::findById)).toDto();
         }
 
         var e = this.repo.findById(spielberichtForm.getId());
         if (e.isPresent()) {
             // bestehende Entität updaten
-            return e.get().update(spielberichtForm, teamRepo::findById).toDto();
+            return e.get().update(spielberichtForm, teamRepo::findById, spielerRepo::findById).toDto();
         } else {
             // neue Entität mit gegebener UUID speichern
-            return this.repo.save(spielberichtForm.build(teamRepo::findById)).toDto();
+            return this.repo.save(spielberichtForm.build(teamRepo::findById, spielerRepo::findById)).toDto();
         }
     }
 
