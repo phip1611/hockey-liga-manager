@@ -9,6 +9,8 @@ package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.domain.*;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
+import de.phip1611.hockeyligamanager.form.SpielerStrafEreignisForm;
+import de.phip1611.hockeyligamanager.form.SpielerTorEreignisForm;
 import de.phip1611.hockeyligamanager.repository.*;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.dto.LigatabellenEintragDto;
@@ -168,6 +170,29 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         }
         Collections.sort(rows);
         return rows;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SpielberichtForm createFormFromId(UUID id) {
+        var entity = repo.findById(id).get();
+        var form = new SpielberichtForm();
+        form.setId(id);
+        form.setTeamGastId(entity.getTeamGast().getId());
+        form.setTeamHeimId(entity.getTeamHeim().getId());
+        form.setSchiedsrichter1(entity.getSchiedsrichter1());
+        form.setSchiedsrichter2(entity.getSchiedsrichter2());
+        form.setZeitnehmer(entity.getZeitnehmer());
+        form.setZuschauer(entity.getZuschauer());
+        form.setOrt(entity.getOrt());
+        form.setBeginTimeString(entity.getBegin().toString());
+        form.setAnwesendeSpielerGast(entity.getAnwesendeSpielerGast().stream().map(Spieler::getId).collect(toList()));
+        form.setAnwesendeSpielerHeim(entity.getAnwesendeSpielerHeim().stream().map(Spieler::getId).collect(toList()));
+        form.setHeimSpielerTorEreignisList(entity.getHeimSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
+        form.setGastSpielerTorEreignisList(entity.getGastSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
+        form.setHeimSpielerStrafEreignisList(entity.getHeimSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
+        form.setGastSpielerStrafEreignisList(entity.getGastSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
+        return form;
     }
 
     private int getTore(List<Spielbericht> list, Function<Spielbericht, List<SpielerTorEreignis>> func) {

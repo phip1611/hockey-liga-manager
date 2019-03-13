@@ -12,11 +12,12 @@ import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class SpielerTorEreignisForm {
+public class SpielerTorEreignisForm implements MultipleFormField {
     private UUID id;
 
     // Spielminute >= 0
@@ -31,6 +32,17 @@ public class SpielerTorEreignisForm {
 
     @NotNull
     private UUID secondAssistId;
+
+    public SpielerTorEreignisForm() {
+    }
+
+    public SpielerTorEreignisForm(SpielerTorEreignis entity) {
+        this.id = entity.getId();
+        this.time = entity.getTime();
+        this.schuetzeId = entity.getSchuetze().getId();
+        this.firstAssistId = entity.getFirstAssist() != null ? entity.getFirstAssist().getId() : null;
+        this.secondAssistId = entity.getSecondAssist() != null ? entity.getSecondAssist().getId() : null;
+    }
 
     public UUID getId() {
         return id;
@@ -76,4 +88,24 @@ public class SpielerTorEreignisForm {
         return new SpielerTorEreignis(this, spielerFinder);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpielerTorEreignisForm that = (SpielerTorEreignisForm) o;
+        return time == that.time &&
+                Objects.equals(schuetzeId, that.schuetzeId) &&
+                Objects.equals(firstAssistId, that.firstAssistId) &&
+                Objects.equals(secondAssistId, that.secondAssistId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(time, schuetzeId, firstAssistId, secondAssistId);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return schuetzeId == null && firstAssistId == null && secondAssistId == null;
+    }
 }

@@ -38,13 +38,6 @@ public class TeamAndSpielerForm implements Form {
         this.spieler = dto.getSpieler().stream().map(SpielerForm::new).collect(toList());
     }
 
-    // fügt fünf leere Felder hinzu, damit man im UI mehr Spieler hinzufügen kann
-    private void addEmptySpielerFields() {
-        for (int i = 0; i < 5; i++) {
-            this.spieler.add(new SpielerForm());
-        }
-    }
-
     public UUID getId() {
         return id;
     }
@@ -77,13 +70,15 @@ public class TeamAndSpielerForm implements Form {
 
     @Override
     public void addExtraFields() {
-        this.addEmptySpielerFields();
+        for (int i = 0; i < EXTRA_FIELDS_SIZE; i++) {
+            this.spieler.add(new SpielerForm());
+        }
     }
 
     @Override
     public void removeEmptyFields() {
         var invalideFelder = this.spieler.stream()
-                .filter(s -> s.getVorname().isEmpty() && s.getNachname().isEmpty())
+                .filter(SpielerForm::isEmpty)
                 .collect(toList());
         this.spieler.removeAll(invalideFelder);
     }

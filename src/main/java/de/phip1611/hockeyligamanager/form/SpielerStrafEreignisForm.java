@@ -12,11 +12,12 @@ import de.phip1611.hockeyligamanager.domain.SpielerStrafEreignis;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class SpielerStrafEreignisForm {
+public class SpielerStrafEreignisForm implements MultipleFormField {
 
     private UUID id;
 
@@ -34,6 +35,17 @@ public class SpielerStrafEreignisForm {
     // dauer der Strafe in Minuten
     @Min(0)
     private int dauer;
+
+    public SpielerStrafEreignisForm() {
+    }
+
+    public SpielerStrafEreignisForm(SpielerStrafEreignis entity) {
+        this.id = entity.getId();
+        this.time = entity.getTime();
+        this.rv = entity.getRv();
+        this.spielerId = entity.getSpieler().getId();
+        this.dauer = entity.getDauer();
+    }
 
     public UUID getId() {
         return id;
@@ -79,4 +91,24 @@ public class SpielerStrafEreignisForm {
         return new SpielerStrafEreignis(this, spielerFinder);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpielerStrafEreignisForm that = (SpielerStrafEreignisForm) o;
+        return time == that.time &&
+                rv == that.rv &&
+                dauer == that.dauer &&
+                Objects.equals(spielerId, that.spielerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(time, rv, spielerId, dauer);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

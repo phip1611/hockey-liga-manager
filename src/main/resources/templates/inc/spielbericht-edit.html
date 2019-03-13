@@ -1,0 +1,65 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <h3>Spielbericht bearbeiten</h3>
+    <form method="post" th:object="${form}" th:action="${'/spielberichte/submit'}">
+        <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="beginTimeString">Begin (YYYY-MM-DD'T'hh:mm:ss)</label>
+                    <input type="text" class="form-control" id="beginTimeString" th:field="*{beginTimeString}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="ort">Ort</label>
+                    <input type="text" class="form-control" id="ort" th:field="*{ort}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="zuschauer">Zuschauer</label>
+                    <input type="text" class="form-control" id="zuschauer" th:field="*{zuschauer}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="heimteam">Heimteam</label>
+                    <select th:field="*{teamHeimId}" class="custom-select" id="heimteam">
+                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <label for="gastteam">Gast</label>
+                <select th:field="*{teamGastId}" class="custom-select" id="gastteam">
+                    <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="schiedsrichter1">Schiedsrichter 1</label>
+                    <input type="text" class="form-control" id="schiedsrichter1" th:field="*{schiedsrichter1}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="schiedsrichter2">Schiedsrichter 1</label>
+                    <input type="text" class="form-control" id="schiedsrichter2" th:field="*{schiedsrichter2}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="zeitnehmer">Zeitnehmer</label>
+                    <input type="text" class="form-control" id="zeitnehmer" th:field="*{zeitnehmer}" />
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </form>
+</th:block>

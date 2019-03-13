@@ -11,9 +11,10 @@
         <tr th:each="team: ${teams}">
             <td th:text="${team.name}"></td>
             <td th:text="${team.spieler.size()}"></td>
-            <td><a th:href="${'/teams/' + team.id}">Details</a>
+            <td><a th:href="${'/teams/' + team.id}">Details</a> |
                 <a th:href="${'/teams/' + team.id + '/edit'}">Bearbeiten</a></td>
         </tr>
         </tbody>
     </table>
+    <a class="btn btn-primary" href="/teams/new">Team hinzufügen</a>
 </th:block>

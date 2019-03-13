@@ -19,7 +19,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class SpielberichtForm {
+import static java.util.stream.Collectors.toList;
+
+public class SpielberichtForm implements Form {
 
     private UUID id;
 
@@ -29,9 +31,9 @@ public class SpielberichtForm {
     @NotNull
     private UUID teamGastId;
 
-    private String Schiedsrichter1;
+    private String schiedsrichter1;
 
-    private String Schiedsrichter2;
+    private String schiedsrichter2;
 
     private String zeitnehmer;
 
@@ -88,19 +90,19 @@ public class SpielberichtForm {
     }
 
     public String getSchiedsrichter1() {
-        return Schiedsrichter1;
+        return schiedsrichter1;
     }
 
     public void setSchiedsrichter1(String schiedsrichter1) {
-        Schiedsrichter1 = schiedsrichter1;
+        this.schiedsrichter1 = schiedsrichter1;
     }
 
     public String getSchiedsrichter2() {
-        return Schiedsrichter2;
+        return schiedsrichter2;
     }
 
     public void setSchiedsrichter2(String schiedsrichter2) {
-        Schiedsrichter2 = schiedsrichter2;
+        this.schiedsrichter2 = schiedsrichter2;
     }
 
     public String getZeitnehmer() {
@@ -187,4 +189,37 @@ public class SpielberichtForm {
         return new Spielbericht(this, teamFinder, spielerFinder);
     }
 
+    @Override
+    public void addExtraFields() {
+        for (int i = 0; i < EXTRA_FIELDS_SIZE; i++) {
+            this.gastSpielerStrafEreignisList.add(new SpielerStrafEreignisForm());
+            this.heimSpielerStrafEreignisList.add(new SpielerStrafEreignisForm());
+            this.gastSpielerTorEreignisList.add(new SpielerTorEreignisForm());
+            this.gastSpielerTorEreignisList.add(new SpielerTorEreignisForm());
+        }
+    }
+
+    @Override
+    public void removeEmptyFields() {
+        this.gastSpielerStrafEreignisList.removeAll(
+                this.gastSpielerStrafEreignisList.stream()
+                        .filter(MultipleFormField::isEmpty)
+                        .collect(toList())
+        );
+        this.heimSpielerStrafEreignisList.removeAll(
+                this.heimSpielerStrafEreignisList.stream()
+                        .filter(MultipleFormField::isEmpty)
+                        .collect(toList())
+        );
+        this.gastSpielerTorEreignisList.removeAll(
+                this.gastSpielerTorEreignisList.stream()
+                        .filter(MultipleFormField::isEmpty)
+                        .collect(toList())
+        );
+        this.gastSpielerTorEreignisList.removeAll(
+                this.gastSpielerTorEreignisList.stream()
+                        .filter(MultipleFormField::isEmpty)
+                        .collect(toList())
+        );
+    }
 }

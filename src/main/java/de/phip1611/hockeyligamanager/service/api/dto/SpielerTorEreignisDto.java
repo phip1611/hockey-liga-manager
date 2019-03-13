@@ -11,7 +11,7 @@ import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
 
 import java.util.UUID;
 
-public class SpielerTorEreignisDto {
+public class SpielerTorEreignisDto implements Comparable<SpielerTorEreignisDto> {
     private UUID id;
 
     // Spielminute >= 0
@@ -51,5 +51,10 @@ public class SpielerTorEreignisDto {
 
     public String getSecondAssistName() {
         return secondAssistName;
+    }
+
+    @Override
+    public int compareTo(SpielerTorEreignisDto o) {
+        return time - o.time;
     }
 }

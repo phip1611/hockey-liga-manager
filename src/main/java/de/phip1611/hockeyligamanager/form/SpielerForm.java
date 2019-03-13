@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 import java.util.UUID;
 
-public class SpielerForm {
+public class SpielerForm implements MultipleFormField {
 
     private UUID id;
 
@@ -88,5 +88,10 @@ public class SpielerForm {
 
     public Spieler build() {
         return new Spieler(this);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return vorname.isEmpty() && nachname.isEmpty();
     }
 }

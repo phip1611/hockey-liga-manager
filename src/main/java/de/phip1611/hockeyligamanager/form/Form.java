@@ -9,6 +9,8 @@ package de.phip1611.hockeyligamanager.form;
 
 public interface Form {
 
+    int EXTRA_FIELDS_SIZE = 5;
+
     /**
      * Fügt zusätzliche Felder hinzu, damit im Frontend nicht nur
      * bestehende Felder bearbeitet werden könne, sondern auch neue

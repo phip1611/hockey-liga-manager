@@ -89,13 +89,21 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         );
 
         this.heimSpielerStrafEreignisList = spielbericht.getHeimSpielerStrafEreignisList().stream()
-                .map(SpielerStrafEreignis::toDto).collect(toList());
+                .map(SpielerStrafEreignis::toDto)
+                .sorted()
+                .collect(toList());
         this.heimSpielerTorEreignisList = spielbericht.getHeimSpielerTorEreignisList().stream()
-                .map(SpielerTorEreignis::toDto).collect(toList());
+                .map(SpielerTorEreignis::toDto)
+                .sorted()
+                .collect(toList());
         this.gastSpielerStrafEreignisList = spielbericht.getGastSpielerStrafEreignisList().stream()
-                .map(SpielerStrafEreignis::toDto).collect(toList());
+                .map(SpielerStrafEreignis::toDto)
+                .sorted()
+                .collect(toList());
         this.gastSpielerTorEreignisList = spielbericht.getGastSpielerTorEreignisList().stream()
-                .map(SpielerTorEreignis::toDto).collect(toList());
+                .map(SpielerTorEreignis::toDto)
+                .sorted()
+                .collect(toList());
     }
 
     // gibt den formatierten Ergebnisstring zurück

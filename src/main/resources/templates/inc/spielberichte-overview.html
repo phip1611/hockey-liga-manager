@@ -17,8 +17,12 @@
             <td th:text="${bericht.teamGast}"></td>
             <td th:text="${bericht.ort}"></td>
             <td th:text="${bericht.ergebnisString}"></td>
-            <td><a th:href="${'/spielberichte/' + bericht.id}">Details</a></td>
+            <td>
+                <a th:href="${'/spielberichte/' + bericht.id}">Details</a> |
+                <a th:href="${'/spielberichte/' + bericht.id} + '/edit'">Bearbeiten</a>
+            </td>
         </tr>
         </tbody>
     </table>
+    <a class="btn btn-primary" href="/spielberichte/new">Spielbericht hinzufügen</a>
 </th:block>

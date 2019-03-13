@@ -11,7 +11,7 @@ import de.phip1611.hockeyligamanager.domain.SpielerStrafEreignis;
 
 import java.util.UUID;
 
-public class SpielerStrafEreignisDto {
+public class SpielerStrafEreignisDto implements Comparable<SpielerStrafEreignisDto> {
 
     private UUID id;
 
@@ -55,5 +55,10 @@ public class SpielerStrafEreignisDto {
 
     public int getDauer() {
         return dauer;
+    }
+
+    @Override
+    public int compareTo(SpielerStrafEreignisDto o) {
+        return time - o.time;
     }
 }
