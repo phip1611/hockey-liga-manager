@@ -1,5 +1,6 @@
-<table class="table table-striped table-bordered table-hover">
-    <thead>
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Team</th>
@@ -12,19 +13,20 @@
             <th scope="col">GT</th>
             <th scope="col">Punkte</th>
         </tr>
-    </thead>
-    <tbody>
-    <tr th:each="entry: ${entries}">
-        <th scope="row" th:text="${entry.platz}"></th>
-        <td th:text="${entry.teamName}"></td>
-        <td th:text="${entry.anzahlSpiele}"></td>
-        <td th:text="${entry.anzahlSiege3P}"></td>
-        <td th:text="${entry.anzahlSiege2P}"></td>
-        <td th:text="${entry.anzahlNiederlagen1P}"></td>
-        <td th:text="${entry.anzahlNiederlagen0P}"></td>
-        <td th:text="${entry.tore}"></td>
-        <td th:text="${entry.gegentore}"></td>
-        <td th:text="${entry.punkte}"></td>
-    </tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <tr th:each="entry: ${entries}">
+            <th scope="row" th:text="${entry.platz}"></th>
+            <td th:text="${entry.teamName}"></td>
+            <td th:text="${entry.anzahlSpiele}"></td>
+            <td th:text="${entry.anzahlSiege3P}"></td>
+            <td th:text="${entry.anzahlSiege2P}"></td>
+            <td th:text="${entry.anzahlNiederlagen1P}"></td>
+            <td th:text="${entry.anzahlNiederlagen0P}"></td>
+            <td th:text="${entry.tore}"></td>
+            <td th:text="${entry.gegentore}"></td>
+            <td th:text="${entry.punkte}"></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>

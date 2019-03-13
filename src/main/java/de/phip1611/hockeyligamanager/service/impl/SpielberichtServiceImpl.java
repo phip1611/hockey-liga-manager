@@ -73,7 +73,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     @Override
     @Transactional(readOnly = true)
     public List<SpielberichtDto> findAll() {
-        return this.repo.findAll().stream().map(Spielbericht::toDto).collect(toList());
+        return this.repo.findAll().stream().map(Spielbericht::toDto).sorted().collect(toList());
     }
 
     @Override

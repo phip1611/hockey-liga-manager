@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 @Entity
 public class Spielbericht {
 
-    private static int REGULAR_GAME_DURATION = 60;
+    public static int REGULAR_GAME_DURATION = 60;
 
     @Id
     private UUID id;
@@ -109,22 +109,13 @@ public class Spielbericht {
 
     public boolean finishedInRegularTime() {
         var x = this.getGastSpielerTorEreignisList().stream()
-                .filter(a -> a.getTime() >= REGULAR_GAME_DURATION)
+                .filter(SpielerTorEreignis::isInOverTime)
                 .findAny();
         if (x.isPresent()) return false;
         x = this.getHeimSpielerTorEreignisList().stream()
-                .filter(a -> a.getTime() >= REGULAR_GAME_DURATION)
+                .filter(SpielerTorEreignis::isInOverTime)
                 .findAny();
         return x.isEmpty();
-    }
-
-    /**
-     * Gibt an ob in der regulären Spielzeit ein Unentschieden erzielt wurde.
-     * Dann kriegt jedes Team schon mal einen Punkt.
-     */
-    public boolean isUnentschieden() {
-        return this.finishedInRegularTime() &&
-                this.getHeimSpielerTorEreignisList().size() == this.getGastSpielerTorEreignisList().size();
     }
 
     /**
@@ -135,6 +126,32 @@ public class Spielbericht {
         return this.finishedInRegularTime()
                 && this.getHeimSpielerTorEreignisList().size() != this.getGastSpielerTorEreignisList().size();
     }
+
+    public int getHeimToreCountInRegTime() {
+        return (int) this.heimSpielerTorEreignisList.stream()
+                .filter(SpielerTorEreignis::isInRegTime)
+                .count();
+    }
+
+    public int getGastToreCountInRegTime() {
+        return (int) this.gastSpielerTorEreignisList.stream()
+                .filter(SpielerTorEreignis::isInRegTime)
+                .count();
+    }
+
+    public int getHeimToreCountInOverTime() {
+        return (int) this.heimSpielerTorEreignisList.stream()
+                .filter(SpielerTorEreignis::isInOverTime)
+                .count();
+    }
+
+    public int getGastToreCountInOverTime() {
+        return (int) this.gastSpielerTorEreignisList.stream()
+                .filter(SpielerTorEreignis::isInOverTime)
+                .count();
+    }
+
+
 
     // nur "primitive/triviale getter"
 

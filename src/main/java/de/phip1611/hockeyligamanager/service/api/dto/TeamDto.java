@@ -17,7 +17,7 @@ import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
-public class TeamDto {
+public class TeamDto implements Comparable<TeamDto> {
 
     private UUID id;
 
@@ -45,6 +45,11 @@ public class TeamDto {
 
     public List<SpielerDto> getSpieler() {
         return spieler;
+    }
+
+    @Override
+    public int compareTo(TeamDto o) {
+        return name.compareTo(o.name);
     }
 
     private class SpielerDto extends de.phip1611.hockeyligamanager.service.api.dto.SpielerDto {

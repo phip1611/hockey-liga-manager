@@ -1,1 +1,18 @@
-teams overview
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Teamname</th>
+            <th scope="col"># Spieler</th>
+            <th scope="col">Aktion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="team: ${teams}">
+            <td th:text="${team.name}"></td>
+            <td th:text="${team.spieler.size()}"></td>
+            <td><a th:href="${'/team-bearbeiten/' + team.id}">bearbeiten</a></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>

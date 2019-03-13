@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
+import static de.phip1611.hockeyligamanager.domain.Spielbericht.REGULAR_GAME_DURATION;
+
 @Entity
 public class SpielerTorEreignis {
 
@@ -76,6 +78,15 @@ public class SpielerTorEreignis {
 
     public Spieler getSecondAssist() {
         return secondAssist;
+    }
+
+    public boolean isInRegTime() {
+        return this.time < REGULAR_GAME_DURATION;
+    }
+
+    // Overtime oder Penaltiy Time, egal, müssen wir nicht genau unterscheiden
+    public boolean isInOverTime() {
+        return !this.isInRegTime();
     }
 
     public SpielerTorEreignisDto toDto() {

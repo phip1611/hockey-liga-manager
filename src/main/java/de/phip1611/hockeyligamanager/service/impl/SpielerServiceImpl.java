@@ -56,7 +56,7 @@ public class SpielerServiceImpl implements SpielerService {
     @Override
     @Transactional(readOnly = true)
     public List<SpielerDto> findAll() {
-        return this.repo.findAll().stream().map(Spieler::toDto).collect(toList());
+        return this.repo.findAll().stream().map(Spieler::toDto).sorted().collect(toList());
     }
 
     @Override

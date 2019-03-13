@@ -4,7 +4,7 @@ import de.phip1611.hockeyligamanager.domain.Spieler;
 
 import java.util.UUID;
 
-public class SpielerDto {
+public class SpielerDto implements Comparable<SpielerDto> {
 
     private UUID id;
 
@@ -37,4 +37,13 @@ public class SpielerDto {
         return teamName;
     }
 
+    @Override
+    public int compareTo(SpielerDto o) {
+        var a = nachname.compareTo(o.nachname);
+        if (a == 0) {
+            return vorname.compareTo(o.vorname);
+        } else {
+            return a;
+        }
+    }
 }

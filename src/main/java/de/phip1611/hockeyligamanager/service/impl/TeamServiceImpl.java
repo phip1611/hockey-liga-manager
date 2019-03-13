@@ -66,7 +66,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional(readOnly = true)
     public List<TeamDto> findAll() {
-        return this.repo.findAll().stream().map(Team::toDto).collect(toList());
+        return this.repo.findAll().stream().map(Team::toDto).sorted().collect(toList());
     }
 
     @Override

@@ -38,6 +38,14 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
 
     private LocalDateTime begin;
 
+    private int heimToreCountInRegTime;
+
+    private int gastToreCountInRegTime;
+
+    private int heimToreCountInOverTime;
+
+    private int gastToreCountInOverTime;
+
     private List<SpielerTorEreignisDto> heimSpielerTorEreignisList = new ArrayList<>();
 
     private List<SpielerStrafEreignisDto> heimSpielerStrafEreignisList = new ArrayList<>();
@@ -56,6 +64,12 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         this.zuschauer = spielbericht.getZuschauer();
         this.ort = spielbericht.getOrt();
         this.begin = spielbericht.getBegin();
+
+        this.heimToreCountInRegTime = spielbericht.getHeimToreCountInRegTime();
+        this.gastToreCountInRegTime = spielbericht.getGastToreCountInRegTime();
+        this.heimToreCountInOverTime = spielbericht.getHeimToreCountInOverTime();
+        this.gastToreCountInOverTime = spielbericht.getGastToreCountInOverTime();
+
         this.heimSpielerStrafEreignisList = spielbericht.getHeimSpielerStrafEreignisList().stream()
                 .map(SpielerStrafEreignis::toDto).collect(toList());
         this.heimSpielerTorEreignisList = spielbericht.getHeimSpielerTorEreignisList().stream()
@@ -64,6 +78,19 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
                 .map(SpielerStrafEreignis::toDto).collect(toList());
         this.gastSpielerTorEreignisList = spielbericht.getGastSpielerTorEreignisList().stream()
                 .map(SpielerTorEreignis::toDto).collect(toList());
+    }
+
+    // gibt den formatierten Ergebnisstring zurück
+    public String getErgebnisString() {
+        var heimtore = heimToreCountInRegTime + heimToreCountInOverTime;
+        var gasttore = gastToreCountInRegTime + gastToreCountInOverTime;
+        var str =  heimToreCountInRegTime + ":" + gastToreCountInRegTime;
+        if (heimToreCountInOverTime + gastToreCountInOverTime == 0) {
+            str += " (-:-)";
+        } else {
+            str += " (" + heimtore + ":" + gasttore + ")";
+        }
+        return str;
     }
 
     public UUID getId() {
@@ -118,8 +145,24 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         return heimSpielerStrafEreignisList;
     }
 
+    public int getHeimToreCountInRegTime() {
+        return heimToreCountInRegTime;
+    }
+
+    public int getGastToreCountInRegTime() {
+        return gastToreCountInRegTime;
+    }
+
+    public int getHeimToreCountInOverTime() {
+        return heimToreCountInOverTime;
+    }
+
+    public int getGastToreCountInOverTime() {
+        return gastToreCountInOverTime;
+    }
+
     @Override
     public int compareTo(SpielberichtDto o) {
-        return begin.compareTo(o.begin);
+        return (begin != null && o.begin != null) ? begin.compareTo(o.begin) : 0;
     }
 }

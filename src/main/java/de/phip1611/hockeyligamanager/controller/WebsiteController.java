@@ -13,6 +13,9 @@ import de.phip1611.hockeyligamanager.service.api.TeamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.UUID;
 
 @Controller
 public class WebsiteController {
@@ -46,17 +49,34 @@ public class WebsiteController {
     @GetMapping("spieler")
     public String teams(Model model) {
         model.addAttribute("page", "spieler-overview");
+        model.addAttribute("spielerList", spielerService.findAll());
         return "index";
     }
 
     @GetMapping("teams")
     public String spieler(Model model) {
         model.addAttribute("page", "teams-overview");
+        model.addAttribute("teams", teamService.findAll());
+        return "index";
+    }
+
+    @GetMapping("team-bearbeiten/{id}")
+    public String teamBearbeiten(Model model,
+                                 @PathVariable(name = "id") UUID id) {
+        model.addAttribute("page", "team-bearbeiten");
+        return "index";
+    }
+
+    @GetMapping("spieler-bearbeiten/{id}")
+    public String spielerBearbeiten(Model model,
+                                    @PathVariable(name = "id") UUID id) {
+        model.addAttribute("page", "spieler-bearbeiten");
         return "index";
     }
 
     @GetMapping("spielberichte")
     public String spielberichte(Model model) {
+        model.addAttribute("berichte", spielberichtService.findAll());
         model.addAttribute("page", "spielberichte-overview");
         return "index";
     }

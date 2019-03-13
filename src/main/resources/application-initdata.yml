@@ -69,8 +69,11 @@ initdata:
           schuetzeId: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
           firstAssistId: 47a56f72-8491-4548-be7a-e8b29a8863fe
     - # 2 Punkte Sieg für Team 2, 1 Punkt Niederlage für Team 3
+      id: 76c519aa-d967-48ca-a76d-f2a015daa2f3
       teamHeimId: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
       teamGastId: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
+      ort: Bautzen Hockey Arena
+      beginTimeString: "2019-02-28T18:00"
       heimSpielerTorEreignisList:
         - time: 1
           schuetzeId: 47a56f72-8491-4548-be7a-e8b29a8863fe
@@ -82,6 +85,9 @@ initdata:
         - time: 16
           schuetzeId: b6ef7515-2dcc-425b-a3d9-ce931743f444
     - # 3 Punkt Sieg für Team 3
+      id: 590eb74b-8bcd-4155-a46e-148d8025f0af
+      ort: Arena Zwickau
+      beginTimeString: "2019-03-12T18:30"
       teamHeimId: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
       teamGastId: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
       heimSpielerTorEreignisList:
