@@ -13,19 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TeamForm {
+public class TeamAndSpielerForm {
 
     private UUID id;
 
     private String name;
 
-    private List<UUID> spielerIdList = new ArrayList<>();
+    private List<SpielerForm> spieler = new ArrayList<>();
 
     public UUID getId() {
         return id;
     }
 
-    public TeamForm setId(UUID id) {
+    public TeamAndSpielerForm setId(UUID id) {
         this.id = id;
         return this;
     }
@@ -34,18 +34,17 @@ public class TeamForm {
         return name;
     }
 
-    public TeamForm setName(String name) {
+    public TeamAndSpielerForm setName(String name) {
         this.name = name;
         return this;
     }
 
-    public List<UUID> getSpielerIdList() {
-        return spielerIdList;
+    public List<SpielerForm> getSpieler() {
+        return spieler;
     }
 
-    public TeamForm setSpielerIdList(List<UUID> spielerIdList) {
-        this.spielerIdList = spielerIdList;
-        return this;
+    public void setSpieler(List<SpielerForm> spieler) {
+        this.spieler = spieler;
     }
 
     public Team build() {

@@ -8,8 +8,7 @@
 package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
-import de.phip1611.hockeyligamanager.form.SpielerForm;
-import de.phip1611.hockeyligamanager.form.TeamForm;
+import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -19,26 +18,16 @@ import java.util.List;
 @ConfigurationProperties(prefix = "initdata")
 public class InitDataHolder {
 
-    private List<TeamForm> teams;
-
-    private List<SpielerForm> spieler;
+    private List<TeamAndSpielerForm> teams;
 
     private List<SpielberichtForm> spielberichte;
 
-    public List<TeamForm> getTeams() {
+    public List<TeamAndSpielerForm> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<TeamForm> teams) {
+    public void setTeams(List<TeamAndSpielerForm> teams) {
         this.teams = teams;
-    }
-
-    public List<SpielerForm> getSpieler() {
-        return spieler;
-    }
-
-    public void setSpieler(List<SpielerForm> spieler) {
-        this.spieler = spieler;
     }
 
     public List<SpielberichtForm> getSpielberichte() {

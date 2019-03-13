@@ -49,7 +49,7 @@ public class SpielerStrafEreignis {
         this.dauer = form.getDauer();
         this.rv = form.getRv();
         this.time = form.getTime();
-        this.spieler = spielerFinder.apply(form.getSpielerId()).get();
+        this.spieler = spielerFinder.apply(form.getSpielerId()).orElseThrow(() -> new IllegalArgumentException("An einem Strafereignis muss ein valider Spieler hängen!"));
         return this;
     }
 

@@ -7,7 +7,7 @@
  */
 package de.phip1611.hockeyligamanager.domain;
 
-import de.phip1611.hockeyligamanager.form.TeamForm;
+import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
 import de.phip1611.hockeyligamanager.service.api.dto.TeamDto;
 
 import javax.persistence.*;
@@ -32,12 +32,12 @@ public class Team {
         /* hibernate default constructor */
     }
 
-    public Team(TeamForm form) {
+    public Team(TeamAndSpielerForm form) {
         this.id = form.getId() == null ? UUID.randomUUID() : form.getId();
         this.update(form);
     }
 
-    public Team update(TeamForm form) {
+    public Team update(TeamAndSpielerForm form) {
         this.name = form.getName();
         return this;
     }

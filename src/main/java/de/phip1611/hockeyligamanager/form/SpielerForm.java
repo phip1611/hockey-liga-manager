@@ -1,3 +1,10 @@
+/*
+   Copyright 2019 Philipp Schuster
+
+   Web:      phip1611.de
+   E-Mail:   philipp.schuster@phip1611.de
+   Twitter:  @phip1611
+ */
 package de.phip1611.hockeyligamanager.form;
 
 import de.phip1611.hockeyligamanager.domain.Spieler;
@@ -16,27 +23,24 @@ public class SpielerForm {
         return id;
     }
 
-    public SpielerForm setId(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
-        return this;
     }
 
     public String getVorname() {
         return vorname;
     }
 
-    public SpielerForm setVorname(String vorname) {
+    public void setVorname(String vorname) {
         this.vorname = vorname;
-        return this;
     }
 
     public String getNachname() {
         return nachname;
     }
 
-    public SpielerForm setNachname(String nachname) {
+    public void setNachname(String nachname) {
         this.nachname = nachname;
-        return this;
     }
 
     public Spieler build() {

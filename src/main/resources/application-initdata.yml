@@ -1,46 +1,34 @@
 initdata:
-  spieler:
-    - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
-      vorname: Spieler 1
-      nachname: In Team 1
-    - id: 7007b773-2f95-42a4-a3df-b6892551c362
-      vorname: Spieler 2
-      nachname: In Team 1
-    - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
-      vorname: Spieler 3
-      nachname: In Team 1
-
-    - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
-      vorname: Spieler 4
-      nachname: In Team 2
-    - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
-      vorname: Spieler 5
-      nachname: In Team 2
-    - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
-      vorname: Spieler 6
-      nachname: In Team 3
-    - id: c1204af8-848d-4118-a737-103f1bebcc68
-      vorname: Spieler 7
-      nachname: In keinem Team
-
   teams:
-    - name: Team1
-      id: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
-      spielerIdList:
-        - a2a7c774-0c88-4baf-8845-b6222ebe1b71
-        - 7007b773-2f95-42a4-a3df-b6892551c362
-        - f971dd81-7590-4a89-9e55-c64a15cdcbd5
-    - name: Team2
-      id: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
-      spielerIdList:
-        - 47a56f72-8491-4548-be7a-e8b29a8863fe
-        - fc4cf4f3-1458-44f8-94fd-b6f1829ada91
-    - name: Team3
-      id: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
-      spielerIdList:
-        - b6ef7515-2dcc-425b-a3d9-ce931743f444
-    - name: Team4
-      id: 71462616-8192-4e27-a39c-d6ee8afd8757
+    - id: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
+      name: Dresdens bestes Eisteam, yo
+      spieler:
+        - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
+          vorname: Spieler 1
+          nachname: In Team 1
+        - id: 7007b773-2f95-42a4-a3df-b6892551c362
+          vorname: Spieler 2
+          nachname: In Team 1
+        - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
+          vorname: Spieler 3
+          nachname: In Team 1
+    - id: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
+      name: Team2
+      spieler:
+        - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
+          vorname: Spieler 4
+          nachname: In Team 2
+        - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
+          vorname: Spieler 5
+          nachname: In Team 2
+    - id: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
+      name: Team3
+      spieler:
+        - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
+          vorname: Spieler 6
+          nachname: In Team 3
+    - id: 71462616-8192-4e27-a39c-d6ee8afd8757
+      name: Team4
 
   spielberichte:
     - # 3 Punkte Sieg
