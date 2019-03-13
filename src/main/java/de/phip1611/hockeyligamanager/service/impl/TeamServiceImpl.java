@@ -49,26 +49,23 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional
     public TeamDto createOrUpdate(TeamAndSpielerForm form) {
-        // alle Spieler die eine ID haben, aber nicht existieren in der DB
-        // (bspw. bei Import der Initdaten) nun anlegen
+        // Alle Spieler die eine ID haben werden so
+        //  a) erstellt  (sofern noch nicht in DB)
+        // oder b) geupdated
         form.getSpieler().stream()
                 .filter(x -> x.getId() != null)
-                .filter(x -> !spielerRepo.existsById(x.getId()))
                 .forEach(spielerService::createOrUpdate);
 
-        // Nach dem wir sichergestellt haben, dass alle mit IDs existieren
-        // speichern wir uns nun die IDs
+        // Nach dem wir sichergestellt haben, dass alle mit IDs auch in der DBexistieren
+        // speichern wir uns nun die IDs in einer Liste für die spätere Verwendung
         var teamSpielerIds = form.getSpieler().stream()
                 .filter(x -> x.getId() != null)
                 .map(SpielerForm::getId)
                 .collect(toList());
 
-        // Spieler die noch keine ID haben speichern
-        var spielerDieNochAngelegtWerdenMuessen = form.getSpieler().stream()
+        // Spieler die noch keine ID haben speichern (wodurch sie eine ID kriegen)
+        var angelegteSpielerIds = form.getSpieler().stream()
                 .filter(x -> x.getId() == null)
-                .collect(toList());
-        // diese nun anlegen
-        var angelegteSpielerIds = spielerDieNochAngelegtWerdenMuessen.stream()
                 .map(spielerService::createOrUpdate)
                 .map(SpielerDto::getId)
                 .collect(toList());
