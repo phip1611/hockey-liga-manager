@@ -13,6 +13,7 @@
                 <th scope="col">Nachname</th>
                 <th scope="col">Vorname</th>
                 <th scope="col">Nummer</th>
+                <th scope="col">Aktion</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                 <td th:text="${s.nachname}"></td>
                 <td th:text="${s.vorname}"></td>
                 <td th:text="${s.nummer}"></td>
+                <td><a th:href="${'/spieler/' + s.id} + '/delete'">Löschen</a></td>
             </tr>
             </tbody>
         </table>

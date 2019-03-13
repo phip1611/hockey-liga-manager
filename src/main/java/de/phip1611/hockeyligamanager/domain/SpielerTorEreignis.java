@@ -60,6 +60,18 @@ public class SpielerTorEreignis {
         return this;
     }
 
+    public void invalidateFirstAssist() {
+        this.firstAssist = null;
+    }
+
+    public void invalidateSchuetze() {
+        this.schuetze = null;
+    }
+
+    public void invalidateSecondAssist() {
+        this.firstAssist = null;
+    }
+
     public UUID getId() {
         return id;
     }

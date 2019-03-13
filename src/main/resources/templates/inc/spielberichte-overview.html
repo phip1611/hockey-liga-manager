@@ -19,7 +19,8 @@
             <td th:text="${bericht.ergebnisString}"></td>
             <td>
                 <a th:href="${'/spielberichte/' + bericht.id}">Details</a> |
-                <a th:href="${'/spielberichte/' + bericht.id} + '/edit'">Bearbeiten</a>
+                <a th:href="${'/spielberichte/' + bericht.id} + '/edit'">Bearbeiten</a> |
+                <a th:href="${'/spielberichte/' + bericht.id} + '/delete'">Löschen</a>
             </td>
         </tr>
         </tbody>

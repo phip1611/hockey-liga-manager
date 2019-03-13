@@ -11,10 +11,15 @@
         <tr th:each="team: ${teams}">
             <td th:text="${team.name}"></td>
             <td th:text="${team.spieler.size()}"></td>
-            <td><a th:href="${'/teams/' + team.id}">Details</a> |
-                <a th:href="${'/teams/' + team.id + '/edit'}">Bearbeiten</a></td>
+            <td>
+                <a th:href="${'/teams/' + team.id}">Details</a> |
+                <a th:href="${'/teams/' + team.id + '/edit'}">Bearbeiten</a> |
+                <a th:href="${'/teams/' + team.id} + '/delete'">Löschen</a>
+            </td>
         </tr>
         </tbody>
     </table>
+    (1) Du kannst keine Spieler löschen, wenn noch Tor- oder Straf-Ereignisse auf sie verweisen.<br/>
+    (2) Du kannst kein Team löschen, in dem Spieler sind, auf die (1) zutrifft.<br/>
     <a class="btn btn-primary" href="/teams/new">Team hinzufügen</a>
 </th:block>

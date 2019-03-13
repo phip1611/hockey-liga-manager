@@ -7,10 +7,13 @@
  */
 package de.phip1611.hockeyligamanager.repository;
 
+import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.SpielerStrafEreignis;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface SpielerStrafEreignisRepo extends JpaRepository<SpielerStrafEreignis, UUID> {
+    List<SpielerStrafEreignis> findAllBySpieler(Spieler spieler);
 }

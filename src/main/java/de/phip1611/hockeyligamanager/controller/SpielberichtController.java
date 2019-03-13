@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Controller
 public class SpielberichtController {
+
+    private Logger LOGGER = Logger.getLogger("SpielberichtController");
 
     private SpielberichtService spielberichtService;
 
@@ -75,10 +78,21 @@ public class SpielberichtController {
         return "index";
     }
 
+    @GetMapping("spielberichte/{id}/delete")
+    public String spielberichtEdit(@PathVariable("id") UUID id) {
+        spielberichtService.deleteById(id);
+        LOGGER.info("deleted spielbericht " + id);
+        return "redirect:/spielberichte";
+    }
+
     @GetMapping("spielberichte/new")
     public String spielberichteNew(Model model) {
-        model.addAttribute("form", new SpielberichtForm());
-        model.addAttribute("page", "spielbericht-edit");
+        var form = new SpielberichtForm();
+        form.addExtraFields();
+        model.addAttribute("form", form)
+                .addAttribute("teams", teamService.findAll())
+                .addAttribute("spieler", spielerService.findAll())
+                .addAttribute("page", "spielbericht-edit");
         return "index";
     }
 

@@ -8,8 +8,11 @@
 package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.domain.Spieler;
+import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
 import de.phip1611.hockeyligamanager.form.SpielerForm;
+import de.phip1611.hockeyligamanager.repository.SpielberichtRepo;
 import de.phip1611.hockeyligamanager.repository.SpielerRepo;
+import de.phip1611.hockeyligamanager.repository.SpielerTorEreignisRepo;
 import de.phip1611.hockeyligamanager.service.api.SpielerService;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,16 @@ public class SpielerServiceImpl implements SpielerService {
 
     private SpielerRepo repo;
 
-    public SpielerServiceImpl(SpielerRepo repo) {
+    private SpielerTorEreignisRepo spielerTorEreignisRepo;
+
+    private SpielberichtRepo spielberichtRepo;
+
+    public SpielerServiceImpl(SpielerRepo repo,
+                              SpielberichtRepo spielberichtRepo,
+                              SpielerTorEreignisRepo spielerTorEreignisRepo) {
         this.repo = repo;
+        this.spielerTorEreignisRepo = spielerTorEreignisRepo;
+        this.spielberichtRepo = spielberichtRepo;
     }
 
     @Override
@@ -60,7 +71,21 @@ public class SpielerServiceImpl implements SpielerService {
     }
 
     @Override
+    @Transactional
     public void deleteById(UUID id) {
+        var o = this.repo.findById(id);
+        if (o.isEmpty()) return;
+        var e = o.get();
+        // aus team entfernen
+        e.getTeam().removeSpieler(e);
+        // sich als second assist überall entfernen
+        this.spielerTorEreignisRepo.findAllBySecondAssist(e).forEach(SpielerTorEreignis::invalidateSecondAssist);
+        // sich als first assist überall entfernen
+        this.spielerTorEreignisRepo.findAllByFirstAssist(e).forEach(SpielerTorEreignis::invalidateFirstAssist);
+        // die Tore bleiben erhalten, müssen dann aber einem neuen Spieler zugrodnet werden
+        this.spielerTorEreignisRepo.findAllBySchuetze(e).forEach(SpielerTorEreignis::invalidateSchuetze);
+
+        // den Nutzer selbst löschen
         this.repo.deleteById(id);
     }
 }

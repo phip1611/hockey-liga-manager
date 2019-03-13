@@ -7,6 +7,7 @@
  */
 package de.phip1611.hockeyligamanager.service.impl;
 
+import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.Team;
 import de.phip1611.hockeyligamanager.form.SpielerForm;
 import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
@@ -109,6 +110,13 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional
     public void deleteById(UUID id) {
-        this.repo.deleteById(id);
+        var o = repo.findById(id);
+        if (o.isEmpty()) return;
+        var e = o.get();
+
+        var idsToDelete = e.getSpielerList().stream().map(Spieler::getId).collect(toList());
+        idsToDelete.forEach(i -> spielerService.deleteById(i));
+
+        repo.deleteById(id);
     }
 }

@@ -63,6 +63,12 @@ public class TeamController {
         return "index";
     }
 
+    @GetMapping("teams/{id}/delete")
+    public String teamDelete(@PathVariable(name = "id") UUID id) {
+        teamService.deleteById(id);
+        return "forward:/teams";
+    }
+
     @GetMapping("teams/new")
     public String teamNeu(Model model) {
         var form = new TeamAndSpielerForm();

@@ -72,6 +72,10 @@ public class Team {
         return this;
     }
 
+    public void removeSpieler(Spieler spieler) {
+        this.spielerList.remove(spieler);
+    }
+
     public UUID getId() {
         return id;
     }

@@ -62,6 +62,27 @@ public class SpielberichtForm implements Form {
     @NotNull
     private List<SpielerStrafEreignisForm> gastSpielerStrafEreignisList = new ArrayList<>();
 
+    public SpielberichtForm() {
+    }
+
+    public SpielberichtForm(Spielbericht entity) {
+        this.setId(entity.getId());
+        this.setTeamGastId(entity.getTeamGast().getId());
+        this.setTeamHeimId(entity.getTeamHeim().getId());
+        this.setSchiedsrichter1(entity.getSchiedsrichter1());
+        this.setSchiedsrichter2(entity.getSchiedsrichter2());
+        this.setZeitnehmer(entity.getZeitnehmer());
+        this.setZuschauer(entity.getZuschauer());
+        this.setOrt(entity.getOrt());
+        this.setBeginTimeString(entity.getBegin().toString());
+        this.setAnwesendeSpielerGast(entity.getAnwesendeSpielerGast().stream().map(Spieler::getId).collect(toList()));
+        this.setAnwesendeSpielerHeim(entity.getAnwesendeSpielerHeim().stream().map(Spieler::getId).collect(toList()));
+        this.setHeimSpielerTorEreignisList(entity.getHeimSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
+        this.setGastSpielerTorEreignisList(entity.getGastSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
+        this.setHeimSpielerStrafEreignisList(entity.getHeimSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
+        this.setGastSpielerStrafEreignisList(entity.getGastSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
+    }
+
     public UUID getId() {
         return id;
     }
