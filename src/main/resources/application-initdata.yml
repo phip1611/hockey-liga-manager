@@ -6,27 +6,33 @@ initdata:
         - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
           vorname: Spieler 1
           nachname: In Team 1
+          nummer: 22
         - id: 7007b773-2f95-42a4-a3df-b6892551c362
           vorname: Spieler 2
           nachname: In Team 1
+          nummer: 73
         - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
           vorname: Spieler 3
           nachname: In Team 1
+          nummer: 24
     - id: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
       name: Team2
       spieler:
         - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
           vorname: Spieler 4
           nachname: In Team 2
+          nummer: 9
         - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
           vorname: Spieler 5
           nachname: In Team 2
+          nummer: 26
     - id: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
       name: Team3
       spieler:
         - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
           vorname: Spieler 6
           nachname: In Team 3
+          nummer: 3
     - id: 71462616-8192-4e27-a39c-d6ee8afd8757
       name: Team4
 

@@ -52,31 +52,26 @@ public class WebsiteController {
         return "index";
     }
 
-    @GetMapping("spieler")
-    public String teams(Model model) {
-        model.addAttribute("page", "spieler-overview");
-        model.addAttribute("spielerList", spielerService.findAll());
-        return "index";
-    }
-
     @GetMapping("teams")
-    public String spieler(Model model) {
+    public String teams(Model model) {
         model.addAttribute("page", "teams-overview");
         model.addAttribute("teams", teamService.findAll());
         return "index";
     }
 
-    @GetMapping("team-bearbeiten/{id}")
-    public String teamBearbeiten(Model model,
-                                 @PathVariable(name = "id") UUID id) {
-        model.addAttribute("page", "team-bearbeiten");
+    @GetMapping("teams/{id}")
+    public String teamDetail(Model model,
+                             @PathVariable(name = "id") UUID id) {
+        model.addAttribute("team", teamService.findById(id));
+        model.addAttribute("page", "team-detail");
         return "index";
     }
 
-    @GetMapping("spieler-bearbeiten/{id}")
-    public String spielerBearbeiten(Model model,
-                                    @PathVariable(name = "id") UUID id) {
-        model.addAttribute("page", "spieler-bearbeiten");
+    @GetMapping("teams/{id}/edit")
+    public String teamBearbeiten(Model model,
+                                 @PathVariable(name = "id") UUID id) {
+        model.addAttribute("team", teamService.findById(id));
+        model.addAttribute("page", "team-edit");
         return "index";
     }
 

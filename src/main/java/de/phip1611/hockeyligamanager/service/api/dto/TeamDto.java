@@ -31,6 +31,7 @@ public class TeamDto implements Comparable<TeamDto> {
         this.spieler.addAll(
                 team.getSpielerList().stream()
                         .map(SpielerDto::new)
+                        .sorted()
                         .collect(toList())
         );
     }

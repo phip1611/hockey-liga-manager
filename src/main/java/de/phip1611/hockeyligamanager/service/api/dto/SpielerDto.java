@@ -14,10 +14,13 @@ public class SpielerDto implements Comparable<SpielerDto> {
 
     private String teamName;
 
+    private int nummer;
+
     public SpielerDto(Spieler spieler) {
         this.id       = spieler.getId();
         this.vorname  = spieler.getVorname();
         this.nachname = spieler.getNachname();
+        this.nummer   = spieler.getNummer();
         this.teamName = spieler.getTeam() != null ? spieler.getTeam().getName() : null;
     }
 
@@ -35,6 +38,10 @@ public class SpielerDto implements Comparable<SpielerDto> {
 
     public String getTeamName() {
         return teamName;
+    }
+
+    public int getNummer() {
+        return nummer;
     }
 
     @Override

@@ -10,6 +10,8 @@ package de.phip1611.hockeyligamanager.form;
 import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -18,12 +20,16 @@ public class SpielerTorEreignisForm {
     private UUID id;
 
     // Spielminute >= 0
+    @Min(0)
     private int time;
 
+    @NotNull
     private UUID schuetzeId;
 
+    @NotNull
     private UUID firstAssistId;
 
+    @NotNull
     private UUID secondAssistId;
 
     public UUID getId() {

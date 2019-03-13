@@ -9,6 +9,8 @@ package de.phip1611.hockeyligamanager.form;
 
 import de.phip1611.hockeyligamanager.domain.Team;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,8 +19,10 @@ public class TeamAndSpielerForm {
 
     private UUID id;
 
+    @NotEmpty
     private String name;
 
+    @NotNull
     private List<SpielerForm> spieler = new ArrayList<>();
 
     public UUID getId() {

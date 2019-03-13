@@ -11,6 +11,8 @@ import de.phip1611.hockeyligamanager.domain.Spielbericht;
 import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.Team;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +23,10 @@ public class SpielberichtForm {
 
     private UUID id;
 
+    @NotNull
     private UUID teamHeimId;
 
+    @NotNull
     private UUID teamGastId;
 
     private String Schiedsrichter1;
@@ -35,18 +39,25 @@ public class SpielberichtForm {
 
     private String ort;
 
+    @NotNull
     private String beginTimeString;
 
+    @NotEmpty
     private List<UUID> anwesendeSpielerHeim = new ArrayList<>();
 
+    @NotEmpty
     private List<UUID> anwesendeSpielerGast = new ArrayList<>();
 
+    @NotNull
     private List<SpielerTorEreignisForm> heimSpielerTorEreignisList = new ArrayList<>();
 
+    @NotNull
     private List<SpielerStrafEreignisForm> heimSpielerStrafEreignisList = new ArrayList<>();
 
+    @NotNull
     private List<SpielerTorEreignisForm> gastSpielerTorEreignisList = new ArrayList<>();
 
+    @NotNull
     private List<SpielerStrafEreignisForm> gastSpielerStrafEreignisList = new ArrayList<>();
 
     public UUID getId() {

@@ -10,6 +10,8 @@ package de.phip1611.hockeyligamanager.form;
 import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.SpielerStrafEreignis;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -19,14 +21,18 @@ public class SpielerStrafEreignisForm {
     private UUID id;
 
     // Spielminute >= 0
+    @Min(0)
     private int time;
 
     // Nummer des Regelverstoßes
+    @Min(0)
     private int rv;
 
+    @NotNull
     private UUID spielerId;
 
     // dauer der Strafe in Minuten
+    @Min(0)
     private int dauer;
 
     public UUID getId() {

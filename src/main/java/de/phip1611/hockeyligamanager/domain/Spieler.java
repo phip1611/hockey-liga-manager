@@ -3,10 +3,7 @@ package de.phip1611.hockeyligamanager.domain;
 import de.phip1611.hockeyligamanager.form.SpielerForm;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,6 +16,8 @@ public class Spieler {
     private String vorname;
 
     private String nachname;
+
+    private int nummer;
 
     @JoinColumn()
     @ManyToOne
@@ -36,6 +35,7 @@ public class Spieler {
     public Spieler update(SpielerForm form) {
         this.vorname  = form.getVorname();
         this.nachname = form.getNachname();
+        this.nummer   = form.getNummer();
         // aktualisiert NICHT das TEAM
         // Das Team verwaltet selbst, welche Spieler zu ihm gehören und macht
         // das den Spielern bekannt
@@ -66,8 +66,17 @@ public class Spieler {
         return team;
     }
 
+    public int getNummer() {
+        return nummer;
+    }
+
+    /**
+     * Gibt den vollen Namen + die Nummer in Klammern zurück.
+     * Das ist die Repräsentation, wie wir sie im Template
+     * benötigen.
+     */
     public String getFullName() {
-        return vorname + " " + nachname;
+        return vorname + " " + nachname + " (" + nummer + ")";
     }
 
     @Override

@@ -26,8 +26,7 @@ public class SpielerTorEreignisDto {
     public SpielerTorEreignisDto(SpielerTorEreignis spielerTorEreignis) {
         this.id = spielerTorEreignis.getId();
         this.time = spielerTorEreignis.getTime();
-        this.schuetzeName = spielerTorEreignis.getSchuetze().getVorname() + " "
-                + spielerTorEreignis.getSchuetze().getNachname();
+        this.schuetzeName = spielerTorEreignis.getSchuetze().getFullName();
         this.firstAssistName = spielerTorEreignis.getFirstAssist() != null ?
                 spielerTorEreignis.getFirstAssist().getFullName() : null;
         this.secondAssistName = spielerTorEreignis.getSecondAssist() != null ?
