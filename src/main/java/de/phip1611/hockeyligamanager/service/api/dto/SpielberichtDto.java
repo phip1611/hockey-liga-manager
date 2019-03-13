@@ -8,6 +8,7 @@
 package de.phip1611.hockeyligamanager.service.api.dto;
 
 import de.phip1611.hockeyligamanager.domain.Spielbericht;
+import de.phip1611.hockeyligamanager.domain.Spieler;
 import de.phip1611.hockeyligamanager.domain.SpielerStrafEreignis;
 import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
 
@@ -46,6 +47,10 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
 
     private int gastToreCountInOverTime;
 
+    private List<String> anwesendeSpielerHeim = new ArrayList<>();
+
+    private List<String> anwesendeSpielerGast = new ArrayList<>();
+
     private List<SpielerTorEreignisDto> heimSpielerTorEreignisList = new ArrayList<>();
 
     private List<SpielerStrafEreignisDto> heimSpielerStrafEreignisList = new ArrayList<>();
@@ -69,6 +74,19 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         this.gastToreCountInRegTime = spielbericht.getGastToreCountInRegTime();
         this.heimToreCountInOverTime = spielbericht.getHeimToreCountInOverTime();
         this.gastToreCountInOverTime = spielbericht.getGastToreCountInOverTime();
+
+        this.anwesendeSpielerHeim.addAll(
+                spielbericht.getAnwesendeSpielerHeim().stream()
+                        .map(Spieler::getFullName)
+                        .sorted()
+                        .collect(toList())
+        );
+        this.anwesendeSpielerGast.addAll(
+                spielbericht.getAnwesendeSpielerGast().stream()
+                        .map(Spieler::getFullName)
+                        .sorted()
+                        .collect(toList())
+        );
 
         this.heimSpielerStrafEreignisList = spielbericht.getHeimSpielerStrafEreignisList().stream()
                 .map(SpielerStrafEreignis::toDto).collect(toList());
@@ -159,6 +177,14 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
 
     public int getGastToreCountInOverTime() {
         return gastToreCountInOverTime;
+    }
+
+    public List<String> getAnwesendeSpielerHeim() {
+        return anwesendeSpielerHeim;
+    }
+
+    public List<String> getAnwesendeSpielerGast() {
+        return anwesendeSpielerGast;
     }
 
     @Override

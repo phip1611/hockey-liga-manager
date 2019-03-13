@@ -37,6 +37,10 @@ public class SpielberichtForm {
 
     private String beginTimeString;
 
+    private List<UUID> anwesendeSpielerHeim = new ArrayList<>();
+
+    private List<UUID> anwesendeSpielerGast = new ArrayList<>();
+
     private List<SpielerTorEreignisForm> heimSpielerTorEreignisList = new ArrayList<>();
 
     private List<SpielerStrafEreignisForm> heimSpielerStrafEreignisList = new ArrayList<>();
@@ -150,6 +154,22 @@ public class SpielberichtForm {
 
     public void setGastSpielerStrafEreignisList(List<SpielerStrafEreignisForm> gastSpielerStrafEreignisList) {
         this.gastSpielerStrafEreignisList = gastSpielerStrafEreignisList;
+    }
+
+    public List<UUID> getAnwesendeSpielerHeim() {
+        return anwesendeSpielerHeim;
+    }
+
+    public void setAnwesendeSpielerHeim(List<UUID> anwesendeSpielerHeim) {
+        this.anwesendeSpielerHeim = anwesendeSpielerHeim;
+    }
+
+    public List<UUID> getAnwesendeSpielerGast() {
+        return anwesendeSpielerGast;
+    }
+
+    public void setAnwesendeSpielerGast(List<UUID> anwesendeSpielerGast) {
+        this.anwesendeSpielerGast = anwesendeSpielerGast;
     }
 
     public Spielbericht build(Function<UUID, Optional<Team>> teamFinder, Function<UUID, Optional<Spieler>> spielerFinder) {

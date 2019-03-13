@@ -33,6 +33,12 @@ public class Spielbericht {
     @ManyToOne
     private Team teamGast;
 
+    @ManyToMany
+    private List<Spieler> anwesendeSpielerHeim = new ArrayList<>();
+
+    @ManyToMany
+    private List<Spieler> anwesendeSpielerGast = new ArrayList<>();
+
     private String schiedsrichter1;
 
     private String schiedsrichter2;
@@ -93,6 +99,24 @@ public class Spielbericht {
         var neueGastSpielerTorEreignisse = form.getGastSpielerTorEreignisList().stream()
                 .map(x -> x.build(spielerFinder))
                 .collect(toList());
+
+        // vermutlich ineffizient, aber egal...
+        this.anwesendeSpielerGast.clear();
+        this.anwesendeSpielerHeim.clear();
+        this.anwesendeSpielerHeim.addAll(
+                form.getAnwesendeSpielerHeim().stream()
+                        .map(spielerFinder)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .collect(toList())
+        );
+        this.anwesendeSpielerGast.addAll(
+                form.getAnwesendeSpielerGast().stream()
+                        .map(spielerFinder)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .collect(toList())
+        );
 
         // vermutlich ineffizient, aber egal...
         this.heimSpielerStrafEreignisList.clear();
@@ -159,12 +183,18 @@ public class Spielbericht {
                 .count();
     }
 
-
-
     // nur "primitive/triviale getter"
 
     public UUID getId() {
         return id;
+    }
+
+    public List<Spieler> getAnwesendeSpielerHeim() {
+        return anwesendeSpielerHeim;
+    }
+
+    public List<Spieler> getAnwesendeSpielerGast() {
+        return anwesendeSpielerGast;
     }
 
     public Team getTeamHeim() {
