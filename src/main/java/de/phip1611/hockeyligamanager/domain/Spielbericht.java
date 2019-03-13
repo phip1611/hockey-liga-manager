@@ -12,10 +12,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
@@ -48,16 +45,16 @@ public class Spielbericht {
 
     private LocalDateTime begin;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpielerTorEreignis> heimSpielerTorEreignisList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpielerStrafEreignis> heimSpielerStrafEreignisList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpielerTorEreignis> gastSpielerTorEreignisList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpielerStrafEreignis> gastSpielerStrafEreignisList = new ArrayList<>();
 
     private Spielbericht() {
@@ -83,19 +80,30 @@ public class Spielbericht {
         this.ort = form.getOrt();
         this.begin = form.getBeginTimeString() != null ? LocalDateTime.parse(form.getBeginTimeString()) : null;
 
-        this.heimSpielerStrafEreignisList = form.getHeimSpielerStrafEreignisList().stream()
+        var neueHeimSpielerStrafEreignisse = form.getHeimSpielerStrafEreignisList().stream()
                 .map(x -> x.build(spielerFinder))
                 .collect(toList());
-        this.heimSpielerTorEreignisList = form.getHeimSpielerTorEreignisList().stream()
+        var neueHeimSpielerTorEreignisse = form.getHeimSpielerTorEreignisList().stream()
                 .map(x -> x.build(spielerFinder))
                 .collect(toList());
 
-        this.gastSpielerStrafEreignisList = form.getGastSpielerStrafEreignisList().stream()
+        var neueGastSpielerStrafEreignisse = form.getGastSpielerStrafEreignisList().stream()
                 .map(x -> x.build(spielerFinder))
                 .collect(toList());
-        this.gastSpielerTorEreignisList = form.getGastSpielerTorEreignisList().stream()
+        var neueGastSpielerTorEreignisse = form.getGastSpielerTorEreignisList().stream()
                 .map(x -> x.build(spielerFinder))
                 .collect(toList());
+
+        // vermutlich ineffizient, aber egal...
+        this.heimSpielerStrafEreignisList.clear();
+        this.heimSpielerTorEreignisList.clear();
+        this.gastSpielerStrafEreignisList.clear();
+        this.gastSpielerTorEreignisList.clear();
+
+        this.heimSpielerStrafEreignisList.addAll(neueHeimSpielerStrafEreignisse);
+        this.heimSpielerTorEreignisList.addAll(neueHeimSpielerTorEreignisse);
+        this.gastSpielerStrafEreignisList.addAll(neueGastSpielerStrafEreignisse);
+        this.gastSpielerTorEreignisList.addAll(neueGastSpielerTorEreignisse);
 
         return this;
     }

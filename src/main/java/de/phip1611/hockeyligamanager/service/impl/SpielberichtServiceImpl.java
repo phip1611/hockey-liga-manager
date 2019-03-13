@@ -7,15 +7,12 @@
  */
 package de.phip1611.hockeyligamanager.service.impl;
 
-import de.phip1611.hockeyligamanager.domain.Spielbericht;
-import de.phip1611.hockeyligamanager.domain.SpielerTorEreignis;
-import de.phip1611.hockeyligamanager.domain.Team;
+import de.phip1611.hockeyligamanager.domain.*;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
-import de.phip1611.hockeyligamanager.repository.SpielberichtRepo;
-import de.phip1611.hockeyligamanager.repository.SpielerRepo;
-import de.phip1611.hockeyligamanager.repository.TeamRepo;
+import de.phip1611.hockeyligamanager.repository.*;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.dto.LigatabellenEintragDto;
+import de.phip1611.hockeyligamanager.service.api.dto.SchuetzenTabellenEintragDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,12 +35,20 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     private SpielerRepo spielerRepo;
 
+    private SpielerTorEreignisRepo spielerTorEreignisRepo;
+
+    private SpielerStrafEreignisRepo spielerStrafEreignisRepo;
+
     public SpielberichtServiceImpl(SpielberichtRepo repo,
                                    TeamRepo teamRepo,
-                                   SpielerRepo spielerRepo) {
+                                   SpielerRepo spielerRepo,
+                                   SpielerTorEreignisRepo spielerTorEreignisRepo,
+                                   SpielerStrafEreignisRepo spielerStrafEreignisRepo) {
         this.repo = repo;
         this.teamRepo = teamRepo;
         this.spielerRepo = spielerRepo;
+        this.spielerTorEreignisRepo = spielerTorEreignisRepo;
+        this.spielerStrafEreignisRepo = spielerStrafEreignisRepo;
     }
 
     @Override
@@ -133,6 +138,36 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         }
 
         return entries;
+    }
+
+    @Override
+    @Transactional
+    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle() {
+        List<SchuetzenTabellenEintragDto> rows = new ArrayList<>();
+        var tore = spielerTorEreignisRepo.findAll();
+        var strafen = spielerStrafEreignisRepo.findAll();
+        for (Spieler spieler : spielerRepo.findAll()) {
+            var row = new SchuetzenTabellenEintragDto(spieler);
+            rows.add(row);
+
+            var torespieler = tore.stream().filter(x -> x.getSchuetze().equals(spieler)).count();
+            var firstassistspieler = tore.stream()
+                    .filter(x -> x.getFirstAssist() != null)
+                    .filter(x -> x.getFirstAssist().equals(spieler))
+                    .count();
+            var secondassistspieler = tore.stream()
+                    .filter(x -> x.getSecondAssist() != null)
+                    .filter(x -> x.getSecondAssist().equals(spieler))
+                    .count();
+            var strafenspieler = strafen.stream().filter(x -> x.getSpieler().equals(spieler)).collect(toList());
+            row.setFirstAssist((int) firstassistspieler);
+            row.setSecondAssist((int) secondassistspieler);
+            row.setTore((int) torespieler);
+            row.setStrafen(strafenspieler.size());
+            row.setStrafMinuten((int) strafenspieler.stream().map(SpielerStrafEreignis::getDauer).count());
+        }
+        Collections.sort(rows);
+        return rows;
     }
 
     private int getTore(List<Spielbericht> list, Function<Spielbericht, List<SpielerTorEreignis>> func) {

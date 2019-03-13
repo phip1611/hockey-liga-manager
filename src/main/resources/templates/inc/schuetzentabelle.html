@@ -1,0 +1,26 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Nachname</th>
+            <th scope="col">Vorname</th>
+            <th scope="col">Team</th>
+            <th scope="col">Tore</th>
+            <th scope="col">1. Assist</th>
+            <th scope="col">2. Assist</th>
+            <th scope="col">Strafen (Minuten)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry: ${entries}">
+            <td th:text="${entry.vorname}"></td>
+            <td th:text="${entry.nachname}"></td>
+            <td th:text="${entry.teamName}"></td>
+            <td th:text="${entry.tore}"></td>
+            <td th:text="${entry.firstAssist}"></td>
+            <td th:text="${entry.secondAssist}"></td>
+            <td th:text="${entry.strafenString}"></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>

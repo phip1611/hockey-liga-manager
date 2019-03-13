@@ -45,6 +45,12 @@ public class WebsiteController {
         model.addAttribute("entries", spielberichtService.erstelleLigatabelle());
         return "index";
     }
+    @GetMapping("schuetzentabelle")
+    public String schuetzentabelle(Model model) {
+        model.addAttribute("page", "schuetzentabelle");
+        model.addAttribute("entries", spielberichtService.erstelleSchuetzentabelle());
+        return "index";
+    }
 
     @GetMapping("spieler")
     public String teams(Model model) {
