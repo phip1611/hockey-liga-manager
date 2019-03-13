@@ -18,4 +18,10 @@ public class WebsiteController {
         return "redirect:/ligatabelle";
     }
 
+
+    @GetMapping("exit")
+    public void exit() {
+        System.exit(0);
+    }
+
 }
