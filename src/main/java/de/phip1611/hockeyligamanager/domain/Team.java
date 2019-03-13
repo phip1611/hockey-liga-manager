@@ -49,25 +49,29 @@ public class Team {
      */
     public Team setSpieler(List<UUID> spielerIdList,
                            Function<UUID, Optional<Spieler>> spielerFinder) {
+        var ausTeamGeflogeneSpieler = this.spielerList.stream()
+                // Liste der IDs der Liste in der Entität kennt diese ID nicht --> diese wollen wir filtern
+                .filter(x -> !spielerIdList.contains(x.getId()))
+                .collect(toList());
+
         // Allen Spieler die aus dem Team geflogen sind bekannt machen,
         // dass sie aus dem Team geflogen sind
-        this.spielerList.stream()
-                .filter(x -> !spielerIdList.contains(x.getId()))
-                .forEach(x -> x.setTeam(null));
+        ausTeamGeflogeneSpieler.forEach(x -> x.setTeam(null));
 
-        var spielerUuidToEntityList = spielerIdList.stream()
+        this.spielerList.removeAll(ausTeamGeflogeneSpieler);
+
+        var alleNeuenSpieler = spielerIdList.stream()
                 .map(spielerFinder)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
+                .filter(x -> !this.spielerList.contains(x))
                 .collect(toList());
 
-        // Allen Spielern die nun im Team sind mitteilen, dass sie zu diesem
-        // Team gehören
-        spielerUuidToEntityList.forEach(x -> x.setTeam(this));
+        this.spielerList.addAll(alleNeuenSpieler);
 
-        // Alle Spieler Entitäten aus den IDs holen
-        // und diesem Team zuordnen
-        this.spielerList.addAll(spielerUuidToEntityList);
+        // Allen Spielern die nun neu im Team sind mitteilen, dass sie zu diesem
+        // Team gehören
+        alleNeuenSpieler.forEach(x -> x.setTeam(this));
 
         return this;
     }
