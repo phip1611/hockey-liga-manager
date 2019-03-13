@@ -26,9 +26,9 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
 
     private String teamGast;
 
-    private String schiedrsrichter1;
+    private String schiedsrichter1;
 
-    private String schiedrsrichter2;
+    private String schiedsrichter2;
 
     private String zeitnehmer;
 
@@ -58,8 +58,8 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         this.id      = spielbericht.getId();
         this.teamGast = spielbericht.getTeamGast() != null ? spielbericht.getTeamGast().getName() : null;
         this.teamHeim = spielbericht.getTeamHeim() != null ? spielbericht.getTeamHeim().getName() : null;
-        this.schiedrsrichter1 = spielbericht.getSchiedsrichter1();
-        this.schiedrsrichter2 = spielbericht.getSchiedsrichter2();
+        this.schiedsrichter1 = spielbericht.getSchiedsrichter1();
+        this.schiedsrichter2 = spielbericht.getSchiedsrichter2();
         this.zeitnehmer = spielbericht.getZeitnehmer();
         this.zuschauer = spielbericht.getZuschauer();
         this.ort = spielbericht.getOrt();
@@ -105,12 +105,12 @@ public class SpielberichtDto implements Comparable<SpielberichtDto> {
         return teamGast;
     }
 
-    public String getSchiedrsrichter1() {
-        return schiedrsrichter1;
+    public String getSchiedsrichter1() {
+        return schiedsrichter1;
     }
 
-    public String getSchiedrsrichter2() {
-        return schiedrsrichter2;
+    public String getSchiedsrichter2() {
+        return schiedsrichter2;
     }
 
     public String getZeitnehmer() {

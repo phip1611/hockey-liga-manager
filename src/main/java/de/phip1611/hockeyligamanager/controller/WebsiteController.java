@@ -87,4 +87,11 @@ public class WebsiteController {
         return "index";
     }
 
+    @GetMapping("spielberichte/{id}")
+    public String spielberichte(Model model, @PathVariable("id") UUID id) {
+        model.addAttribute("bericht", spielberichtService.findById(id));
+        model.addAttribute("page", "spielbericht-detail");
+        return "index";
+    }
+
 }

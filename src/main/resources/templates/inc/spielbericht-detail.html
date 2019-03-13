@@ -1,0 +1,107 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <h2>Spielbericht</h2>
+    <div class="row">
+        <div class="col"><strong>Datum:</strong> <span th:text="${bericht.begin}">Datum</span></div>
+        <div class="col"><strong>Ort:</strong> <span th:text="${bericht.ort}">Ort</span></div>
+        <div class="col"><strong>Zuschauer:</strong> <span th:text="${bericht.zuschauer}">Zuschauer</span></div>
+    </div>
+    <div class="row">
+        <div class="col"><strong>Heimteam:</strong> <span th:text="${bericht.teamHeim}">Heimteam</span></div>
+        <div class="col"><strong>Gastteam:</strong> <span th:text="${bericht.teamGast}">Gastteam</span></div>
+        <div class="col"><strong>Ergebnis:</strong> <span th:text="${bericht.ergebnisString}">2:2 (3:2)</span></div>
+    </div>
+    <div class="row">
+        <div class="col"><strong>Zeitnehmer:</strong> <span th:text="${bericht.zeitnehmer}">Zeitnehmer</span></div>
+        <div class="col"><strong>Schiedsrichter 1:</strong> <span th:text="${bericht.schiedsrichter1}">Schiedsrichter 1</span></div>
+        <div class="col"><strong>Schiedrsrichter 2:</strong> <span th:text="${bericht.schiedsrichter2}">Schiedsrichter 2</span></div>
+    </div>
+    <br/>
+    <div class="row mt-2">
+        <div class="col-12 col-sm-6">
+            <h2>Tore Heim</h2>
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Minute</th>
+                    <th scope="col">Spieler</th>
+                    <th scope="col">1. Assist</th>
+                    <th scope="col">2. Assist</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tor: ${bericht.heimSpielerTorEreignisList}">
+                    <td th:text="${tor.time}"></td>
+                    <td th:text="${tor.schuetzeName}"></td>
+                    <td th:text="${tor.firstAssistName}"></td>
+                    <td th:text="${tor.secondAssistName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-6">
+            <h2>Strafen Heim</h2>
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Minute</th>
+                    <th scope="col">Spieler</th>
+                    <th scope="col">Dauer</th>
+                    <th scope="col">RV</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="strafe: ${bericht.heimSpielerStrafEreignisList}">
+                        <td th:text="${strafe.time}"></td>
+                        <td th:text="${strafe.spielerName}"></td>
+                        <td th:text="${strafe.dauer}"></td>
+                        <td th:text="${strafe.rv}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12 col-sm-6">
+            <h2>Tore Gast</h2>
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Minute</th>
+                    <th scope="col">Spieler</th>
+                    <th scope="col">1. Assist</th>
+                    <th scope="col">2. Assist</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tor: ${bericht.gastSpielerTorEreignisList}">
+                    <td th:text="${tor.time}"></td>
+                    <td th:text="${tor.schuetzeName}"></td>
+                    <td th:text="${tor.firstAssistName}"></td>
+                    <td th:text="${tor.secondAssistName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-6">
+            <h2>Strafen Gast</h2>
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Minute</th>
+                    <th scope="col">Spieler</th>
+                    <th scope="col">Dauer</th>
+                    <th scope="col">RV</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="strafe: ${bericht.gastSpielerStrafEreignisList}">
+                        <td th:text="${strafe.time}"></td>
+                        <td th:text="${strafe.spielerName}"></td>
+                        <td th:text="${strafe.dauer}"></td>
+                        <td th:text="${strafe.rv}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>

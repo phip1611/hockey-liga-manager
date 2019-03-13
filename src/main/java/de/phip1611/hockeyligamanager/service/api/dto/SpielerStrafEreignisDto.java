@@ -23,11 +23,13 @@ public class SpielerStrafEreignisDto {
 
     private String spielerName;
 
+    private int dauer;
 
     public SpielerStrafEreignisDto(SpielerStrafEreignis spielerStrafEreignis) {
         this.id = spielerStrafEreignis.getId();
         this.time = spielerStrafEreignis.getTime();
         this.rv = spielerStrafEreignis.getRv();
+        this.dauer = spielerStrafEreignis.getDauer();
         this.spielerName = spielerStrafEreignis.getSpieler().getFullName();
     }
 
@@ -45,5 +47,13 @@ public class SpielerStrafEreignisDto {
 
     public String getSpielerId() {
         return spielerName;
+    }
+
+    public String getSpielerName() {
+        return spielerName;
+    }
+
+    public int getDauer() {
+        return dauer;
     }
 }
