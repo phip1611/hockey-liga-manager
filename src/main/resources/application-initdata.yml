@@ -40,6 +40,7 @@ initdata:
       spielerIdList:
         - b6ef7515-2dcc-425b-a3d9-ce931743f444
     - name: Team4
+      id: 71462616-8192-4e27-a39c-d6ee8afd8757
 
   spielberichte:
     - # 3 Punkte Sieg
