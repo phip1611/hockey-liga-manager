@@ -1,0 +1,37 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <h3>Team bearbeiten</h3>
+    <form method="post" th:object="${teamForm}" th:action="${'/teams/submit'}">
+        <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="form-group">
+            <label for="teamname">Teamname</label>
+            <input type="text" class="form-control" id="teamname" th:field="*{name}" />
+        </div>
+        <br/>
+        <h4>Spieler</h4>
+        <div class="row" th:each="s, stat : *{spieler}">
+            <input type="hidden" th:field="*{spieler[__${stat.index}__].id}" />
+            <div class="col">
+                <div class="form-group">
+                    <label>Vorname</label>
+                    <input type="text" class="form-control" th:field="*{spieler[__${stat.index}__].vorname}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Nachname</label>
+                    <input type="text" class="form-control" th:field="*{spieler[__${stat.index}__].nachname}" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Nummer</label>
+                    <input type="number" class="form-control" th:field="*{spieler[__${stat.index}__].nummer}" />
+                </div>
+            </div>
+
+            <hr style="width: 100%" />
+        </div>
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </form>
+</th:block>

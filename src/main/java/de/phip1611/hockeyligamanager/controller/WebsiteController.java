@@ -7,13 +7,13 @@
  */
 package de.phip1611.hockeyligamanager.controller;
 
+import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.SpielerService;
 import de.phip1611.hockeyligamanager.service.api.TeamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -70,9 +70,20 @@ public class WebsiteController {
     @GetMapping("teams/{id}/edit")
     public String teamBearbeiten(Model model,
                                  @PathVariable(name = "id") UUID id) {
-        model.addAttribute("team", teamService.findById(id));
+        var form = new TeamAndSpielerForm(teamService.findById(id));
+        form.addExtraFields();
+        model.addAttribute("teamForm", form);
         model.addAttribute("page", "team-edit");
         return "index";
+    }
+
+    @PostMapping("teams/submit")
+    public String teamBearbeiten(@ModelAttribute /*@Valid TODO*/ TeamAndSpielerForm form) {
+        form.removeEmptyFields();
+        this.teamService.createOrUpdate(form);
+
+        // formular erneut bearbeiten
+        return "redirect:/teams/" + form.getId() + "/edit";
     }
 
     @GetMapping("spielberichte")

@@ -53,7 +53,7 @@ public class TeamDto implements Comparable<TeamDto> {
         return name.compareTo(o.name);
     }
 
-    private class SpielerDto extends de.phip1611.hockeyligamanager.service.api.dto.SpielerDto {
+    public class SpielerDto extends de.phip1611.hockeyligamanager.service.api.dto.SpielerDto {
 
         public SpielerDto(Spieler spieler) {
             super(spieler);

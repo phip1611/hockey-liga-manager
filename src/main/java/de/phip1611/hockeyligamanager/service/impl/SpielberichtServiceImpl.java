@@ -53,19 +53,19 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     @Override
     @Transactional
-    public SpielberichtDto createOrUpdate(SpielberichtForm spielberichtForm) {
-        if (spielberichtForm.getId() == null) {
+    public SpielberichtDto createOrUpdate(SpielberichtForm form) {
+        if (form.getId() == null) {
             // neue Entität speichern
-            return this.repo.save(spielberichtForm.build(teamRepo::findById, spielerRepo::findById)).toDto();
+            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById)).toDto();
         }
 
-        var e = this.repo.findById(spielberichtForm.getId());
+        var e = this.repo.findById(form.getId());
         if (e.isPresent()) {
             // bestehende Entität updaten
-            return e.get().update(spielberichtForm, teamRepo::findById, spielerRepo::findById).toDto();
+            return e.get().update(form, teamRepo::findById, spielerRepo::findById).toDto();
         } else {
             // neue Entität mit gegebener UUID speichern
-            return this.repo.save(spielberichtForm.build(teamRepo::findById, spielerRepo::findById)).toDto();
+            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById)).toDto();
         }
     }
 

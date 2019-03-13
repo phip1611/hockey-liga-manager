@@ -48,22 +48,23 @@ public class TeamServiceImpl implements TeamService {
      */
     @Override
     @Transactional
-    public TeamDto createOrUpdate(TeamAndSpielerForm teamAndSpielerForm) {
+    public TeamDto createOrUpdate(TeamAndSpielerForm form) {
         // alle Spieler die eine ID haben, aber nicht existieren in der DB
         // (bspw. bei Import der Initdaten) nun anlegen
-        teamAndSpielerForm.getSpieler().stream()
+        form.getSpieler().stream()
+                .filter(x -> x.getId() != null)
                 .filter(x -> !spielerRepo.existsById(x.getId()))
                 .forEach(spielerService::createOrUpdate);
 
         // Nach dem wir sichergestellt haben, dass alle mit IDs existieren
         // speichern wir uns nun die IDs
-        var teamSpielerIds = teamAndSpielerForm.getSpieler().stream()
+        var teamSpielerIds = form.getSpieler().stream()
                 .filter(x -> x.getId() != null)
                 .map(SpielerForm::getId)
                 .collect(toList());
 
         // Spieler die noch keine ID haben speichern
-        var spielerDieNochAngelegtWerdenMuessen = teamAndSpielerForm.getSpieler().stream()
+        var spielerDieNochAngelegtWerdenMuessen = form.getSpieler().stream()
                 .filter(x -> x.getId() == null)
                 .collect(toList());
         // diese nun anlegen
@@ -76,17 +77,17 @@ public class TeamServiceImpl implements TeamService {
         teamSpielerIds.addAll(angelegteSpielerIds);
 
         Team entity; // Entität speichern für später
-        if (teamAndSpielerForm.getId() == null) {
+        if (form.getId() == null) {
             // neue Entität speichern
-            entity =  this.repo.save(teamAndSpielerForm.build());
+            entity =  this.repo.save(form.build());
         } else {
-            Optional<Team> entityOptional = this.repo.findById(teamAndSpielerForm.getId());
+            Optional<Team> entityOptional = this.repo.findById(form.getId());
             if (entityOptional.isPresent()) {
                 // bestehende Entität updaten
-                entity = entityOptional.get().update(teamAndSpielerForm);
+                entity = entityOptional.get().update(form);
             } else {
                 // neue Entität mit gegebener UUID speichern
-                entity = this.repo.save(teamAndSpielerForm.build());
+                entity = this.repo.save(form.build());
             }
         }
 

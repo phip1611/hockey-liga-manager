@@ -8,9 +8,11 @@
 package de.phip1611.hockeyligamanager.form;
 
 import de.phip1611.hockeyligamanager.domain.Spieler;
+import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 import java.util.UUID;
 
 public class SpielerForm {
@@ -25,6 +27,17 @@ public class SpielerForm {
 
     @Min(0)
     private int nummer;
+
+    public SpielerForm() {
+        // default konstruktor für @ConfigurationProperties
+    }
+
+    public SpielerForm(SpielerDto dto) {
+        this.id = dto.getId();
+        this.vorname = dto.getVorname();
+        this.nachname = dto.getNachname();
+        this.nummer = dto.getNummer();
+    }
 
     public UUID getId() {
         return id;
@@ -52,6 +65,21 @@ public class SpielerForm {
 
     public int getNummer() {
         return nummer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpielerForm that = (SpielerForm) o;
+        return nummer == that.nummer &&
+                Objects.equals(vorname, that.vorname) &&
+                Objects.equals(nachname, that.nachname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vorname, nachname, nummer);
     }
 
     public void setNummer(int nummer) {

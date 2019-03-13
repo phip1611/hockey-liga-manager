@@ -31,19 +31,19 @@ public class SpielerServiceImpl implements SpielerService {
 
     @Override
     @Transactional
-    public SpielerDto createOrUpdate(SpielerForm spielerForm) {
-        if (spielerForm.getId() == null) {
+    public SpielerDto createOrUpdate(SpielerForm form) {
+        if (form.getId() == null) {
             // neue Entität speichern
-            return this.repo.save(spielerForm.build()).toDto();
+            return this.repo.save(form.build()).toDto();
         }
 
-        var e = this.repo.findById(spielerForm.getId());
+        var e = this.repo.findById(form.getId());
         if (e.isPresent()) {
             // bestehende Entität updaten
-            return e.get().update(spielerForm).toDto();
+            return e.get().update(form).toDto();
         } else {
             // neue Entität mit gegebener UUID speichern
-            return this.repo.save(spielerForm.build()).toDto();
+            return this.repo.save(form.build()).toDto();
         }
     }
 
