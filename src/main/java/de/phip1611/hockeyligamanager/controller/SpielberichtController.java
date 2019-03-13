@@ -67,6 +67,7 @@ public class SpielberichtController {
     @GetMapping("spielberichte/{id}/edit")
     public String spielberichtEdit(Model model, @PathVariable("id") UUID id) {
         var form = spielberichtService.createFormFromId(id);
+        form.addExtraFields();
         model.addAttribute("form", form);
         model.addAttribute("teams", teamService.findAll());
         model.addAttribute("spieler", spielerService.findAll());

@@ -3,7 +3,7 @@
     <form method="post" th:object="${form}" th:action="${'/spielberichte/submit'}">
         <input type="hidden" name="id" th:field="*{id}">
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
                     <label for="beginTimeString">Begin (YYYY-MM-DD'T'hh:mm:ss)</label>
@@ -23,7 +23,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
                     <label for="heimteam">Heimteam</label>
@@ -39,7 +40,8 @@
                 </select>
             </div>
         </div>
-        <div class="row">
+
+        <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
                     <label for="schiedsrichter1">Schiedsrichter 1</label>
@@ -60,6 +62,175 @@
             </div>
         </div>
 
+        <h4>Anwesende Spieler</h4>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="spielerheim">Heimteam</label>
+                <select th:field="*{anwesendeSpielerHeim}" class="custom-select" id="spielerheim">
+                    <option value="">-</option>
+                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="spielergast">Gastteam</label>
+                <select th:field="*{anwesendeSpielerGast}" class="custom-select" id="spielergast" multiple="multiple">
+                    <option value="">-</option>
+                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                </select>
+            </div>
+        </div>
+
+        <h4>Tore</h4>
+        <div class="row mb-3">
+            <div class="col" style="border-right: 1px solid #ccc">
+                <h5>Heimteam</h5>
+                <div class="row" th:each="torereignis, stat : *{heimSpielerTorEreignisList}">
+                    <input type="hidden" th:field="*{heimSpielerTorEreignisList[__${stat.index}__].id}" />
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Minute</label>
+                            <input type="number" class="form-control" th:field="*{heimSpielerTorEreignisList[__${stat.index}__].time}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Schütze</label>
+                            <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].schuetzeId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>First Assist</label>
+                            <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].firstAssistId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Second Assist</label>
+                            <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].secondAssistId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h5>Gastteam</h5>
+                <div class="row" th:each="torereignis, stat : *{gastSpielerTorEreignisList}">
+                    <input type="hidden" th:field="*{gastSpielerTorEreignisList[__${stat.index}__].id}" />
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Minute</label>
+                            <input type="number" class="form-control" th:field="*{gastSpielerTorEreignisList[__${stat.index}__].time}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Schütze</label>
+                            <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].schuetzeId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>First Assist</label>
+                            <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].firstAssistId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Second Assist</label>
+                            <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].secondAssistId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4>Strafen</h4>
+        <div class="row">
+            <div class="col" style="border-right: 1px solid #ccc">
+                <h5>Heimteam</h5>
+                <div class="row" th:each="strafereignis, stat : *{heimSpielerStrafEreignisList}">
+                    <input type="hidden" th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].id}" />
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Minute</label>
+                            <input type="number" class="form-control" th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].time}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Spieler</label>
+                            <select th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].spielerId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>RV</label>
+                            <input type="number" class="form-control" th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].rv}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Dauer (min)</label>
+                            <input type="number" min="0" class="form-control" th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].dauer}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h5>Gastteam</h5>
+                <div class="row" th:each="strafereignis, stat : *{gastSpielerStrafEreignisList}">
+                    <input type="hidden" th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].id}" />
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Minute</label>
+                            <input type="number" class="form-control" th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].time}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Spieler</label>
+                            <select th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].spielerId}" class="custom-select">
+                                <option value="">-</option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>RV</label>
+                            <input type="number" class="form-control" th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].rv}" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Dauer (min)</label>
+                            <input type="number" min="0" class="form-control" th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].dauer}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Speichern</button>
     </form>
 </th:block>

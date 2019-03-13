@@ -56,6 +56,8 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     @Override
     @Transactional
     public SpielberichtDto createOrUpdate(SpielberichtForm form) {
+        form.removeEmptyFields();
+
         if (form.getId() == null) {
             // neue Entität speichern
             return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById)).toDto();

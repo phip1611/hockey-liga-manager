@@ -109,6 +109,6 @@ public class SpielerStrafEreignisForm implements MultipleFormField {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return spielerId == null;
     }
 }

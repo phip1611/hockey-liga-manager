@@ -74,7 +74,6 @@ public class TeamController {
 
     @PostMapping("teams/submit")
     public String teamBearbeiten(@ModelAttribute /*@Valid TODO*/ TeamAndSpielerForm form) {
-        form.removeEmptyFields();
         var dto = this.teamService.createOrUpdate(form);
 
         // formular erneut bearbeiten

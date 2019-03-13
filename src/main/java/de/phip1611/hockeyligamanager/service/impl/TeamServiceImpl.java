@@ -49,6 +49,8 @@ public class TeamServiceImpl implements TeamService {
     @Override
     @Transactional
     public TeamDto createOrUpdate(TeamAndSpielerForm form) {
+        form.removeEmptyFields();
+
         // Alle Spieler die eine ID haben werden so
         //  a) erstellt  (sofern noch nicht in DB)
         // oder b) geupdated

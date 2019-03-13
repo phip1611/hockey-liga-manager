@@ -106,6 +106,6 @@ public class SpielerTorEreignisForm implements MultipleFormField {
 
     @Override
     public boolean isEmpty() {
-        return schuetzeId == null && firstAssistId == null && secondAssistId == null;
+        return schuetzeId == null;
     }
 }

@@ -195,14 +195,14 @@ public class SpielberichtForm implements Form {
             this.gastSpielerStrafEreignisList.add(new SpielerStrafEreignisForm());
             this.heimSpielerStrafEreignisList.add(new SpielerStrafEreignisForm());
             this.gastSpielerTorEreignisList.add(new SpielerTorEreignisForm());
-            this.gastSpielerTorEreignisList.add(new SpielerTorEreignisForm());
+            this.heimSpielerTorEreignisList.add(new SpielerTorEreignisForm());
         }
     }
 
     @Override
     public void removeEmptyFields() {
-        this.gastSpielerStrafEreignisList.removeAll(
-                this.gastSpielerStrafEreignisList.stream()
+        this.heimSpielerTorEreignisList.removeAll(
+                this.heimSpielerTorEreignisList.stream()
                         .filter(MultipleFormField::isEmpty)
                         .collect(toList())
         );
@@ -216,8 +216,8 @@ public class SpielberichtForm implements Form {
                         .filter(MultipleFormField::isEmpty)
                         .collect(toList())
         );
-        this.gastSpielerTorEreignisList.removeAll(
-                this.gastSpielerTorEreignisList.stream()
+        this.gastSpielerStrafEreignisList.removeAll(
+                this.gastSpielerStrafEreignisList.stream()
                         .filter(MultipleFormField::isEmpty)
                         .collect(toList())
         );
