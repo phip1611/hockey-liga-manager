@@ -1,9 +1,13 @@
 package de.phip1611.hockeyligamanager.domain;
 
 import de.phip1611.hockeyligamanager.form.SpielerForm;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielerDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,11 +24,21 @@ public class Spieler {
     private int nummer;
 
     @JoinColumn()
-    @ManyToOne
+    @ManyToOne()
     private Team team;
 
     private Spieler() {
         /* hibernate default constructor */
+    }
+
+    public Spieler(ExportSpielerDto export) {
+        this.id = export.getId();
+        this.vorname = export.getVorname();
+        this.nachname = export.getNachname();
+        this.nummer = export.getNummer();
+
+        // this.team = null; erstens: wir haben bereits das Team, das seine Spieler kennt
+        // zweitens: in Hiberbante funktioniert es nicht im Konstruktor auf eine andere Entität zu verweisen (außer Cascade is aktiv)
     }
 
     public Spieler(SpielerForm form) {

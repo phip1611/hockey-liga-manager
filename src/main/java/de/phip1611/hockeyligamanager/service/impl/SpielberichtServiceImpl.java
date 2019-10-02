@@ -92,6 +92,18 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     }
 
     @Override
+    @Transactional
+    public void deleteAll() {
+        this.repo.deleteAll();;
+    }
+
+    @Override
+    @Transactional
+    public void saveAll(Iterable<Spielbericht> iterable) {
+        this.repo.saveAll(iterable);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<LigatabellenEintragDto> erstelleLigatabelle() {
         var teams = this.teamRepo.findAll();
@@ -198,6 +210,6 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     }
 
     private int getTore(List<Spielbericht> list, Function<Spielbericht, List<SpielerTorEreignis>> func) {
-        return list.stream().map(func).map(List::size).reduce((a, b) -> a + b).orElse(0);
+        return list.stream().map(func).map(List::size).reduce(Integer::sum).orElse(0);
     }
 }

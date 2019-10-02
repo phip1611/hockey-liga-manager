@@ -16,7 +16,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 import java.util.List;
 import java.util.UUID;
 
-public interface SpielberichtService extends EntityService<Spielbericht, SpielberichtForm, SpielberichtDto> {
+public interface SpielberichtService extends ExAndImportEntityService<Spielbericht, SpielberichtForm, SpielberichtDto> {
 
     List<LigatabellenEintragDto> erstelleLigatabelle();
 

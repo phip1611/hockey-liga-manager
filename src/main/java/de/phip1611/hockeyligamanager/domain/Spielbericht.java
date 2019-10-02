@@ -8,11 +8,15 @@
 package de.phip1611.hockeyligamanager.domain;
 
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielberichtDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
@@ -20,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 @Entity
 public class Spielbericht {
 
-    public static int REGULAR_GAME_DURATION = 60;
+    public final static int REGULAR_GAME_DURATION = 60;
 
     @Id
     private UUID id;
@@ -65,6 +69,27 @@ public class Spielbericht {
 
     private Spielbericht() {
         /* hibernate default constructor */
+    }
+
+    public Spielbericht(ExportSpielberichtDto export,
+                        Function<UUID, Optional<Team>> teamFinder,
+                        Function<UUID, Optional<Spieler>> spielerFinder) {
+        this.id = export.getId();
+        this.teamHeim = teamFinder.apply(export.getTeamHeimId()).orElseThrow();
+        this.teamGast = teamFinder.apply(export.getTeamGastId()).orElseThrow();
+        this.schiedsrichter1 = export.getSchiedsrichter1();
+        this.schiedsrichter2 = export.getSchiedsrichter2();
+        this.zeitnehmer = export.getZeitnehmer();
+        this.ort = export.getOrt();
+        this.zuschauer = export.getZuschauer();
+        this.begin = export.getBegin();
+        this.anwesendeSpielerHeim = export.getAnwesendeSpielerHeimIds().stream().map(spielerFinder).map(Optional::orElseThrow).collect(toList());
+        this.anwesendeSpielerGast = export.getAnwesendeSpielerGastIds().stream().map(spielerFinder).map(Optional::orElseThrow).collect(toList());
+        this.heimSpielerStrafEreignisList = export.getHeimSpielerStrafEreignisse().stream().map(spieler -> new SpielerStrafEreignis(spieler, spielerFinder)).collect(toList());
+        this.gastSpielerStrafEreignisList = export.getGastSpielerStrafEreignisse().stream().map(spieler -> new SpielerStrafEreignis(spieler, spielerFinder)).collect(toList());
+
+        this.heimSpielerTorEreignisList = export.getHeimSpielerTorEreignisse().stream().map(spieler -> new SpielerTorEreignis(spieler, spielerFinder)).collect(toList());
+        this.gastSpielerTorEreignisList = export.getGastSpielerTorEreignisse().stream().map(spieler -> new SpielerTorEreignis(spieler, spielerFinder)).collect(toList());
     }
 
     public Spielbericht(SpielberichtForm form,

@@ -23,14 +23,14 @@ public class TeamDto implements Comparable<TeamDto> {
 
     private String name;
 
-    private List<SpielerDto> spieler = new ArrayList<>();
+    private List<SpielerInTeamDto> spieler = new ArrayList<>();
 
     public TeamDto(Team team) {
         this.id   = team.getId();
         this.name = team.getName();
         this.spieler.addAll(
                 team.getSpielerList().stream()
-                        .map(SpielerDto::new)
+                        .map(SpielerInTeamDto::new)
                         .sorted()
                         .collect(toList())
         );
@@ -44,7 +44,7 @@ public class TeamDto implements Comparable<TeamDto> {
         return name;
     }
 
-    public List<SpielerDto> getSpieler() {
+    public List<SpielerInTeamDto> getSpieler() {
         return spieler;
     }
 
@@ -53,9 +53,9 @@ public class TeamDto implements Comparable<TeamDto> {
         return name.compareTo(o.name);
     }
 
-    public class SpielerDto extends de.phip1611.hockeyligamanager.service.api.dto.SpielerDto {
+    public class SpielerInTeamDto extends de.phip1611.hockeyligamanager.service.api.dto.SpielerDto {
 
-        public SpielerDto(Spieler spieler) {
+        public SpielerInTeamDto(Spieler spieler) {
             super(spieler);
         }
 

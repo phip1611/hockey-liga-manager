@@ -15,6 +15,7 @@ import de.phip1611.hockeyligamanager.repository.SpielerRepo;
 import de.phip1611.hockeyligamanager.repository.TeamRepo;
 import de.phip1611.hockeyligamanager.service.api.SpielerService;
 import de.phip1611.hockeyligamanager.service.api.TeamService;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportTeamDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerDto;
 import de.phip1611.hockeyligamanager.service.api.dto.TeamDto;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class TeamServiceImpl implements TeamService {
                 .filter(x -> x.getId() != null)
                 .forEach(spielerService::createOrUpdate);
 
-        // Nach dem wir sichergestellt haben, dass alle mit IDs auch in der DBexistieren
+        // Nach dem wir sichergestellt haben, dass alle mit IDs auch in der DB existieren
         // speichern wir uns nun die IDs in einer Liste für die spätere Verwendung
         var teamSpielerIds = form.getSpieler().stream()
                 .filter(x -> x.getId() != null)
@@ -118,5 +119,32 @@ public class TeamServiceImpl implements TeamService {
         idsToDelete.forEach(i -> spielerService.deleteById(i));
 
         repo.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        this.repo.findAll().stream().map(Team::getId).forEach(this::deleteById);
+    }
+
+    @Override
+    @Transactional
+    public void saveAll(Iterable<Team> iterable) {
+        this.repo.saveAll(iterable);
+    }
+
+
+    @Override
+    @Transactional
+    public void importTeam(List<ExportTeamDto> teams) {
+        this.repo.saveAll(teams.stream().map(Team::new).collect(toList()));
+        this.saveTeamSpielerAfterImport(teams);
+    }
+
+    private void saveTeamSpielerAfterImport(List<ExportTeamDto> teams) {
+        this.repo.findAll().forEach(team -> {
+            var uuids = teams.stream().filter(x -> x.getId().equals(team.getId())).findFirst().get().getSpielerList();
+            team.setSpieler(uuids, this.spielerRepo::findById);
+        });
     }
 }

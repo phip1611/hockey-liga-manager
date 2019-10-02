@@ -18,6 +18,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public class SpielerTorEreignisForm implements MultipleFormField {
+
     private UUID id;
 
     // Spielminute >= 0

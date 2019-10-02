@@ -30,14 +30,11 @@ public class SpielerServiceImpl implements SpielerService {
 
     private SpielerTorEreignisRepo spielerTorEreignisRepo;
 
-    private SpielberichtRepo spielberichtRepo;
-
     public SpielerServiceImpl(SpielerRepo repo,
                               SpielberichtRepo spielberichtRepo,
                               SpielerTorEreignisRepo spielerTorEreignisRepo) {
         this.repo = repo;
         this.spielerTorEreignisRepo = spielerTorEreignisRepo;
-        this.spielberichtRepo = spielberichtRepo;
     }
 
     @Override
@@ -87,5 +84,17 @@ public class SpielerServiceImpl implements SpielerService {
 
         // den Nutzer selbst löschen
         this.repo.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        this.repo.findAll().stream().map(Spieler::getId).forEach(this::deleteById);
+    }
+
+    @Override
+    @Transactional
+    public void saveAll(Iterable<Spieler> iterable) {
+        this.repo.saveAll(iterable);
     }
 }

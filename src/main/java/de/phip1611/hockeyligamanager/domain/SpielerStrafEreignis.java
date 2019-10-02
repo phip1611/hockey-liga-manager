@@ -8,6 +8,7 @@
 package de.phip1611.hockeyligamanager.domain;
 
 import de.phip1611.hockeyligamanager.form.SpielerStrafEreignisForm;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielerStrafEreignisDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerStrafEreignisDto;
 
 import javax.persistence.Entity;
@@ -36,6 +37,15 @@ public class SpielerStrafEreignis {
 
     private SpielerStrafEreignis() {
         /* hibernate */
+    }
+
+    public SpielerStrafEreignis(ExportSpielerStrafEreignisDto export,
+                                Function<UUID, Optional<Spieler>> spielerFinder) {
+        this.id = export.getId();
+        this.time = export.getTime();
+        this.rv = export.getRv();
+        this.dauer = export.getDauer();
+        this.spieler = spielerFinder.apply(export.getSpielerId()).orElseThrow(() -> new IllegalArgumentException("Es gibt keinen Spieler mit der ID"));
     }
 
     public SpielerStrafEreignis(SpielerStrafEreignisForm form,

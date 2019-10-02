@@ -8,6 +8,7 @@
 package de.phip1611.hockeyligamanager.domain;
 
 import de.phip1611.hockeyligamanager.form.SpielerTorEreignisForm;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielerTorEreignisDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielerTorEreignisDto;
 
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class SpielerTorEreignis {
     // Spielminute >= 0
     private int time;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Spieler schuetze;
 
     @ManyToOne
@@ -39,6 +40,19 @@ public class SpielerTorEreignis {
 
     private SpielerTorEreignis() {
         /* hibernate */
+    }
+
+    public SpielerTorEreignis(ExportSpielerTorEreignisDto export,
+                              Function<UUID, Optional<Spieler>> spielerFinder) {
+        this.id = export.getId();
+        this.time = export.getTime();
+        this.schuetze = spielerFinder.apply(export.getSchuetzeId()).orElseThrow();
+        if (export.getFirstAssistId() != null) {
+            this.firstAssist = spielerFinder.apply(export.getFirstAssistId()).orElseThrow();
+        }
+        if (export.getSecondAssistId() != null) {
+            this.secondAssist = spielerFinder.apply(export.getSecondAssistId()).orElseThrow();
+        }
     }
 
     public SpielerTorEreignis(SpielerTorEreignisForm form,

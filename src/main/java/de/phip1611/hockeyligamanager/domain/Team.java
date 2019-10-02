@@ -8,9 +8,13 @@
 package de.phip1611.hockeyligamanager.domain;
 
 import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
+import de.phip1611.hockeyligamanager.service.api.dto.ExportTeamDto;
 import de.phip1611.hockeyligamanager.service.api.dto.TeamDto;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.*;
 import java.util.function.Function;
 
@@ -30,6 +34,12 @@ public class Team {
 
     private Team() {
         /* hibernate default constructor */
+    }
+
+    public Team(ExportTeamDto export) {
+        this.id = export.getId();
+        this.name = export.getName();
+        // in Hiberbante funktioniert es nicht im Konstruktor auf eine andere Entität zu verweisen (außer Cascade is aktiv)
     }
 
     public Team(TeamAndSpielerForm form) {
