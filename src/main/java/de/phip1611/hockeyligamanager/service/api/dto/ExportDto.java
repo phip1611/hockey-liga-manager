@@ -22,6 +22,10 @@ public class ExportDto {
 
     private List<ExportTeamDto> teams;
 
+    // for objectmapper
+    public ExportDto() {
+    }
+
     public ExportDto(List<ExportSpielerDto> spieler,
                      List<ExportSpielberichtDto> spielberichte,
                      List<ExportSpielerStrafEreignisDto> strafEreignisse,

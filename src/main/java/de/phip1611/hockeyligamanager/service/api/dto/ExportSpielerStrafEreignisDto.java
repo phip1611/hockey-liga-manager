@@ -30,6 +30,10 @@ public class ExportSpielerStrafEreignisDto {
 
     private int dauer;
 
+    // for objectmapper
+    public ExportSpielerStrafEreignisDto() {
+    }
+
     public ExportSpielerStrafEreignisDto(SpielerStrafEreignis spielerStrafEreignis) {
         this.id = spielerStrafEreignis.getId();
         this.time = spielerStrafEreignis.getTime();

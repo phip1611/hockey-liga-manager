@@ -55,6 +55,10 @@ public class ExportSpielberichtDto {
 
     private List<ExportSpielerStrafEreignisDto> gastSpielerStrafEreignisse;
 
+    // for objectmapper
+    public ExportSpielberichtDto() {
+    }
+
     public ExportSpielberichtDto(Spielbericht spielbericht) {
         this.id = spielbericht.getId();
         this.teamHeimId = spielbericht.getTeamHeim().getId();

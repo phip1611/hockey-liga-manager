@@ -15,6 +15,8 @@ import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.SpielerService;
 import de.phip1611.hockeyligamanager.service.api.TeamService;
 import de.phip1611.hockeyligamanager.service.api.dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,8 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 public class ExAndImportServiceImpl implements ExAndImportService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExAndImportServiceImpl.class);
 
     private SpielerRepo spielerRepo;
 
@@ -70,6 +74,7 @@ public class ExAndImportServiceImpl implements ExAndImportService {
     @Override
     @Transactional(readOnly = true)
     public ExportDto exportData() {
+        LOGGER.info("Export");
         return new ExportDto(
                 this.findAllAndMap(spielerRepo::findAll, ExportSpielerDto::new),
                 this.findAllAndMap(spielberichtRepo::findAll, ExportSpielberichtDto::new),
@@ -86,6 +91,7 @@ public class ExAndImportServiceImpl implements ExAndImportService {
     @Override
     //@Transactional NICHT, da die einzeln aufgerufenen unter Methoden einzelne Transaktionen sein sollen
     public void importData(ExportDto dto) {
+        LOGGER.info("Import started");
         // da am spielbereicht cascade all dran ist geht das auch so this.spielerTorEreignisRepo.deleteAll();
         // this.spielerStrafEreignisRepo.deleteAll();
         /*this.spielberichtRepo.deleteAll();
@@ -101,6 +107,7 @@ public class ExAndImportServiceImpl implements ExAndImportService {
         this.teamService.importTeam(dto.getTeams());
 
         this.spielberichtService.saveAll(dto.getSpielberichte().stream().map(bericht -> new Spielbericht(bericht, teamRepo::findById, spielerRepo::findById)).collect(toList()));
+        LOGGER.info("Import done");
 
     }
 }

@@ -30,6 +30,10 @@ public class ExportSpielerDto {
 
     // Spieler kennt sein Team nicht, da der Team-Export bereits seine Spieler anhand der UUID kennt
 
+    // for objectmapper
+    public ExportSpielerDto() {
+    }
+
     public ExportSpielerDto(Spieler spieler) {
         this.id = spieler.getId();
         this.vorname = spieler.getVorname();

@@ -25,6 +25,10 @@ public class ExportTeamDto {
 
     private List<UUID> spielerList;
 
+    // for objectmapper
+    public ExportTeamDto() {
+    }
+
     public ExportTeamDto(Team team) {
         this.id = team.getId();
         this.name = team.getName();

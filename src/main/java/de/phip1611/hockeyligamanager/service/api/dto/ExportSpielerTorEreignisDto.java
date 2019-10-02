@@ -30,6 +30,10 @@ public class ExportSpielerTorEreignisDto {
 
     private UUID secondAssistId;
 
+    // for objectmapper
+    public ExportSpielerTorEreignisDto() {
+    }
+
     public ExportSpielerTorEreignisDto(SpielerTorEreignis spielerTorEreignis) {
         this.id = spielerTorEreignis.getId();
         this.time = spielerTorEreignis.getTime();

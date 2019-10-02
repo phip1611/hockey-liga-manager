@@ -1,0 +1,19 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:action="'/import'">
+    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+        <form enctype="multipart/form-data" method="post">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Datei</span>
+                </div>
+                <div class="custom-file">
+                    <input name="file" type="file" class="custom-file-input" id="file" aria-describedby="fileHelp" required>
+                    <label class="custom-file-label" for="file">Choose file</label>
+                </div>
+                <div class="w-100">
+                    <small id="fileHelp" class="form-text text-muted">BACKUP-Datei im .json-Format</small>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-2" type="submit">Importieren</button>
+        </form>
+    </div>
+</th:block>
