@@ -9,14 +9,16 @@ package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.form.TeamAndSpielerForm;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@ConfigurationProperties(prefix = "initdata")
-public class InitDataHolder {
+@ConditionalOnProperty("generate-testdata")
+@ConfigurationProperties(prefix = "testdata")
+public class TestDataHolder {
 
     private List<TeamAndSpielerForm> teams;
 

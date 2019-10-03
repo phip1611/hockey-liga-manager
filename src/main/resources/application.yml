@@ -1,8 +1,6 @@
 # underscores, keine Bindestriche, sonst SQL Probleme! Der Dateiname erscheint in der SQL Query!
 database-file: ~/hockey_liga_manger_h2db
 
-spring.profiles.include: initdata
-
 # kein Zugriff von außen
 server:
   address: "localhost"
@@ -20,7 +18,6 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      # durch das ddl-auto beginnt h2 erst die persistierten
-      # Daten auch beim nächsten startup zu nutzen
+      # ohne gehen die Daten verloren in der DB
       ddl-auto: update
 

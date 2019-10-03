@@ -1,4 +1,7 @@
-initdata:
+# check for @ConditionalOnProperty
+generate-testdata: true
+
+testdata:
   teams:
     - id: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
       name: Dresdens bestes Eisteam, yo

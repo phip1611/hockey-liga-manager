@@ -9,27 +9,31 @@ package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.TeamService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import java.util.logging.Logger;
-
 @Service
-public class InitDataService {
+@ConditionalOnProperty("generate-testdata")
+public class TestDataService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestDataService.class);
 
     private TeamService teamService;
 
     private SpielberichtService spielberichtService;
 
-    private InitDataHolder data;
+    private TestDataHolder data;
 
-    private static Logger LOGGER = Logger.getLogger("InitDataService");
-
-    public InitDataService(TeamService teamService,
+    public TestDataService(TeamService teamService,
                            SpielberichtService spielberichtService,
-                           InitDataHolder data) {
+                           TestDataHolder data) {
         this.teamService = teamService;
         this.spielberichtService = spielberichtService;
         this.data = data;
+
+        LOGGER.info("Starting Test Data Generation");
 
         this.initTeamsAndSpieler();
         this.initSpielberichte();
@@ -37,13 +41,13 @@ public class InitDataService {
 
     private void initSpielberichte() {
         if (this.data.getSpielberichte() == null) return;
-        LOGGER.info("initSpielberichte()");
+        LOGGER.info("init Spielberichte");
         this.data.getSpielberichte().forEach(spielberichtService::createOrUpdate);
     }
 
     private void initTeamsAndSpieler() {
         if (this.data.getTeams() == null) return;
-        LOGGER.info("initTeamsAndSpieler()");
+        LOGGER.info("init Teams and Spieler");
         this.data.getTeams().forEach(teamService::createOrUpdate);
     }
 }
