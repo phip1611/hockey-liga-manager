@@ -13,10 +13,7 @@ import de.phip1611.hockeyligamanager.service.api.SpielerService;
 import de.phip1611.hockeyligamanager.service.api.TeamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -47,9 +44,9 @@ public class SpielberichtController {
         return "index";
     }
     @GetMapping("schuetzentabelle")
-    public String schuetzentabelle(Model model) {
+    public String schuetzentabelle(Model model, @RequestParam(value = "sort", required = false) String sort) {
         model.addAttribute("page", "schuetzentabelle");
-        model.addAttribute("entries", spielberichtService.erstelleSchuetzentabelle());
+        model.addAttribute("entries", spielberichtService.erstelleSchuetzentabelle(sort));
         return "index";
     }
 

@@ -22,6 +22,8 @@ public interface SpielberichtService extends ExAndImportEntityService<Spielberic
 
     List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle();
 
+    List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty);
+
     SpielberichtForm createFormFromId(UUID id);
 
 }

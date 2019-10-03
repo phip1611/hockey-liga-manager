@@ -19,10 +19,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -159,6 +156,12 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     @Override
     @Transactional
     public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle() {
+        return erstelleSchuetzentabelle(null);
+    }
+
+    @Override
+    @Transactional
+    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty) {
         List<SchuetzenTabellenEintragDto> rows = new ArrayList<>();
         var tore = spielerTorEreignisRepo.findAll();
         var strafen = spielerStrafEreignisRepo.findAll();
@@ -182,7 +185,11 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             row.setStrafen(strafenspieler.size());
             row.setStrafMinuten((int) strafenspieler.stream().map(SpielerStrafEreignis::getDauer).count());
         }
-        Collections.sort(rows);
+        if (sortProperty == null) {
+            Collections.sort(rows);
+        } else {
+            Collections.sort(rows, getComparator(sortProperty));
+        }
         return rows;
     }
 
@@ -211,5 +218,34 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     private int getTore(List<Spielbericht> list, Function<Spielbericht, List<SpielerTorEreignis>> func) {
         return list.stream().map(func).map(List::size).reduce(Integer::sum).orElse(0);
+    }
+
+    private Comparator<SchuetzenTabellenEintragDto> getComparator(String sortProperty) {
+        switch (sortProperty) {
+            case "nachname": {
+                return Comparator.comparing(SchuetzenTabellenEintragDto::getNachname);
+            }
+            case "vorname": {
+                return Comparator.comparing(SchuetzenTabellenEintragDto::getVorname);
+            }
+            case "team": {
+                return Comparator.comparing(SchuetzenTabellenEintragDto::getTeamName);
+            }
+            case "tore": {
+                return (o1, o2) -> o2.getTore() - o1.getTore();
+            }
+            case "1ass": {
+                return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();
+            }
+            case "2ass": {
+                return (o1, o2) -> o2.getSecondAssist() - o1.getSecondAssist();
+            }
+            case "strafen": {
+                // nach anzahl strafen, nicht anzahl der gesamtminuten
+                return (o1, o2) -> o2.getStrafen() - o1.getStrafen();
+            }
+            default:
+                return (o1, o2) -> 0;
+        }
     }
 }
