@@ -90,7 +90,7 @@ public class Spieler {
      * benötigen.
      */
     public String getFullName() {
-        return vorname + " " + nachname + " (" + nummer + ")";
+        return vorname + " " + nachname + " (Nr. " + nummer + ")";
     }
 
     @Override
