@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,11 +26,12 @@ public class TeamRestController {
         this.service = service;
     }
 
-    @GetMapping()
-    public List<TeamDto> getAllTeams() {
-        return this.service.findAll();
-    }
-
+    /**
+     * Das UI schickt per JS einen Request um bei einem ausgewählten Team nur noch die passenden
+     * Spieler in den Selectboxen anzuzeigen.
+     * @param uuid
+     * @return
+     */
     @GetMapping("{uuid}")
     public TeamDto getTeam(@PathVariable("uuid") UUID uuid) {
         return this.service.findById(uuid);
