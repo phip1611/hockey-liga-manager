@@ -38,9 +38,9 @@ public class SpielberichtController {
     }
 
     @GetMapping("ligatabelle")
-    public String ligatabelle(Model model) {
+    public String ligatabelle(Model model, @RequestParam(value = "sort", required = false) String sort) {
         model.addAttribute("page", "ligatabelle");
-        model.addAttribute("entries", spielberichtService.erstelleLigatabelle());
+        model.addAttribute("entries", spielberichtService.erstelleLigatabelle(sort));
         return "index";
     }
     @GetMapping("schuetzentabelle")

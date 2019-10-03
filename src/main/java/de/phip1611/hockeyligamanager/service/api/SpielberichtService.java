@@ -20,6 +20,8 @@ public interface SpielberichtService extends ExAndImportEntityService<Spielberic
 
     List<LigatabellenEintragDto> erstelleLigatabelle();
 
+    List<LigatabellenEintragDto> erstelleLigatabelle(String sortProperty);
+
     List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle();
 
     List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty);

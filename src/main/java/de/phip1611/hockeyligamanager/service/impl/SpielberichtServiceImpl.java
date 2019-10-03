@@ -103,6 +103,12 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     @Override
     @Transactional(readOnly = true)
     public List<LigatabellenEintragDto> erstelleLigatabelle() {
+        return erstelleLigatabelle(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LigatabellenEintragDto> erstelleLigatabelle(String sort) {
         var teams = this.teamRepo.findAll();
 
         List<LigatabellenEintragDto> entries = new ArrayList<>();
@@ -145,9 +151,15 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             entry.setPunkte((int) punkte);
         }
 
+        // Sortieren nun einmal "normal" um den Platz bestimmen zu können
         Collections.sort(entries);
         for (int i = 0; i < entries.size(); i++) {
             entries.get(i).setPlatz(i + 1);
+        }
+
+        // und jetzt nach dem alle properties gesetzt sind "richtig"
+        if (sort != null) {
+            entries.sort(getLigatabelleComparator(sort));
         }
 
         return entries;
@@ -188,7 +200,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         if (sortProperty == null) {
             Collections.sort(rows);
         } else {
-            Collections.sort(rows, getComparator(sortProperty));
+            rows.sort(getSchuetzenComparator(sortProperty));
         }
         return rows;
     }
@@ -220,7 +232,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         return list.stream().map(func).map(List::size).reduce(Integer::sum).orElse(0);
     }
 
-    private Comparator<SchuetzenTabellenEintragDto> getComparator(String sortProperty) {
+    private Comparator<SchuetzenTabellenEintragDto> getSchuetzenComparator(String sortProperty) {
         switch (sortProperty) {
             case "nachname": {
                 return Comparator.comparing(SchuetzenTabellenEintragDto::getNachname);
@@ -243,6 +255,43 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             case "strafen": {
                 // nach anzahl strafen, nicht anzahl der gesamtminuten
                 return (o1, o2) -> o2.getStrafen() - o1.getStrafen();
+            }
+            default:
+                return (o1, o2) -> 0;
+        }
+    }
+
+    private Comparator<LigatabellenEintragDto> getLigatabelleComparator(String sortProperty) {
+        switch (sortProperty) {
+            case "#": {
+                return Comparator.comparingInt(LigatabellenEintragDto::getPlatz);
+            }
+            case "team": {
+                return Comparator.comparing(LigatabellenEintragDto::getTeamName);
+            }
+            case "spiele": {
+                return (o1, o2) -> o2.getAnzahlSpiele() - o1.getAnzahlSpiele();
+            }
+            case "s3": {
+                return (o1, o2) -> o2.getAnzahlSiege3P() - o1.getAnzahlSiege3P();
+            }
+            case "s2": {
+                return (o1, o2) -> o2.getAnzahlSiege2P() - o1.getAnzahlSiege2P();
+            }
+            case "n1": {
+                return (o1, o2) -> o2.getAnzahlNiederlagen1P() - o1.getAnzahlNiederlagen1P();
+            }
+            case "n0": {
+                return (o1, o2) -> o2.getAnzahlNiederlagen0P() - o1.getAnzahlNiederlagen0P();
+            }
+            case "t": {
+                return (o1, o2) -> o2.getTore() - o1.getTore();
+            }
+            case "gt": {
+                return (o1, o2) -> o2.getGegentore() - o1.getGegentore();
+            }
+            case "punkte": {
+                return (o1, o2) -> o2.getPunkte() - o1.getPunkte();
             }
             default:
                 return (o1, o2) -> 0;
