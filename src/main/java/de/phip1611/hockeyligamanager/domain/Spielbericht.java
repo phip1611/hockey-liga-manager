@@ -13,6 +13,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -94,14 +95,16 @@ public class Spielbericht {
 
     public Spielbericht(SpielberichtForm form,
                         Function<UUID, Optional<Team>> teamFinder,
-                        Function<UUID, Optional<Spieler>> spielerFinder) {
+                        Function<UUID, Optional<Spieler>> spielerFinder,
+                        DateTimeFormatter formatter) {
         this.id = form.getId() == null ? UUID.randomUUID() : form.getId();
-        this.update(form, teamFinder, spielerFinder);
+        this.update(form, teamFinder, spielerFinder, formatter);
     }
 
     public Spielbericht update(SpielberichtForm form,
                                Function<UUID, Optional<Team>> teamFinder,
-                               Function<UUID, Optional<Spieler>> spielerFinder) {
+                               Function<UUID, Optional<Spieler>> spielerFinder,
+                               DateTimeFormatter formatter) {
         this.teamHeim = teamFinder.apply(form.getTeamHeimId()).get();
         this.teamGast = teamFinder.apply(form.getTeamGastId()).get();
         this.schiedsrichter1 = form.getSchiedsrichter1();
@@ -109,7 +112,7 @@ public class Spielbericht {
         this.zeitnehmer = form.getZeitnehmer();
         this.zuschauer = form.getZuschauer();
         this.ort = form.getOrt();
-        this.begin = form.getBeginTimeString() != null ? LocalDateTime.parse(form.getBeginTimeString()) : null;
+        this.begin = form.getBeginTimeString() != null ? LocalDateTime.parse(form.getBeginTimeString(), formatter) : null;
 
         var neueHeimSpielerStrafEreignisse = form.getHeimSpielerStrafEreignisList().stream()
                 .map(x -> x.build(spielerFinder))

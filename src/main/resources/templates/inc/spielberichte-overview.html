@@ -12,7 +12,7 @@
         </thead>
         <tbody>
         <tr th:each="bericht: ${berichte}">
-            <td th:text="${bericht.begin}"></td>
+            <td th:text="${#temporals.format(bericht.begin, pattern)}"></td>
             <td th:text="${bericht.teamHeim}"></td>
             <td th:text="${bericht.teamGast}"></td>
             <td th:text="${bericht.ort}"></td>

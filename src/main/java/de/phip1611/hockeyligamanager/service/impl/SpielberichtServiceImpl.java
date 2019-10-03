@@ -9,8 +9,6 @@ package de.phip1611.hockeyligamanager.service.impl;
 
 import de.phip1611.hockeyligamanager.domain.*;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
-import de.phip1611.hockeyligamanager.form.SpielerStrafEreignisForm;
-import de.phip1611.hockeyligamanager.form.SpielerTorEreignisForm;
 import de.phip1611.hockeyligamanager.repository.*;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.dto.LigatabellenEintragDto;
@@ -19,6 +17,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -38,16 +37,20 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     private SpielerStrafEreignisRepo spielerStrafEreignisRepo;
 
+    private DateTimeFormatter formatter;
+
     public SpielberichtServiceImpl(SpielberichtRepo repo,
                                    TeamRepo teamRepo,
                                    SpielerRepo spielerRepo,
                                    SpielerTorEreignisRepo spielerTorEreignisRepo,
-                                   SpielerStrafEreignisRepo spielerStrafEreignisRepo) {
+                                   SpielerStrafEreignisRepo spielerStrafEreignisRepo,
+                                   DateTimeFormatter formatter) {
         this.repo = repo;
         this.teamRepo = teamRepo;
         this.spielerRepo = spielerRepo;
         this.spielerTorEreignisRepo = spielerTorEreignisRepo;
         this.spielerStrafEreignisRepo = spielerStrafEreignisRepo;
+        this.formatter = formatter;
     }
 
     @Override
@@ -57,16 +60,16 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
         if (form.getId() == null) {
             // neue Entität speichern
-            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById)).toDto();
+            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById, formatter)).toDto();
         }
 
         var e = this.repo.findById(form.getId());
         if (e.isPresent()) {
             // bestehende Entität updaten
-            return e.get().update(form, teamRepo::findById, spielerRepo::findById).toDto();
+            return e.get().update(form, teamRepo::findById, spielerRepo::findById, formatter).toDto();
         } else {
             // neue Entität mit gegebener UUID speichern
-            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById)).toDto();
+            return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById, formatter)).toDto();
         }
     }
 
@@ -209,23 +212,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     @Transactional(readOnly = true)
     public SpielberichtForm createFormFromId(UUID id) {
         var entity = repo.findById(id).get();
-        var form = new SpielberichtForm();
-        form.setId(id);
-        form.setTeamGastId(entity.getTeamGast().getId());
-        form.setTeamHeimId(entity.getTeamHeim().getId());
-        form.setSchiedsrichter1(entity.getSchiedsrichter1());
-        form.setSchiedsrichter2(entity.getSchiedsrichter2());
-        form.setZeitnehmer(entity.getZeitnehmer());
-        form.setZuschauer(entity.getZuschauer());
-        form.setOrt(entity.getOrt());
-        form.setBeginTimeString(entity.getBegin().toString());
-        form.setAnwesendeSpielerGast(entity.getAnwesendeSpielerGast().stream().map(Spieler::getId).collect(toList()));
-        form.setAnwesendeSpielerHeim(entity.getAnwesendeSpielerHeim().stream().map(Spieler::getId).collect(toList()));
-        form.setHeimSpielerTorEreignisList(entity.getHeimSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
-        form.setGastSpielerTorEreignisList(entity.getGastSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
-        form.setHeimSpielerStrafEreignisList(entity.getHeimSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
-        form.setGastSpielerStrafEreignisList(entity.getGastSpielerStrafEreignisList().stream().map(SpielerStrafEreignisForm::new).collect(toList()));
-        return form;
+        return new SpielberichtForm(entity, formatter);
     }
 
     private int getTore(List<Spielbericht> list, Function<Spielbericht, List<SpielerTorEreignis>> func) {

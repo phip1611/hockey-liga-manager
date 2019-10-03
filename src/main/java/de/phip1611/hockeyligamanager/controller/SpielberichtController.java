@@ -7,6 +7,7 @@
  */
 package de.phip1611.hockeyligamanager.controller;
 
+import de.phip1611.hockeyligamanager.config.DateTimeFormatterConfiguration;
 import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.service.api.SpielberichtService;
 import de.phip1611.hockeyligamanager.service.api.SpielerService;
@@ -54,6 +55,7 @@ public class SpielberichtController {
     public String spielberichte(Model model) {
         model.addAttribute("berichte", spielberichtService.findAll());
         model.addAttribute("page", "spielberichte-overview");
+        model.addAttribute("pattern", DateTimeFormatterConfiguration.PATTERN);
         return "index";
     }
 
@@ -61,6 +63,7 @@ public class SpielberichtController {
     public String spielberichtDetail(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("bericht", spielberichtService.findById(id));
         model.addAttribute("page", "spielbericht-detail");
+        model.addAttribute("pattern", DateTimeFormatterConfiguration.PATTERN);
         return "index";
     }
 

@@ -6,8 +6,9 @@
         <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
-                    <label for="beginTimeString">Begin (YYYY-MM-DD'T'hh:mm:ss)</label>
+                    <label for="beginTimeString">Begin (Datum + Zeit)</label>
                     <input type="text" class="form-control" id="beginTimeString" th:field="*{beginTimeString}" />
+                    <small class="form-text text-muted">Format 'yyyy-mm-dd hh:mm' (bei <9 mit führenden Nullen)</small>
                 </div>
             </div>
             <div class="col">

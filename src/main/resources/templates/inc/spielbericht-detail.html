@@ -1,7 +1,7 @@
 <th:block xmlns:th="http://www.thymeleaf.org">
     <h2>Spielbericht</h2>
     <div class="row">
-        <div class="col"><strong>Datum:</strong> <span th:text="${bericht.begin}">Datum</span></div>
+        <div class="col"><strong>Datum:</strong> <span th:text="${#temporals.format(bericht.begin, pattern)}">Datum + Zeit</span></div>
         <div class="col"><strong>Ort:</strong> <span th:text="${bericht.ort}">Ort</span></div>
         <div class="col"><strong>Zuschauer:</strong> <span th:text="${bericht.zuschauer}">Zuschauer</span></div>
     </div>

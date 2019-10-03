@@ -13,6 +13,7 @@ import de.phip1611.hockeyligamanager.domain.Team;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,7 +66,7 @@ public class SpielberichtForm implements Form {
     public SpielberichtForm() {
     }
 
-    public SpielberichtForm(Spielbericht entity) {
+    public SpielberichtForm(Spielbericht entity, DateTimeFormatter formatter) {
         this.setId(entity.getId());
         this.setTeamGastId(entity.getTeamGast().getId());
         this.setTeamHeimId(entity.getTeamHeim().getId());
@@ -74,7 +75,7 @@ public class SpielberichtForm implements Form {
         this.setZeitnehmer(entity.getZeitnehmer());
         this.setZuschauer(entity.getZuschauer());
         this.setOrt(entity.getOrt());
-        this.setBeginTimeString(entity.getBegin().toString());
+        this.setBeginTimeString(formatter.format(entity.getBegin()));
         this.setAnwesendeSpielerGast(entity.getAnwesendeSpielerGast().stream().map(Spieler::getId).collect(toList()));
         this.setAnwesendeSpielerHeim(entity.getAnwesendeSpielerHeim().stream().map(Spieler::getId).collect(toList()));
         this.setHeimSpielerTorEreignisList(entity.getHeimSpielerTorEreignisList().stream().map(SpielerTorEreignisForm::new).collect(toList()));
@@ -206,8 +207,10 @@ public class SpielberichtForm implements Form {
         this.anwesendeSpielerGast = anwesendeSpielerGast;
     }
 
-    public Spielbericht build(Function<UUID, Optional<Team>> teamFinder, Function<UUID, Optional<Spieler>> spielerFinder) {
-        return new Spielbericht(this, teamFinder, spielerFinder);
+    public Spielbericht build(Function<UUID, Optional<Team>> teamFinder,
+                              Function<UUID, Optional<Spieler>> spielerFinder,
+                              DateTimeFormatter formatter) {
+        return new Spielbericht(this, teamFinder, spielerFinder, formatter);
     }
 
     @Override
