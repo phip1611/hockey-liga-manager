@@ -4,40 +4,48 @@ generate-testdata: true
 testdata:
   teams:
     - id: 0dea5a22-4d26-4402-a6d7-4c9b4dd99c6d
-      name: Dresdens bestes Eisteam, yo
+      name: Dresdens bestes Eisteam
       spieler:
         - id: a2a7c774-0c88-4baf-8845-b6222ebe1b71
-          vorname: Spieler 1
-          nachname: In Team 1
-          nummer: 22
+          vorname: Max
+          nachname: Mustermann
+          nummer: 1
         - id: 7007b773-2f95-42a4-a3df-b6892551c362
-          vorname: Spieler 2
-          nachname: In Team 1
-          nummer: 73
+          vorname: Sarah
+          nachname: JZK
+          nummer: 2
         - id: f971dd81-7590-4a89-9e55-c64a15cdcbd5
-          vorname: Spieler 3
-          nachname: In Team 1
-          nummer: 24
+          vorname: Phil
+          nachname: Flieger
+          nummer: 3
     - id: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833
-      name: Team2
+      name: Dresdener Eislöwen
       spieler:
         - id: 47a56f72-8491-4548-be7a-e8b29a8863fe
-          vorname: Spieler 4
-          nachname: In Team 2
+          vorname: Annegret
+          nachname: Kampf-Knarrenbauer
           nummer: 9
         - id: fc4cf4f3-1458-44f8-94fd-b6f1829ada91
-          vorname: Spieler 5
-          nachname: In Team 2
+          vorname: Barrack
+          nachname: Obama
           nummer: 26
     - id: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b
-      name: Team3
+      name: Fridays for Future rules
       spieler:
         - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
-          vorname: Spieler 6
-          nachname: In Team 3
+          vorname: Luisa
+          nachname: Neubauer
           nummer: 3
+        - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
+          vorname: Greta
+          nachname: Thunberg
+          nummer: 6
+        - id: b6ef7515-2dcc-425b-a3d9-ce931743f444
+          vorname: Robert
+          nachname: Habeck
+          nummer: 9
     - id: 71462616-8192-4e27-a39c-d6ee8afd8757
-      name: Team4
+      name: Team 4 hat keine Spieler
 
   spielberichte:
     - # 3 Punkte Sieg
@@ -49,7 +57,7 @@ testdata:
       zeitnehmer: Mr. Zeitstopper
       zuschauer: 42
       ort: Dresden Trainingshalle
-      beginTimeString: "2019-03-12T19:00"
+      beginTimeString: "2019-03-12 19:00"
       anwesendeSpielerHeim:
         - a2a7c774-0c88-4baf-8845-b6222ebe1b71
         - 7007b773-2f95-42a4-a3df-b6892551c362
@@ -77,7 +85,7 @@ testdata:
       teamHeimId: 0b29b67c-5b03-4c76-b99f-f36b8bbb8833 # Team 2
       teamGastId: 4d8e25eb-5256-43c8-ae28-05c3d7e3b76b # Team 3
       ort: Bautzen Hockey Arena
-      beginTimeString: "2019-02-28T18:00"
+      beginTimeString: "2019-02-28 18:00"
       anwesendeSpielerHeim:
         - 47a56f72-8491-4548-be7a-e8b29a8863fe
         - fc4cf4f3-1458-44f8-94fd-b6f1829ada91
@@ -96,7 +104,7 @@ testdata:
     - # 3 Punkt Sieg für Team 3
       id: 590eb74b-8bcd-4155-a46e-148d8025f0af
       ort: Arena Zwickau
-      beginTimeString: "2019-03-12T18:30"
+      beginTimeString: "2019-03-12 18:30"
       anwesendeSpielerHeim:
         - b6ef7515-2dcc-425b-a3d9-ce931743f444
       anwesendeSpielerGast:
