@@ -45,10 +45,10 @@ function getTeamByUuid(team, uuid, callback) {
 
 function processTeamDto(team, dto) {
     const selects = team === 'heim' ? $$(HEIM_SELECTIONS_SELECTOR) : $$(GAST_SELECTIONS_SELECTOR);
-    let optionsHtml = '<option value="">-</option>'; // default option
-    dto.spieler.forEach(spieler => {
-       optionsHtml += `<option value="${spieler.id}">${spieler.fullName}</option>`;
-    });
+    const DEFAULT_OPTION = '<option value="">-</option>'; // default option
+    const optionsHtml = dto.spieler
+        .map(spieler => `<option value="${spieler.id}">${spieler.fullName}</option>`)
+        .reduce((r, l) => r + l, DEFAULT_OPTION);
     selects.forEach(select => {
        select.innerHTML = optionsHtml;
     });
@@ -84,16 +84,16 @@ function filterOptions(team, dto) {
     const spielerIds = dto.spieler.map(spieler => spieler.id); // Array von ID
     selects.forEach(select => {
         const options = select.querySelectorAll('option'); // Alle Options einer bestimmten Select-Box
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === '') continue; // das leere option feld auch erlauben
-            if (!spielerIds.includes(options[i].value)) {
-                console.log(`Spieler ${options[i].value} ist NICHT in dem Team; fliegt aus der NodeList`);
-                select.removeChild(options[i]);
+        options.forEach(option => {
+            if (option.value === '') return; // like continue in for-loop; keep the default option
+            if (!spielerIds.includes(option.value)) {
+                console.log(`Spieler ${option.value} ist NICHT in dem Team; fliegt aus der NodeList`);
+                select.removeChild(option);
             } else {
-                console.log(`Spieler ${options[i].value} ist in dem Team; bleibt in der NodeList`);
+                console.log(`Spieler ${option.value} ist in dem Team; bleibt in der NodeList`);
                 // vom Server steht im InnerHTML das Proeprty "fullNameWithTeamPrefix"; das können wir hier ersetzen
-                options[i].innerHTML = dto.spieler.find(spieler => spieler.id === options[i].value).fullName;
+                option.innerHTML = dto.spieler.find(spieler => spieler.id === option.value).fullName;
             }
-        }
+        });
     });
 }
