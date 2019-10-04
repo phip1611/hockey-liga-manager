@@ -1,3 +1,6 @@
+# hier kommt das zip am ende hin
+build/
+
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -23,4 +26,4 @@ HELP.md
 /dist/
 /nbdist/
 /.nb-gradle/
-/build/
+/build-support/

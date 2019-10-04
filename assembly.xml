@@ -1,0 +1,23 @@
+<assembly>
+    <id>build</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <fileSets>
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory />
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>build-support</directory>
+            <outputDirectory />
+            <includes>
+                <include>**</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
