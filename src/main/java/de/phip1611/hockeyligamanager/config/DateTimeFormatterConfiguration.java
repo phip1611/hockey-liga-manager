@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class DateTimeFormatterConfiguration {
 
-    public static final String PATTERN = "yyyy-dd-MM HH:mm";
+    public static final String PATTERN = "yyyy-MM-dd HH:mm";
 
     @Bean
     public DateTimeFormatter dateTimeFormatter() {
