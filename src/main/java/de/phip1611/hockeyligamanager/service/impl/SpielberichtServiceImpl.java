@@ -186,8 +186,9 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
             var torespieler = tore.stream().filter(x -> x.getSchuetze().equals(spieler)).count();
             var firstassistspieler = tore.stream()
-                    .filter(x -> x.getFirstAssist() != null)
-                    .filter(x -> x.getFirstAssist().equals(spieler))
+                    .map(SpielerTorEreignis::getFirstAssist)
+                    .filter(Objects::nonNull)
+                    .filter(x -> x.equals(spieler))
                     .count();
             row.setFirstAssist((int) firstassistspieler);
             var strafenspieler = strafen.stream().filter(x -> x.getSpieler().equals(spieler)).collect(toList());
