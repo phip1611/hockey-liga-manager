@@ -33,7 +33,7 @@ public class SpielerStrafEreignisForm implements MultipleFormField {
     private UUID spielerId;
 
     // dauer der Strafe in Minuten
-    @Min(0)
+    @Min(1)
     private int dauer;
 
     public SpielerStrafEreignisForm() {

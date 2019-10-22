@@ -189,10 +189,14 @@ public class SpielberichtServiceImpl implements SpielberichtService {
                     .filter(x -> x.getFirstAssist() != null)
                     .filter(x -> x.getFirstAssist().equals(spieler))
                     .count();
+            row.setFirstAssist((int) firstassistspieler);
             var strafenspieler = strafen.stream().filter(x -> x.getSpieler().equals(spieler)).collect(toList());
             row.setTore((int) torespieler);
             row.setStrafen(strafenspieler.size());
-            row.setStrafMinuten((int) strafenspieler.stream().map(SpielerStrafEreignis::getDauer).count());
+            row.setStrafMinuten(strafenspieler.stream()
+                    .map(SpielerStrafEreignis::getDauer)
+                    .reduce(Integer::sum).orElse(0)
+            );
         }
         if (sortProperty == null) {
             Collections.sort(rows);
