@@ -28,8 +28,6 @@ public class ExportSpielerTorEreignisDto {
 
     private UUID firstAssistId;
 
-    private UUID secondAssistId;
-
     // for objectmapper
     public ExportSpielerTorEreignisDto() {
     }
@@ -42,9 +40,6 @@ public class ExportSpielerTorEreignisDto {
         // Werte können null sein
         if (spielerTorEreignis.getFirstAssist() != null) {
             this.firstAssistId = spielerTorEreignis.getFirstAssist().getId();
-        }
-        if (spielerTorEreignis.getSecondAssist() != null) {
-            this.secondAssistId = spielerTorEreignis.getSecondAssist().getId();
         }
     }
 
@@ -64,10 +59,6 @@ public class ExportSpielerTorEreignisDto {
         return firstAssistId;
     }
 
-    public UUID getSecondAssistId() {
-        return secondAssistId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,13 +67,12 @@ public class ExportSpielerTorEreignisDto {
         return time == that.time &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(schuetzeId, that.schuetzeId) &&
-                Objects.equals(firstAssistId, that.firstAssistId) &&
-                Objects.equals(secondAssistId, that.secondAssistId);
+                Objects.equals(firstAssistId, that.firstAssistId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, time, schuetzeId, firstAssistId, secondAssistId);
+        return Objects.hash(id, time, schuetzeId, firstAssistId);
     }
 
     @Override
@@ -92,7 +82,6 @@ public class ExportSpielerTorEreignisDto {
                 ", time=" + time +
                 ", schuetzeId=" + schuetzeId +
                 ", firstAssistId=" + firstAssistId +
-                ", secondAssistId=" + secondAssistId +
                 '}';
     }
 }

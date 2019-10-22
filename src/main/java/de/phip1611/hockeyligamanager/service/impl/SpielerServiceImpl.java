@@ -75,8 +75,6 @@ public class SpielerServiceImpl implements SpielerService {
         var e = o.get();
         // aus team entfernen
         e.getTeam().removeSpieler(e);
-        // sich als second assist überall entfernen
-        this.spielerTorEreignisRepo.findAllBySecondAssist(e).forEach(SpielerTorEreignis::invalidateSecondAssist);
         // sich als first assist überall entfernen
         this.spielerTorEreignisRepo.findAllByFirstAssist(e).forEach(SpielerTorEreignis::invalidateFirstAssist);
         // die Tore bleiben erhalten, müssen dann aber einem neuen Spieler zugrodnet werden

@@ -35,9 +35,6 @@ public class SpielerTorEreignis {
     @ManyToOne
     private Spieler firstAssist;
 
-    @ManyToOne
-    private Spieler secondAssist;
-
     private SpielerTorEreignis() {
         /* hibernate */
     }
@@ -49,9 +46,6 @@ public class SpielerTorEreignis {
         this.schuetze = spielerFinder.apply(export.getSchuetzeId()).orElseThrow();
         if (export.getFirstAssistId() != null) {
             this.firstAssist = spielerFinder.apply(export.getFirstAssistId()).orElseThrow();
-        }
-        if (export.getSecondAssistId() != null) {
-            this.secondAssist = spielerFinder.apply(export.getSecondAssistId()).orElseThrow();
         }
     }
 
@@ -66,9 +60,6 @@ public class SpielerTorEreignis {
         this.firstAssist  = form.getFirstAssistId() != null ?
                 spielerFinder.apply(form.getFirstAssistId()).get()
                 : null;
-        this.secondAssist = form.getSecondAssistId() != null ?
-                spielerFinder.apply(form.getSecondAssistId()).get()
-                : null;
         this.schuetze = spielerFinder.apply(form.getSchuetzeId()).get();
         this.time = form.getTime();
         return this;
@@ -80,10 +71,6 @@ public class SpielerTorEreignis {
 
     public void invalidateSchuetze() {
         this.schuetze = null;
-    }
-
-    public void invalidateSecondAssist() {
-        this.secondAssist = null;
     }
 
     public UUID getId() {
@@ -100,10 +87,6 @@ public class SpielerTorEreignis {
 
     public Spieler getFirstAssist() {
         return firstAssist;
-    }
-
-    public Spieler getSecondAssist() {
-        return secondAssist;
     }
 
     public boolean isInRegTime() {

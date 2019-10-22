@@ -189,13 +189,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
                     .filter(x -> x.getFirstAssist() != null)
                     .filter(x -> x.getFirstAssist().equals(spieler))
                     .count();
-            var secondassistspieler = tore.stream()
-                    .filter(x -> x.getSecondAssist() != null)
-                    .filter(x -> x.getSecondAssist().equals(spieler))
-                    .count();
             var strafenspieler = strafen.stream().filter(x -> x.getSpieler().equals(spieler)).collect(toList());
-            row.setFirstAssist((int) firstassistspieler);
-            row.setSecondAssist((int) secondassistspieler);
             row.setTore((int) torespieler);
             row.setStrafen(strafenspieler.size());
             row.setStrafMinuten((int) strafenspieler.stream().map(SpielerStrafEreignis::getDauer).count());
@@ -235,9 +229,6 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             }
             case "1ass": {
                 return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();
-            }
-            case "2ass": {
-                return (o1, o2) -> o2.getSecondAssist() - o1.getSecondAssist();
             }
             case "strafen": {
                 // nach anzahl strafen, nicht anzahl der gesamtminuten

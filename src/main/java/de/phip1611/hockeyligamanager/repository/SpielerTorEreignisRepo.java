@@ -17,5 +17,4 @@ import java.util.UUID;
 public interface SpielerTorEreignisRepo extends JpaRepository<SpielerTorEreignis, UUID> {
     List<SpielerTorEreignis> findAllBySchuetze(Spieler spieler);
     List<SpielerTorEreignis> findAllByFirstAssist(Spieler spieler);
-    List<SpielerTorEreignis> findAllBySecondAssist(Spieler spieler);
 }

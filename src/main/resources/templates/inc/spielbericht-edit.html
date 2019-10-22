@@ -111,15 +111,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Second Assist</label>
-                            <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].secondAssistId}" class="custom-select heim-spieler-selection">
-                                <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col">
@@ -145,15 +136,6 @@
                         <div class="form-group">
                             <label>First Assist</label>
                             <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].firstAssistId}" class="custom-select gast-spieler-selection">
-                                <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Second Assist</label>
-                            <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].secondAssistId}" class="custom-select gast-spieler-selection">
                                 <option value="">-</option>
                                 <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
                             </select>

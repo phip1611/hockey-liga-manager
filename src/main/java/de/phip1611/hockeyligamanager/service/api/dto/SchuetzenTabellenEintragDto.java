@@ -21,8 +21,6 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
 
     private int firstAssist;
 
-    private int secondAssist;
-
     private int strafen;
 
     private int strafMinuten;
@@ -43,10 +41,6 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
 
     public void setFirstAssist(int firstAssist) {
         this.firstAssist = firstAssist;
-    }
-
-    public void setSecondAssist(int secondAssist) {
-        this.secondAssist = secondAssist;
     }
 
     public void setStrafen(int strafen) {
@@ -73,10 +67,6 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
         return firstAssist;
     }
 
-    public int getSecondAssist() {
-        return secondAssist;
-    }
-
     public int getStrafen() {
         return strafen;
     }
@@ -94,9 +84,6 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
         if (o.tore != tore) {
             return o.tore - tore;
         }
-        if (o.firstAssist != firstAssist) {
-            return o.firstAssist - firstAssist;
-        }
-        return o.secondAssist - secondAssist;
+        return o.firstAssist - firstAssist;
     }
 }

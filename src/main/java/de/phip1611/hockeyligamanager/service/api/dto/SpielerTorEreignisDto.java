@@ -21,16 +21,12 @@ public class SpielerTorEreignisDto implements Comparable<SpielerTorEreignisDto> 
 
     private String firstAssistName;
 
-    private String secondAssistName;
-
     public SpielerTorEreignisDto(SpielerTorEreignis spielerTorEreignis) {
         this.id = spielerTorEreignis.getId();
         this.time = spielerTorEreignis.getTime();
         this.schuetzeName = spielerTorEreignis.getSchuetze().getFullName();
         this.firstAssistName = spielerTorEreignis.getFirstAssist() != null ?
                 spielerTorEreignis.getFirstAssist().getFullName() : null;
-        this.secondAssistName = spielerTorEreignis.getSecondAssist() != null ?
-                spielerTorEreignis.getSecondAssist().getFullName() : null;
     }
 
     public UUID getId() {
@@ -47,10 +43,6 @@ public class SpielerTorEreignisDto implements Comparable<SpielerTorEreignisDto> 
 
     public String getFirstAssistName() {
         return firstAssistName;
-    }
-
-    public String getSecondAssistName() {
-        return secondAssistName;
     }
 
     @Override

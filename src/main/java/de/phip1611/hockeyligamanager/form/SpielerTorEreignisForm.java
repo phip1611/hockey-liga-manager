@@ -31,9 +31,6 @@ public class SpielerTorEreignisForm implements MultipleFormField {
     @NotNull
     private UUID firstAssistId;
 
-    @NotNull
-    private UUID secondAssistId;
-
     public SpielerTorEreignisForm() {
     }
 
@@ -42,7 +39,6 @@ public class SpielerTorEreignisForm implements MultipleFormField {
         this.time = entity.getTime();
         this.schuetzeId = entity.getSchuetze().getId();
         this.firstAssistId = entity.getFirstAssist() != null ? entity.getFirstAssist().getId() : null;
-        this.secondAssistId = entity.getSecondAssist() != null ? entity.getSecondAssist().getId() : null;
     }
 
     public UUID getId() {
@@ -77,14 +73,6 @@ public class SpielerTorEreignisForm implements MultipleFormField {
         this.firstAssistId = firstAssistId;
     }
 
-    public UUID getSecondAssistId() {
-        return secondAssistId;
-    }
-
-    public void setSecondAssistId(UUID secondAssistId) {
-        this.secondAssistId = secondAssistId;
-    }
-
     public SpielerTorEreignis build(Function<UUID, Optional<Spieler>> spielerFinder) {
         return new SpielerTorEreignis(this, spielerFinder);
     }
@@ -96,13 +84,12 @@ public class SpielerTorEreignisForm implements MultipleFormField {
         SpielerTorEreignisForm that = (SpielerTorEreignisForm) o;
         return time == that.time &&
                 Objects.equals(schuetzeId, that.schuetzeId) &&
-                Objects.equals(firstAssistId, that.firstAssistId) &&
-                Objects.equals(secondAssistId, that.secondAssistId);
+                Objects.equals(firstAssistId, that.firstAssistId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(time, schuetzeId, firstAssistId, secondAssistId);
+        return Objects.hash(time, schuetzeId, firstAssistId);
     }
 
     @Override
