@@ -83,7 +83,7 @@ public class SpielerTorEreignis {
     }
 
     public void invalidateSecondAssist() {
-        this.firstAssist = null;
+        this.secondAssist = null;
     }
 
     public UUID getId() {
