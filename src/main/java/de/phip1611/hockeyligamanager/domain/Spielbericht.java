@@ -11,7 +11,13 @@ import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielberichtDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -258,19 +264,19 @@ public class Spielbericht {
     }
 
     public List<SpielerTorEreignis> getHeimSpielerTorEreignisList() {
-        return heimSpielerTorEreignisList;
+        return heimSpielerTorEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerStrafEreignis> getHeimSpielerStrafEreignisList() {
-        return heimSpielerStrafEreignisList;
+        return heimSpielerStrafEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerTorEreignis> getGastSpielerTorEreignisList() {
-        return gastSpielerTorEreignisList;
+        return gastSpielerTorEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerStrafEreignis> getGastSpielerStrafEreignisList() {
-        return gastSpielerStrafEreignisList;
+        return gastSpielerStrafEreignisList.stream().sorted().collect(toList());
     }
 
     public SpielberichtDto toDto() {
