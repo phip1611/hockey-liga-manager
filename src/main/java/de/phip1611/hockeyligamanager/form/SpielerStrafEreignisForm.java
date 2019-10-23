@@ -34,7 +34,7 @@ public class SpielerStrafEreignisForm implements MultipleFormField {
 
     // dauer der Strafe in Minuten
     @Min(1)
-    private int dauer;
+    private int dauer = 1; // Damit der Wert im Formular mit dem min=""-Feld übereinstimmt
 
     public SpielerStrafEreignisForm() {
     }
