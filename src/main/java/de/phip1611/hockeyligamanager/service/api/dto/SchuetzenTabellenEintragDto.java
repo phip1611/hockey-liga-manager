@@ -21,6 +21,8 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
 
     private int firstAssist;
 
+    private int anzahlSpiele;
+
     private int strafen;
 
     private int strafMinuten;
@@ -49,6 +51,24 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
 
     public void setStrafMinuten(int strafMinuten) {
         this.strafMinuten = strafMinuten;
+    }
+
+    public int getAnzahlSpiele() {
+        return anzahlSpiele;
+    }
+
+    public void setAnzahlSpiele(int anzahlSpiele) {
+        this.anzahlSpiele = anzahlSpiele;
+    }
+
+    public double getToreJeSpiel() {
+        if (anzahlSpiele == 0) return 0;
+
+        var schnitt = ((double)this.tore) / ((double)this.anzahlSpiele);
+        schnitt *= 100;
+        schnitt = Math.round(schnitt);
+        schnitt /= 100;
+        return schnitt;
     }
 
     public String getVorname() {

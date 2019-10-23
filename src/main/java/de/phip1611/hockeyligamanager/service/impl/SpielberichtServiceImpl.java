@@ -180,6 +180,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         List<SchuetzenTabellenEintragDto> rows = new ArrayList<>();
         var tore = spielerTorEreignisRepo.findAll();
         var strafen = spielerStrafEreignisRepo.findAll();
+        var spiele = repo.findAll(); // laden an der stelle alle, da wir alle brauchen für den Bericht
         for (Spieler spieler : spielerRepo.findAll()) {
             var row = new SchuetzenTabellenEintragDto(spieler);
             rows.add(row);
@@ -198,6 +199,8 @@ public class SpielberichtServiceImpl implements SpielberichtService {
                     .map(SpielerStrafEreignis::getDauer)
                     .reduce(Integer::sum).orElse(0)
             );
+
+            row.setAnzahlSpiele(getAnzahlSpieleVonSpieler(spiele, spieler.getId()));
         }
         if (sortProperty == null) {
             Collections.sort(rows);
@@ -218,6 +221,18 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         return list.stream().map(func).map(List::size).reduce(Integer::sum).orElse(0);
     }
 
+    private int getAnzahlSpieleVonSpieler(List<Spielbericht> alleSpiele, UUID spieler) {
+        return (int) alleSpiele.stream().filter(spiel -> {
+            var spielteHeimSpiel = spiel.getAnwesendeSpielerHeim().stream()
+                    .map(Spieler::getId)
+                    .anyMatch(id -> id.equals(spieler));
+            var spielteGastSpiel = spiel.getAnwesendeSpielerGast().stream()
+                    .map(Spieler::getId)
+                    .anyMatch(id -> id.equals(spieler));
+            return  spielteHeimSpiel || spielteGastSpiel;
+        }).count();
+    }
+
     private Comparator<SchuetzenTabellenEintragDto> getSchuetzenComparator(String sortProperty) {
         switch (sortProperty) {
             case "nachname": {
@@ -231,6 +246,12 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             }
             case "tore": {
                 return (o1, o2) -> o2.getTore() - o1.getTore();
+            }
+            case "torejespiel": {
+                return (o1, o2) -> (int) (o2.getToreJeSpiel() - o1.getToreJeSpiel());
+            }
+            case "spiele": {
+                return (o1, o2) -> o2.getAnzahlSpiele() - o1.getAnzahlSpiele();
             }
             case "1ass": {
                 return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();

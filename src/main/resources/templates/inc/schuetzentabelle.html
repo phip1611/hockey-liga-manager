@@ -5,7 +5,9 @@
             <th scope="col"><a href="?sort=nachname">Nachname</a></th>
             <th scope="col"><a href="?sort=vorname">Vorname</a></th>
             <th scope="col"><a href="?sort=team">Team</a></th>
+            <th scope="col"><a href="?sort=spiele">Spiele</a></th>
             <th scope="col"><a href="?sort=tore">Tore</a></th>
+            <th scope="col"><a href="?sort=torejespiel">Tore/Spiel</a></th>
             <th scope="col"><a href="?sort=1ass">1. Assist</a></th>
             <th scope="col"><a href="?sort=strafen">Strafen (Minuten)</a></th>
         </tr>
@@ -15,7 +17,9 @@
             <td th:text="${entry.vorname}"></td>
             <td th:text="${entry.nachname}"></td>
             <td th:text="${entry.teamName}"></td>
+            <td th:text="${entry.anzahlSpiele}"></td>
             <td th:text="${entry.tore}"></td>
+            <td th:text="${entry.toreJeSpiel}"></td>
             <td th:text="${entry.firstAssist}"></td>
             <td th:text="${entry.strafenString}"></td>
         </tr>
