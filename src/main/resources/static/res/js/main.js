@@ -10,9 +10,11 @@ const $  = d.querySelector.bind(d);
 const $$ = d.querySelectorAll.bind(d);
 
 window.onload = () => {
-    console.log("js onload");
-    registerEventListeners();
-    filterOptionsOnInit();
+    // Die Logik ist nur für die Spielbericht-Edit-Seite
+    if (location.pathname.startsWith('/spielberichte/')) {
+        registerEventListeners();
+        filterOptionsOnInit();
+    }
 };
 
 function registerEventListeners() {
