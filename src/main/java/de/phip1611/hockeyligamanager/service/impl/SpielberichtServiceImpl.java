@@ -174,18 +174,16 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     @Override
     @Transactional
-    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle() {
-        return erstelleSchuetzentabelle(null);
-    }
-
-    @Override
-    @Transactional
-    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty) {
+    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(Optional<UUID> filterTeam,
+                                                                      Optional<String> sortProperty) {
         List<SchuetzenTabellenEintragDto> rows = new ArrayList<>();
         var tore = spielerTorEreignisRepo.findAll();
         var strafen = spielerStrafEreignisRepo.findAll();
         var spiele = repo.findAll(); // laden an der stelle alle, da wir alle brauchen für den Bericht
-        for (Spieler spieler : spielerRepo.findAll()) {
+
+        List<Spieler> alleSpieler = filterTeam.map(spielerRepo::findAllByTeamId)
+                .orElseGet(() -> spielerRepo.findAll());
+        for (Spieler spieler : alleSpieler) {
             var row = new SchuetzenTabellenEintragDto(spieler);
             rows.add(row);
 
@@ -206,10 +204,10 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
             row.setAnzahlSpiele(getAnzahlSpieleVonSpieler(spiele, spieler.getId()));
         }
-        if (sortProperty == null) {
+        if (sortProperty.isEmpty()) {
             Collections.sort(rows);
         } else {
-            rows.sort(getSchuetzenComparator(sortProperty));
+            rows.sort(getSchuetzenComparator(sortProperty.get()));
         }
         return rows;
     }
