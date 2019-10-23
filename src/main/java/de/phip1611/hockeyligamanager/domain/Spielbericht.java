@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -162,6 +163,27 @@ public class Spielbericht {
         this.heimSpielerTorEreignisList.addAll(neueHeimSpielerTorEreignisse);
         this.gastSpielerStrafEreignisList.addAll(neueGastSpielerStrafEreignisse);
         this.gastSpielerTorEreignisList.addAll(neueGastSpielerTorEreignisse);
+
+        // Alle Spieler die Tor- oder Strafereignisse bekommen haben, werden sofern nicht angegeben
+        // den Anwesenden Spielern hinzugefügt
+        // falls das im UI vergessen wurde; es ist an der Stelle aber logisch die Spieler als
+        // Anwesend zu markieren und nimmt sogar Arbeit im Formular ab :)
+        Stream.concat(
+                this.heimSpielerStrafEreignisList.stream().map(SpielerStrafEreignis::getSpieler),
+                this.heimSpielerTorEreignisList.stream().map(SpielerTorEreignis::getSchuetze)
+        ).distinct().forEach(heimSpielerMitEreignis -> {
+            if (!this.anwesendeSpielerHeim.contains(heimSpielerMitEreignis)) {
+                this.anwesendeSpielerHeim.add(heimSpielerMitEreignis);
+            }
+        });
+        Stream.concat(
+                this.gastSpielerStrafEreignisList.stream().map(SpielerStrafEreignis::getSpieler),
+                this.gastSpielerTorEreignisList.stream().map(SpielerTorEreignis::getSchuetze)
+        ).distinct().forEach(gastSpielerMitEreignis -> {
+            if (!this.anwesendeSpielerGast.contains(gastSpielerMitEreignis)) {
+                this.anwesendeSpielerGast.add(gastSpielerMitEreignis);
+            }
+        });
 
         return this;
     }

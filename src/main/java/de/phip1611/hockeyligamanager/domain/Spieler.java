@@ -99,12 +99,13 @@ public class Spieler {
         if (o == null || getClass() != o.getClass()) return false;
         Spieler spieler = (Spieler) o;
         return Objects.equals(vorname, spieler.vorname) &&
-                Objects.equals(nachname, spieler.nachname);
+                Objects.equals(nachname, spieler.nachname) &&
+                Objects.equals(nummer, spieler.nummer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vorname, nachname);
+        return Objects.hash(vorname, nachname, nummer);
     }
 
     public SpielerDto toDto() {
