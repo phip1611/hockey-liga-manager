@@ -58,6 +58,10 @@ public class SpielberichtServiceImpl implements SpielberichtService {
     public SpielberichtDto createOrUpdate(SpielberichtForm form) {
         form.removeEmptyFields();
 
+        if (form.getTeamHeimId().equals(form.getTeamGastId())) {
+            throw new IllegalArgumentException("Heim-Team und Gast-Team sind gleich!");
+        }
+
         if (form.getId() == null) {
             // neue Entität speichern
             return this.repo.save(form.build(teamRepo::findById, spielerRepo::findById, formatter)).toDto();
@@ -170,17 +174,16 @@ public class SpielberichtServiceImpl implements SpielberichtService {
 
     @Override
     @Transactional
-    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle() {
-        return erstelleSchuetzentabelle(null);
-    }
-
-    @Override
-    @Transactional
-    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty) {
+    public List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(Optional<UUID> filterTeam,
+                                                                      Optional<String> sortProperty) {
         List<SchuetzenTabellenEintragDto> rows = new ArrayList<>();
         var tore = spielerTorEreignisRepo.findAll();
         var strafen = spielerStrafEreignisRepo.findAll();
-        for (Spieler spieler : spielerRepo.findAll()) {
+        var spiele = repo.findAll(); // laden an der stelle alle, da wir alle brauchen für den Bericht
+
+        List<Spieler> alleSpieler = filterTeam.map(spielerRepo::findAllByTeamId)
+                .orElseGet(() -> spielerRepo.findAll());
+        for (Spieler spieler : alleSpieler) {
             var row = new SchuetzenTabellenEintragDto(spieler);
             rows.add(row);
 
@@ -198,11 +201,13 @@ public class SpielberichtServiceImpl implements SpielberichtService {
                     .map(SpielerStrafEreignis::getDauer)
                     .reduce(Integer::sum).orElse(0)
             );
+
+            row.setAnzahlSpiele(getAnzahlSpieleVonSpieler(spiele, spieler.getId()));
         }
-        if (sortProperty == null) {
+        if (sortProperty.isEmpty()) {
             Collections.sort(rows);
         } else {
-            rows.sort(getSchuetzenComparator(sortProperty));
+            rows.sort(getSchuetzenComparator(sortProperty.get()));
         }
         return rows;
     }
@@ -218,6 +223,18 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         return list.stream().map(func).map(List::size).reduce(Integer::sum).orElse(0);
     }
 
+    private int getAnzahlSpieleVonSpieler(List<Spielbericht> alleSpiele, UUID spieler) {
+        return (int) alleSpiele.stream().filter(spiel -> {
+            var spielteHeimSpiel = spiel.getAnwesendeSpielerHeim().stream()
+                    .map(Spieler::getId)
+                    .anyMatch(id -> id.equals(spieler));
+            var spielteGastSpiel = spiel.getAnwesendeSpielerGast().stream()
+                    .map(Spieler::getId)
+                    .anyMatch(id -> id.equals(spieler));
+            return  spielteHeimSpiel || spielteGastSpiel;
+        }).count();
+    }
+
     private Comparator<SchuetzenTabellenEintragDto> getSchuetzenComparator(String sortProperty) {
         switch (sortProperty) {
             case "nachname": {
@@ -231,6 +248,12 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             }
             case "tore": {
                 return (o1, o2) -> o2.getTore() - o1.getTore();
+            }
+            case "torejespiel": {
+                return (o1, o2) -> (int) (o2.getToreJeSpiel() - o1.getToreJeSpiel());
+            }
+            case "spiele": {
+                return (o1, o2) -> o2.getAnzahlSpiele() - o1.getAnzahlSpiele();
             }
             case "1ass": {
                 return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();

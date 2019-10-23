@@ -21,7 +21,7 @@ import java.util.function.Function;
 import static de.phip1611.hockeyligamanager.domain.Spielbericht.REGULAR_GAME_DURATION;
 
 @Entity
-public class SpielerTorEreignis {
+public class SpielerTorEreignis implements Comparable<SpielerTorEreignis> {
 
     @Id
     private UUID id;
@@ -100,5 +100,10 @@ public class SpielerTorEreignis {
 
     public SpielerTorEreignisDto toDto() {
         return new SpielerTorEreignisDto(this);
+    }
+
+    @Override
+    public int compareTo(SpielerTorEreignis o) {
+        return this.time - o.time;
     }
 }

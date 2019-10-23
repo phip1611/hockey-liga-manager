@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -45,9 +46,19 @@ public class SpielberichtController {
         return "index";
     }
     @GetMapping("schuetzentabelle")
-    public String schuetzentabelle(Model model, @RequestParam(value = "sort", required = false) String sort) {
+    public String schuetzentabelle(Model model,
+                                   @RequestParam(value = "teamauswahl", required = false) UUID teamAuswahl,
+                                   @RequestParam(value = "sort", required = false) String sort
+    ) {
         model.addAttribute("page", "schuetzentabelle");
-        model.addAttribute("entries", spielberichtService.erstelleSchuetzentabelle(sort));
+        model.addAttribute("teams", teamService.findAll());
+        model.addAttribute("selectedTeam", teamAuswahl);
+        model.addAttribute("entries",
+                spielberichtService.erstelleSchuetzentabelle(
+                        Optional.ofNullable(teamAuswahl),
+                        Optional.ofNullable(sort)
+                )
+        );
         return "index";
     }
 

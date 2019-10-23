@@ -16,7 +16,7 @@ public class SpielerDto implements Comparable<SpielerDto> {
 
     private String fullName;
 
-    private String fullNameWithTeamPraefix;
+    private String fullNameWithTeamPrefix;
 
     private int nummer;
 
@@ -27,7 +27,7 @@ public class SpielerDto implements Comparable<SpielerDto> {
         this.nummer   = spieler.getNummer();
         this.teamName = spieler.getTeam() != null ? spieler.getTeam().getName() : null;
         this.fullName = spieler.getFullName();
-        this.fullNameWithTeamPraefix = "[" + teamName + "] " + fullName;
+        this.fullNameWithTeamPrefix = "[" + teamName + "] " + fullName;
     }
 
     public UUID getId() {
@@ -50,8 +50,8 @@ public class SpielerDto implements Comparable<SpielerDto> {
         return fullName;
     }
 
-    public String getFullNameWithTeamPraefix() {
-        return fullNameWithTeamPraefix;
+    public String getFullNameWithTeamPrefix() {
+        return fullNameWithTeamPrefix;
     }
 
     public int getNummer() {
@@ -60,13 +60,7 @@ public class SpielerDto implements Comparable<SpielerDto> {
 
     @Override
     public int compareTo(SpielerDto o) {
-        var a = teamName.compareTo(o.teamName);
-        var b = nachname.compareTo(o.nachname);
-        var c = vorname.compareTo(o.vorname);
-        var d = nummer - o.nummer;
-        if (a != 0) return a;
-        if (b != 0) return b;
-        if (c != 0) return c;
-        return d;
+        // getFullNameWithTeamPrefix ist das Anzeigewert im UI, darum sortieren wir auch danach
+        return this.fullNameWithTeamPrefix.compareTo(o.fullNameWithTeamPrefix);
     }
 }

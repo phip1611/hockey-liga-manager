@@ -14,6 +14,7 @@ import de.phip1611.hockeyligamanager.service.api.dto.SchuetzenTabellenEintragDto
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SpielberichtService extends ExAndImportEntityService<Spielbericht, SpielberichtForm, SpielberichtDto> {
@@ -22,9 +23,8 @@ public interface SpielberichtService extends ExAndImportEntityService<Spielberic
 
     List<LigatabellenEintragDto> erstelleLigatabelle(String sortProperty);
 
-    List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle();
-
-    List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(String sortProperty);
+    List<SchuetzenTabellenEintragDto> erstelleSchuetzentabelle(Optional<UUID> filterTeam,
+                                                               Optional<String> sortProperty);
 
     SpielberichtForm createFormFromId(UUID id);
 

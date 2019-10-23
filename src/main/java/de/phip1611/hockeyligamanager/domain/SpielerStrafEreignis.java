@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 @Entity
-public class SpielerStrafEreignis {
+public class SpielerStrafEreignis implements Comparable<SpielerStrafEreignis> {
 
     @Id
     private UUID id;
@@ -87,4 +87,8 @@ public class SpielerStrafEreignis {
         return new SpielerStrafEreignisDto(this);
     }
 
+    @Override
+    public int compareTo(SpielerStrafEreignis o) {
+        return this.time - o.time;
+    }
 }

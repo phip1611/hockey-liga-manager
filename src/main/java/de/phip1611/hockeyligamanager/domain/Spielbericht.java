@@ -11,7 +11,13 @@ import de.phip1611.hockeyligamanager.form.SpielberichtForm;
 import de.phip1611.hockeyligamanager.service.api.dto.ExportSpielberichtDto;
 import de.phip1611.hockeyligamanager.service.api.dto.SpielberichtDto;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -157,6 +164,27 @@ public class Spielbericht {
         this.gastSpielerStrafEreignisList.addAll(neueGastSpielerStrafEreignisse);
         this.gastSpielerTorEreignisList.addAll(neueGastSpielerTorEreignisse);
 
+        // Alle Spieler die Tor- oder Strafereignisse bekommen haben, werden sofern nicht angegeben
+        // den Anwesenden Spielern hinzugefügt
+        // falls das im UI vergessen wurde; es ist an der Stelle aber logisch die Spieler als
+        // Anwesend zu markieren und nimmt sogar Arbeit im Formular ab :)
+        Stream.concat(
+                this.heimSpielerStrafEreignisList.stream().map(SpielerStrafEreignis::getSpieler),
+                this.heimSpielerTorEreignisList.stream().map(SpielerTorEreignis::getSchuetze)
+        ).distinct().forEach(heimSpielerMitEreignis -> {
+            if (!this.anwesendeSpielerHeim.contains(heimSpielerMitEreignis)) {
+                this.anwesendeSpielerHeim.add(heimSpielerMitEreignis);
+            }
+        });
+        Stream.concat(
+                this.gastSpielerStrafEreignisList.stream().map(SpielerStrafEreignis::getSpieler),
+                this.gastSpielerTorEreignisList.stream().map(SpielerTorEreignis::getSchuetze)
+        ).distinct().forEach(gastSpielerMitEreignis -> {
+            if (!this.anwesendeSpielerGast.contains(gastSpielerMitEreignis)) {
+                this.anwesendeSpielerGast.add(gastSpielerMitEreignis);
+            }
+        });
+
         return this;
     }
 
@@ -258,19 +286,19 @@ public class Spielbericht {
     }
 
     public List<SpielerTorEreignis> getHeimSpielerTorEreignisList() {
-        return heimSpielerTorEreignisList;
+        return heimSpielerTorEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerStrafEreignis> getHeimSpielerStrafEreignisList() {
-        return heimSpielerStrafEreignisList;
+        return heimSpielerStrafEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerTorEreignis> getGastSpielerTorEreignisList() {
-        return gastSpielerTorEreignisList;
+        return gastSpielerTorEreignisList.stream().sorted().collect(toList());
     }
 
     public List<SpielerStrafEreignis> getGastSpielerStrafEreignisList() {
-        return gastSpielerStrafEreignisList;
+        return gastSpielerStrafEreignisList.stream().sorted().collect(toList());
     }
 
     public SpielberichtDto toDto() {
