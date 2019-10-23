@@ -1,14 +1,21 @@
 <th:block xmlns:th="http://www.thymeleaf.org">
     <h3>Spielbericht bearbeiten</h3>
     <form method="post" th:object="${form}" th:action="${'/spielberichte/submit'}">
+        <!-- Beim Bearbeiten das Formular identifizieren -->
         <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="d-flex justify-content-end my-3">
+            <button type="submit" class="d-none  d-md-block           btn btn-primary w-25">Speichern</button>
+            <button type="submit" class="d-none  d-sm-block d-md-none btn btn-primary w-50">Speichern</button>
+            <button type="submit" class="d-block d-sm-none            btn btn-primary w-100">Speichern</button>
+        </div>
 
         <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
                     <label for="beginTimeString">Begin (Datum + Zeit)</label>
-                    <input type="text" class="form-control" id="beginTimeString" th:field="*{beginTimeString}" />
-                    <small class="form-text text-muted">Format 'yyyy-mm-dd hh:mm' (bei <9 mit führenden Nullen)</small>
+                    <input type="text" class="form-control" id="beginTimeString" th:field="*{beginTimeString}" required/>
+                    <small class="form-text text-muted">Format 'yyyy-mm-dd hh:mm' (bei <9 mit führenden Nullen, d.h. 07.07.2019 statt 7.7.2019)</small>
                 </div>
             </div>
             <div class="col">
@@ -69,15 +76,34 @@
                 <label for="spielerheim">Heimteam</label>
                 <select th:field="*{anwesendeSpielerHeim}" class="custom-select heim-spieler-selection" id="spielerheim" multiple="multiple">
                     <option value="">-</option>
-                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                 </select>
             </div>
             <div class="col">
                 <label for="spielergast">Gastteam</label>
                 <select th:field="*{anwesendeSpielerGast}" class="custom-select gast-spieler-selection" id="spielergast" multiple="multiple">
                     <option value="">-</option>
-                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                    <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                 </select>
+            </div>
+        </div>
+
+        <div class="row text-muted mt-5 mb-2">
+            <div class="col-10 offset-1">
+                <h4>Hinweis für Tore und Strafereignisse</h4>
+                <ul>
+                    <li>
+                        Es werden zu den bereits gesetzten Feldern immer fünf zusätzliche Felder angezeigt.
+                        Werden mehr Felder benötigt, bitte Speichern und das Formular erneut öffnen :)
+                    </li>
+                    <li>
+                        Wenn Schütze/Spieler auf "-" gesetzt wird, wird der Eintrag nach dem Speichern gelöscht.
+                    </li>
+                    <li>
+                        Spieler, für die Tor-/Strafereignissen hinzugefügt werden, werden automatisch den anwesenden
+                        Spielern hinzugefügt.
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -98,7 +124,7 @@
                             <label>Schütze</label>
                             <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].schuetzeId}" class="custom-select heim-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -107,7 +133,7 @@
                             <label>First Assist</label>
                             <select th:field="*{heimSpielerTorEreignisList[__${stat.index}__].firstAssistId}" class="custom-select heim-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -128,7 +154,7 @@
                             <label>Schütze</label>
                             <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].schuetzeId}" class="custom-select gast-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -137,7 +163,7 @@
                             <label>First Assist</label>
                             <select th:field="*{gastSpielerTorEreignisList[__${stat.index}__].firstAssistId}" class="custom-select gast-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -162,7 +188,7 @@
                             <label>Spieler</label>
                             <select th:field="*{heimSpielerStrafEreignisList[__${stat.index}__].spielerId}" class="custom-select heim-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -195,7 +221,7 @@
                             <label>Spieler</label>
                             <select th:field="*{gastSpielerStrafEreignisList[__${stat.index}__].spielerId}" class="custom-select gast-spieler-selection">
                                 <option value="">-</option>
-                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPraefix}"></option>
+                                <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                             </select>
                         </div>
                     </div>
@@ -214,6 +240,11 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Speichern</button>
+
+        <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="d-none  d-md-block           btn btn-primary w-25">Speichern</button>
+            <button type="submit" class="d-none  d-sm-block d-md-none btn btn-primary w-50">Speichern</button>
+            <button type="submit" class="d-block d-sm-none            btn btn-primary w-100">Speichern</button>
+        </div>
     </form>
 </th:block>
