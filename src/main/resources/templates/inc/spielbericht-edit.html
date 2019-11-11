@@ -74,14 +74,16 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="spielerheim">Heimteam</label>
-                <select th:field="*{anwesendeSpielerHeim}" class="custom-select heim-spieler-selection" id="spielerheim" multiple="multiple">
+                <select th:field="*{anwesendeSpielerHeim}" class="custom-select custom-select--height heim-spieler-selection"
+                        id="spielerheim" multiple="multiple">
                     <option value="">-</option>
                     <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                 </select>
             </div>
             <div class="col">
                 <label for="spielergast">Gastteam</label>
-                <select th:field="*{anwesendeSpielerGast}" class="custom-select gast-spieler-selection" id="spielergast" multiple="multiple">
+                <select th:field="*{anwesendeSpielerGast}" class="custom-select custom-select--height gast-spieler-selection"
+                        id="spielergast" multiple="multiple">
                     <option value="">-</option>
                     <option th:each="sp : ${spieler}" th:value="${sp.id}" th:text="${sp.fullNameWithTeamPrefix}"></option>
                 </select>
