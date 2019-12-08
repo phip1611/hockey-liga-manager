@@ -7,3 +7,7 @@
 .footer {
     text-align: center;
 }
+
+.custom-select--height {
+    height: 500px !important;
+}
