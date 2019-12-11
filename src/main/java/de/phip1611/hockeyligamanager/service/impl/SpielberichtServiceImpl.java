@@ -258,9 +258,9 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             case "1ass": {
                 return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();
             }
-            case "strafen": {
+            case "strafminuten": {
                 // nach anzahl strafen, nicht anzahl der gesamtminuten
-                return (o1, o2) -> o2.getStrafen() - o1.getStrafen();
+                return (o1, o2) -> o2.getStrafMinuten() - o1.getStrafMinuten();
             }
             default:
                 return (o1, o2) -> 0;

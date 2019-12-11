@@ -32,14 +32,14 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-            <th scope="col"><a href="?sort=nachname">Nachname</a></th>
-            <th scope="col"><a href="?sort=vorname">Vorname</a></th>
-            <th scope="col"><a href="?sort=team">Team</a></th>
-            <th scope="col"><a href="?sort=spiele">Spiele</a></th>
-            <th scope="col"><a href="?sort=tore">Tore</a></th>
-            <th scope="col"><a href="?sort=torejespiel">Tore/Spiel</a></th>
-            <th scope="col"><a href="?sort=1ass">1. Assist</a></th>
-            <th scope="col"><a href="?sort=strafen">Strafen (Minuten)</a></th>
+            <th scope="col"><a th:href="${'?sort=nachname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Nachname</a></th>
+            <th scope="col"><a th:href="${'?sort=vorname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Vorname</a></th>
+            <th scope="col"><a th:href="${'?sort=team' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Team</a></th>
+            <th scope="col"><a th:href="${'?sort=spiele' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Spiele</a></th>
+            <th scope="col"><a th:href="${'?sort=tore' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore</a></th>
+            <th scope="col"><a th:href="${'?sort=torejespiel' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore/Spiel</a></th>
+            <th scope="col"><a th:href="${'?sort=1ass' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">1. Assist</a></th>
+            <th scope="col"><a th:href="${'?sort=strafminuten' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Strafminuten (#Strafen)</a></th>
         </tr>
         </thead>
         <tbody>
@@ -51,7 +51,7 @@
             <td th:text="${entry.tore}"></td>
             <td th:text="${entry.toreJeSpiel}"></td>
             <td th:text="${entry.firstAssist}"></td>
-            <td th:text="${entry.strafenString}"></td>
+            <td th:text="${entry.strafMinuten + ' (' + entry.strafen + ')'}"></td>
         </tr>
         </tbody>
     </table>
