@@ -95,10 +95,6 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
         return strafMinuten;
     }
 
-    public String getStrafenString() {
-        return strafen + " (" + strafMinuten + ")";
-    }
-
     @Override
     public int compareTo(SchuetzenTabellenEintragDto o) {
         if (o.tore != tore) {

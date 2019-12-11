@@ -121,10 +121,12 @@ public class SpielberichtServiceImpl implements SpielberichtService {
         List<LigatabellenEintragDto> entries = new ArrayList<>();
 
         for (Team team : teams) {
-            var entry = new LigatabellenEintragDto(team.getName());
+            var entry = new LigatabellenEintragDto();
             entries.add(entry);
 
             // das ist jetzt nicht schön, aber es funktioniert erstmal xD
+            entry.setTeamName(team.getName());
+
             var heimspiele = this.repo.findAllByTeamHeimId(team.getId());
             var auswaertsspiele = this.repo.findAllByTeamGastId(team.getId());
 
@@ -156,6 +158,14 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             entry.setAnzahlSiege2P((int) siege2P);
             entry.setAnzahlSiege3P((int) siege3P);
             entry.setPunkte((int) punkte);
+
+
+            var toreProSpiel = entry.getAnzahlSpiele() == 0 ? 0
+                    : entry.getTore() / (float)entry.getAnzahlSpiele();
+            var gegenToreProSpiel = entry.getAnzahlSpiele() == 0 ? 0
+                    : entry.getGegentore() / (float)entry.getAnzahlSpiele();
+            entry.setToreProSpiel(toreProSpiel);
+            entry.setGegentoreProSpiel(gegenToreProSpiel);
         }
 
         // Sortieren nun einmal "normal" um den Platz bestimmen zu können
@@ -258,9 +268,9 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             case "1ass": {
                 return (o1, o2) -> o2.getFirstAssist() - o1.getFirstAssist();
             }
-            case "strafen": {
+            case "strafminuten": {
                 // nach anzahl strafen, nicht anzahl der gesamtminuten
-                return (o1, o2) -> o2.getStrafen() - o1.getStrafen();
+                return (o1, o2) -> o2.getStrafMinuten() - o1.getStrafMinuten();
             }
             default:
                 return (o1, o2) -> 0;
@@ -293,8 +303,14 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             case "t": {
                 return (o1, o2) -> o2.getTore() - o1.getTore();
             }
+            case "t_pro_spiel": {
+                return (o1, o2) -> Double.compare(o2.getToreProSpiel(), o1.getToreProSpiel());
+            }
             case "gt": {
                 return (o1, o2) -> o2.getGegentore() - o1.getGegentore();
+            }
+            case "gt_pro_spiel": {
+                return (o1, o2) -> Double.compare(o2.getGegentoreProSpiel(), o1.getGegentoreProSpiel());
             }
             case "punkte": {
                 return (o1, o2) -> o2.getPunkte() - o1.getPunkte();
