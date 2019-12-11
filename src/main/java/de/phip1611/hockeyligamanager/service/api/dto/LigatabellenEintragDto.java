@@ -25,60 +25,55 @@ public class LigatabellenEintragDto implements Comparable<LigatabellenEintragDto
 
     private int tore;
 
+    private double toreProSpiel;
+
     private int gegentore;
+
+    private float gegentoreProSpiel;
 
     private int punkte;
 
-    public LigatabellenEintragDto(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public void setPlatz(int platz) {
-        this.platz = platz;
-    }
-
-    public void setAnzahlSpiele(int anzahlSpiele) {
-        this.anzahlSpiele = anzahlSpiele;
-    }
-
-    public void setAnzahlSiege3P(int anzahlSiege3P) {
-        this.anzahlSiege3P = anzahlSiege3P;
-    }
-
-    public void setAnzahlNiederlagen1P(int anzahlNiederlagen1P) {
-        this.anzahlNiederlagen1P = anzahlNiederlagen1P;
-    }
-
-    public void setTore(int tore) {
-        this.tore = tore;
-    }
-
-    public void setGegentore(int gegentore) {
-        this.gegentore = gegentore;
+    public LigatabellenEintragDto() {
     }
 
     public int getPlatz() {
         return platz;
     }
 
+    public void setPlatz(int platz) {
+        this.platz = platz;
+    }
+
     public String getTeamName() {
         return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public int getAnzahlSpiele() {
         return anzahlSpiele;
     }
 
+    public void setAnzahlSpiele(int anzahlSpiele) {
+        this.anzahlSpiele = anzahlSpiele;
+    }
+
     public int getAnzahlSiege3P() {
         return anzahlSiege3P;
+    }
+
+    public void setAnzahlSiege3P(int anzahlSiege3P) {
+        this.anzahlSiege3P = anzahlSiege3P;
     }
 
     public int getAnzahlNiederlagen1P() {
         return anzahlNiederlagen1P;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setAnzahlNiederlagen1P(int anzahlNiederlagen1P) {
+        this.anzahlNiederlagen1P = anzahlNiederlagen1P;
     }
 
     public int getAnzahlSiege2P() {
@@ -101,8 +96,32 @@ public class LigatabellenEintragDto implements Comparable<LigatabellenEintragDto
         return tore;
     }
 
+    public void setTore(int tore) {
+        this.tore = tore;
+    }
+
+    public double getToreProSpiel() {
+        return toreProSpiel;
+    }
+
+    public void setToreProSpiel(double toreProSpiel) {
+        this.toreProSpiel = toreProSpiel;
+    }
+
+    public float getGegentoreProSpiel() {
+        return gegentoreProSpiel;
+    }
+
+    public void setGegentoreProSpiel(float gegentoreProSpiel) {
+        this.gegentoreProSpiel = gegentoreProSpiel;
+    }
+
     public int getGegentore() {
         return gegentore;
+    }
+
+    public void setGegentore(int gegentore) {
+        this.gegentore = gegentore;
     }
 
     public int getPunkte() {

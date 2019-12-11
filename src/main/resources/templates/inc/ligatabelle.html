@@ -10,7 +10,9 @@
             <th scope="col"><a href="?sort=n1">N1</a></th>
             <th scope="col"><a href="?sort=n0">N0</a></th>
             <th scope="col"><a href="?sort=t">T</a></th>
-            <th scope="col"><a href="?sort=gt">GT</a></th>
+            <th scope="col"><a href="?sort=t_pro_spiel">T/Spiel</a></th>
+            <th scope="col"><a href="?sort=gt_pro_spiel">GT</a></th>
+            <th scope="col"><a href="?sort=gt">GT/Spiel</a></th>
             <th scope="col"><a href="?sort=punkte">Punkte</a></th>
         </tr>
         </thead>
@@ -24,7 +26,9 @@
             <td th:text="${entry.anzahlNiederlagen1P}"></td>
             <td th:text="${entry.anzahlNiederlagen0P}"></td>
             <td th:text="${entry.tore}"></td>
+            <td th:text="${entry.toreProSpiel}"></td>
             <td th:text="${entry.gegentore}"></td>
+            <td th:text="${entry.gegentoreProSpiel}"></td>
             <td th:text="${entry.punkte}"></td>
         </tr>
         </tbody>
