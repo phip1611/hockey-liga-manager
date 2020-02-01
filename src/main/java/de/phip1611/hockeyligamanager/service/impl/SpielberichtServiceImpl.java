@@ -316,9 +316,10 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             case "gt_pro_spiel": {
                 return (o1, o2) -> Double.compare(o2.getGegentoreProSpiel(), o1.getGegentoreProSpiel());
             }
-            case "punkte": {
+            // das wird bereits mit dem Platz gemacht
+            /*case "punkte": {
                 return (o1, o2) -> o2.getPunkte() - o1.getPunkte();
-            }
+            }*/
             default:
                 return (o1, o2) -> 0;
         }

@@ -42,15 +42,18 @@ public class SpielberichtController {
     @GetMapping("ligatabelle")
     public String ligatabelle(Model model, @RequestParam(value = "sort", required = false) String sort) {
         model.addAttribute("page", "ligatabelle");
+        model.addAttribute("sort", sort);
         model.addAttribute("entries", spielberichtService.erstelleLigatabelle(sort));
         return "index";
     }
+
     @GetMapping("schuetzentabelle")
     public String schuetzentabelle(Model model,
                                    @RequestParam(value = "teamauswahl", required = false) UUID teamAuswahl,
                                    @RequestParam(value = "sort", required = false) String sort
     ) {
         model.addAttribute("page", "schuetzentabelle");
+        model.addAttribute("sort", sort);
         model.addAttribute("teams", teamService.findAll());
         model.addAttribute("selectedTeam", teamAuswahl);
         model.addAttribute("entries",
