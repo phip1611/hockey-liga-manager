@@ -39,6 +39,7 @@
             <th scope="col"><a th:href="${'?sort=tore' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore</a></th>
             <th scope="col"><a th:href="${'?sort=torejespiel' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore/Spiel</a></th>
             <th scope="col"><a th:href="${'?sort=1ass' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">1. Assist</a></th>
+            <th scope="col"><a th:href="${'?sort=score' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Score</a></th>
             <th scope="col"><a th:href="${'?sort=strafminuten' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Strafminuten (#Strafen)</a></th>
         </tr>
         </thead>
@@ -51,6 +52,7 @@
             <td th:text="${entry.tore}"></td>
             <td th:text="${entry.toreJeSpiel}"></td>
             <td th:text="${entry.firstAssist}"></td>
+            <td th:text="${entry.score}"></td>
             <td th:text="${entry.strafMinuten + ' (' + entry.strafen + ')'}"></td>
         </tr>
         </tbody>

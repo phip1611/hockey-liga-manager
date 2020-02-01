@@ -272,6 +272,10 @@ public class SpielberichtServiceImpl implements SpielberichtService {
                 // nach anzahl strafen, nicht anzahl der gesamtminuten
                 return (o1, o2) -> o2.getStrafMinuten() - o1.getStrafMinuten();
             }
+            case "score": {
+                // nach anzahl strafen, nicht anzahl der gesamtminuten
+                return (o1, o2) -> o2.getScore() - o1.getScore();
+            }
             default:
                 return (o1, o2) -> 0;
         }
