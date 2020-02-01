@@ -32,14 +32,42 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-            <th scope="col"><a th:href="${'?sort=nachname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Nachname</a></th>
-            <th scope="col"><a th:href="${'?sort=vorname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Vorname</a></th>
-            <th scope="col"><a th:href="${'?sort=team' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Team</a></th>
-            <th scope="col"><a th:href="${'?sort=spiele' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Spiele</a></th>
-            <th scope="col"><a th:href="${'?sort=tore' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore</a></th>
-            <th scope="col"><a th:href="${'?sort=torejespiel' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore/Spiel</a></th>
-            <th scope="col"><a th:href="${'?sort=1ass' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">1. Assist</a></th>
-            <th scope="col"><a th:href="${'?sort=strafminuten' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Strafminuten (#Strafen)</a></th>
+            <th scope="col">
+                <a th:class="${sort == 'nachname' ? 'strong' : null}"
+                   th:href="${'?sort=nachname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Nachname</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'vorname' ? 'strong' : null}"
+                   th:href="${'?sort=vorname' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Vorname</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'team' ? 'strong' : null}"
+                   th:href="${'?sort=team' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Team</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'spiele' ? 'strong' : null}"
+                   th:href="${'?sort=spiele' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Spiele</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'tore' ? 'strong' : null}"
+                   th:href="${'?sort=tore' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'torejespiel' ? 'strong' : null}"
+                   th:href="${'?sort=torejespiel' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Tore/Spiel</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == '1ass' ? 'strong' : null}"
+                   th:href="${'?sort=1ass' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">1.
+                    Assist</a></th>
+            <th scope="col">
+                <a th:class="${sort == 'score' ? 'strong' : null}"
+                   th:href="${'?sort=score' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Score</a>
+            </th>
+            <th scope="col">
+                <a th:class="${sort == 'strafminuten' ? 'strong' : null}"
+                   th:href="${'?sort=strafminuten' + (selectedTeam != null ? ('&teamauswahl=' + selectedTeam) : '')}">Strafminuten
+                    (#Strafen)</a></th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +79,7 @@
             <td th:text="${entry.tore}"></td>
             <td th:text="${entry.toreJeSpiel}"></td>
             <td th:text="${entry.firstAssist}"></td>
+            <td th:text="${entry.score}"></td>
             <td th:text="${entry.strafMinuten + ' (' + entry.strafen + ')'}"></td>
         </tr>
         </tbody>

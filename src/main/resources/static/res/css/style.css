@@ -11,3 +11,7 @@
 .custom-select--height {
     height: 500px !important;
 }
+
+.strong {
+    font-weight: 900;
+}

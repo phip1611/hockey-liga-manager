@@ -87,6 +87,10 @@ public class SchuetzenTabellenEintragDto implements Comparable<SchuetzenTabellen
         return firstAssist;
     }
 
+    public int getScore() {
+        return this.getTore() + this.getFirstAssist();
+    }
+
     public int getStrafen() {
         return strafen;
     }
