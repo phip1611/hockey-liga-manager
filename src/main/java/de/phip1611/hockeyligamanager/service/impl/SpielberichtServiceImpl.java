@@ -144,7 +144,7 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             var ausweartsspielGegentore = getTore(auswaertsspiele, Spielbericht::getHeimSpielerTorEreignisList);
             entry.setTore(heimspieltore + ausweartsspieltore);
             entry.setGegentore(heimspielGegentore + ausweartsspielGegentore);
-
+            entry.setGegenTorSchnitt(entry.getTore() - entry.getGegentore());
 
 
             var siege3P = alleSpieleSieger.stream().filter(Spielbericht::isWinInRegularTime).count();
@@ -312,6 +312,10 @@ public class SpielberichtServiceImpl implements SpielberichtService {
             }
             case "gt": {
                 return (o1, o2) -> o2.getGegentore() - o1.getGegentore();
+            }
+            // Gegentorschnitt
+            case "gts": {
+                return (o1, o2) -> o2.getGegenTorSchnitt() - o1.getGegenTorSchnitt();
             }
             case "gt_pro_spiel": {
                 return (o1, o2) -> Double.compare(o2.getGegentoreProSpiel(), o1.getGegentoreProSpiel());
