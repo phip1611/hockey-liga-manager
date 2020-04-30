@@ -33,6 +33,9 @@ public class LigatabellenEintragDto implements Comparable<LigatabellenEintragDto
 
     private int punkte;
 
+    // Tore minus Gegentore
+    private int gegenTorSchnitt;
+
     public LigatabellenEintragDto() {
     }
 
@@ -130,6 +133,14 @@ public class LigatabellenEintragDto implements Comparable<LigatabellenEintragDto
 
     public void setPunkte(int punkte) {
         this.punkte = punkte;
+    }
+
+    public int getGegenTorSchnitt() {
+        return gegenTorSchnitt;
+    }
+
+    public void setGegenTorSchnitt(int gegenTorSchnitt) {
+        this.gegenTorSchnitt = gegenTorSchnitt;
     }
 
     @Override

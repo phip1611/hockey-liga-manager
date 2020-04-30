@@ -19,9 +19,12 @@
             <th scope="col">
                 <a th:class="${sort == 't' ? 'strong' : null}" href="?sort=t">T</a></th>
             <th scope="col">
-                <a th:class="${sort == 't_pro_spiel' ? 'strong' : null}" href="?sort=t_pro_spiel">T/Spiel</a></th>
-            <th scope="col">
                 <a th:class="${sort == 'gt' ? 'strong' : null}" href="?sort=gt">GT</a></th>
+            <th scope="col">
+                <a th:class="${sort == 'gts' ? 'strong' : null}" href="?sort=gts"
+                   title="Tore - Gegentore">GT-Schnitt</a></th>
+            <th scope="col">
+                <a th:class="${sort == 't_pro_spiel' ? 'strong' : null}" href="?sort=t_pro_spiel">T/Spiel</a></th>
             <th scope="col">
                 <a th:class="${sort == 'gt_pro_spiel' ? 'strong' : null}" href="?sort=gt_pro_spiel">GT/Spiel</a></th>
             <th scope="col">Punkte</th>
@@ -37,9 +40,10 @@
             <td th:text="${entry.anzahlNiederlagen1P}"></td>
             <td th:text="${entry.anzahlNiederlagen0P}"></td>
             <td th:text="${entry.tore}"></td>
-            <td th:text="${entry.toreProSpiel}"></td>
             <td th:text="${entry.gegentore}"></td>
-            <td th:text="${entry.gegentoreProSpiel}"></td>
+            <td th:text="${entry.gegenTorSchnitt}"></td>
+            <td th:text="${#numbers.formatDecimal(entry.toreProSpiel, 1, 2)}"></td>
+            <td th:text="${#numbers.formatDecimal(entry.gegentoreProSpiel, 1, 2)}"></td>
             <td th:text="${entry.punkte}"></td>
         </tr>
         </tbody>
